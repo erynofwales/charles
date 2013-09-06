@@ -8,6 +8,8 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+#include "basics.h"
+
 
 typedef struct _Scene
 {
