@@ -26,3 +26,17 @@ scene_init(Scene *scene)
 void
 scene_destroy(Scene *scene)
 { }
+
+
+/*
+ * scene_render --
+ */
+void
+scene_render(Scene *scene)
+{
+    for (int y = 0; y < scene->height; y++) {
+        for (int x = 0; x < scene->width; x++) {
+            // TODO: Process the scene.
+        }
+    }
+}

@@ -17,6 +17,7 @@ typedef struct _Scene
 
 void scene_init(Scene *scene);
 void scene_destroy(Scene *scene);
+void scene_render(Scene *scene);
 
 
 #endif
