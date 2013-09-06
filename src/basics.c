@@ -8,6 +8,9 @@
 #include "basics.h"
 
 
+const Vector3 ZeroVector3 = {0.0, 0.0, 0.0};
+
+
 /*
  * vector_init --
  *
