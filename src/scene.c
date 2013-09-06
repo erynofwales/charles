@@ -6,30 +6,61 @@
  */
 
 
+#include <stdlib.h>
 #include "scene.h"
 
 
 /*
  * scene_init --
+ *
+ * Initialize and return a new Scene. If the Scene could not be created, NULL is returned.
  */
-void
-scene_init(Scene *scene)
+Scene *
+scene_init()
 {
-    scene->height = 0;
-    scene->width = 0;
+    Scene *new_scene = malloc(sizeof(Scene));
+    if (!new_scene) {
+        return NULL;
+    }
+
+    // Set some default values.
+    new_scene->height = 0;
+    new_scene->width = 0;
+
+    return new_scene;
 }
 
 
 /*
  * scene_destroy --
+ *
+ * Cleanup a Scene.
  */
 void
 scene_destroy(Scene *scene)
+{
+    if (scene == NULL) {
+        return;
+    }
+
+    free(scene);
+}
+
+
+/*
+ * scene_load --
+ *
+ * Load a scene from a file into the given Scene object.
+ */
+void
+scene_load(Scene *scene, FILE *scene_file)
 { }
 
 
 /*
  * scene_render --
+ *
+ * Render the given Scene.
  */
 void
 scene_render(Scene *scene)
