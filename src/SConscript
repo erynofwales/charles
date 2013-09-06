@@ -1,3 +1,7 @@
+# SConscript
+# vim: set ft=python:
+# Eryn Wells <eryn@erynwells.me>
+
 Import('env')
 
 files = Split("""
