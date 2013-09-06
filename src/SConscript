@@ -2,6 +2,7 @@ Import('env')
 
 files = Split("""
     charles.c
+    scene.c
 """)
 
 prog = env.Program('charles', files)
