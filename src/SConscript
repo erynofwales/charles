@@ -1,0 +1,8 @@
+Import('env')
+
+files = Split("""
+    charles.c
+""")
+
+prog = env.Program('charles', files)
+env.Alias('charles', prog)
