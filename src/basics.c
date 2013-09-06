@@ -5,6 +5,7 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#include <math.h>
 #include "basics.h"
 
 
@@ -48,4 +49,51 @@ Vector3
 vector_mult_vector(Vector3 v, Vector3 f)
 {
     return vector_init(v.x * f.x, v.y * f.y, v.z * f.z);
+}
+
+
+/*
+ * vector_length2 --
+ *
+ * Return the length-squared of the given vector.
+ */
+float
+vector_length2(Vector3 v)
+{
+    return (v.x * v.x) + (v.y * v.y) + (v.z * v.z);
+}
+
+
+/*
+ * vector_length --
+ *
+ * Return the length of the given vector.
+ */
+float
+vector_length(Vector3 v)
+{
+    return sqrt(vector_length2(v));
+}
+
+
+/*
+ * vector_normalize --
+ *
+ * Normalize the given vector. Return a new vector.
+ */
+Vector3
+vector_normalize(Vector3 v)
+{
+    float length2 = vector_length2(v);
+    if (length2 <= 0) {
+        return v;
+    }
+
+    Vector3 out;
+    float inverse_length = 1 / sqrt(length2);
+    out.x = v.x * inverse_length;
+    out.y = v.y * inverse_length;
+    out.z = v.z * inverse_length;
+
+    return out;
 }
