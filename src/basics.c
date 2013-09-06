@@ -89,11 +89,6 @@ vector_normalize(Vector3 v)
         return v;
     }
 
-    Vector3 out;
     float inverse_length = 1 / sqrt(length2);
-    out.x = v.x * inverse_length;
-    out.y = v.y * inverse_length;
-    out.z = v.z * inverse_length;
-
-    return out;
+    return vector_init(v.x * inverse_length, v.y * inverse_length, v.z * inverse_length);
 }
