@@ -92,3 +92,23 @@ vector_normalize(Vector3 v)
     float inverse_length = 1 / sqrt(length2);
     return vector_init(v.x * inverse_length, v.y * inverse_length, v.z * inverse_length);
 }
+
+/*
+ * Rects
+ */
+
+/*
+ * rect_init --
+ *
+ * Create a new Rect given x, y coordinates, height, and width.
+ */
+Rect
+rect_init(float x, float y, float w, float h)
+{
+    Rect r;
+    r.x = x;
+    r.y = y;
+    r.h = h;
+    r.w = w;
+    return r;
+}

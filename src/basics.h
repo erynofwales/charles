@@ -26,4 +26,12 @@ float vector_length(Vector3 v);
 Vector3 vector_normalize(Vector3 v);
 
 
+typedef struct {
+    float x, y;
+    float w, h;
+} Rect;
+
+Rect rect_init(float x, float y, float h, float w);
+
+
 #endif
