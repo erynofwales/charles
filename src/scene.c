@@ -77,6 +77,9 @@ scene_render(Scene *scene)
         return;
     }
 
+    scene->width = 640;
+    scene->height = 480;
+
     float fov = 30.0;
     float aspect_ratio = scene->width / scene->height;
     float angle = tan(M_PI * 0.5 * fov / 180.0);
@@ -96,6 +99,8 @@ scene_render(Scene *scene)
             scene->pixels[y * scene->height + x] = _scene_trace(scene, primary_ray, 0);
         }
     }
+
+    scene->is_rendered = 1;
 }
 
 
