@@ -6,6 +6,7 @@ Import('env')
 
 files = Split("""
     basics.c
+    camera.c
     charles.c
     scene.c
 """)
