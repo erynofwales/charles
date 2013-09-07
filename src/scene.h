@@ -9,7 +9,6 @@
 #define __SCENE_H__
 
 #include <stdio.h>
-#include "basics.h"
 #include "camera.h"
 
 typedef struct _ObjectList ObjectList;
