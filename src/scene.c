@@ -8,7 +8,16 @@
 
 #include <math.h>
 #include <stdlib.h>
+
+#include "object.h"
 #include "scene.h"
+
+
+struct _ObjectList
+{
+    Object *object;
+    ObjectList *next;
+};
 
 
 Color _scene_trace(Scene *scene, const Ray ray, const int depth);

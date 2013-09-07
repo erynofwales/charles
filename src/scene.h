@@ -12,11 +12,15 @@
 #include "basics.h"
 #include "camera.h"
 
+typedef struct _ObjectList ObjectList;
+
 
 typedef struct _Scene
 {
     int height, width;      /* Pixel dimensions. */
     Camera *camera;
+
+    ObjectList *objects;
 
     int is_rendered;
     Color *pixels;
