@@ -17,6 +17,9 @@ typedef struct _Scene
 {
     int height, width;      /* Pixel dimensions. */
     Camera *camera;
+
+    int is_rendered;
+    Color *pixels;
 } Scene;
 
 
