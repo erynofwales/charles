@@ -6,8 +6,12 @@
  */
 
 
+#include <math.h>
 #include <stdlib.h>
 #include "scene.h"
+
+
+Color _scene_trace(Scene *scene, const Ray ray, const int depth);
 
 
 /*
@@ -67,9 +71,41 @@ scene_load(Scene *scene, FILE *scene_file)
 void
 scene_render(Scene *scene)
 {
+    Color *pixels = malloc(sizeof(Color) * scene->height * scene->width);
+    if (pixels == NULL) {
+        // TODO: Print an error.
+        return;
+    }
+
+    float fov = 30.0;
+    float aspect_ratio = scene->width / scene->height;
+    float angle = tan(M_PI * 0.5 * fov / 180.0);
+
+    float xx, yy;
+    Ray primary_ray;
+    Vector3 direction;
     for (int y = 0; y < scene->height; y++) {
         for (int x = 0; x < scene->width; x++) {
-            // TODO: Process the scene.
+            // Compute (x, y) of ray direction.
+            xx = (2 * ((x + 0.5) / scene->width) - 1) * angle * aspect_ratio;
+            yy = (1 - 2 * ((y + 0.5) / scene->height)) * angle;
+
+            // Assemble a ray and trace it.
+            direction = vector_init(xx, yy, 1);
+            primary_ray = ray_init(ZeroVector3, direction);
+            pixels[y * x] = _scene_trace(scene, primary_ray, 0);
         }
     }
+}
+
+
+Color
+_scene_trace(Scene *scene, const Ray ray, const int depth)
+{
+    Color out_color;
+    out_color.red = 0.0;
+    out_color.blue = 0.0;
+    out_color.green = 0.0;
+
+    return out_color;
 }

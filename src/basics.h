@@ -34,4 +34,17 @@ typedef struct {
 Rect rect_init(float x, float y, float h, float w);
 
 
+typedef struct {
+    Vector3 location;
+    Vector3 direction;
+} Ray;
+
+Ray ray_init(Vector3 location, Vector3 direction);
+
+
+typedef struct {
+    float red, green, blue;
+} Color;
+
+
 #endif

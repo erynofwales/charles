@@ -112,3 +112,21 @@ rect_init(float x, float y, float w, float h)
     r.w = w;
     return r;
 }
+
+/*
+ * Rays
+ */
+
+/*
+ * ray_init --
+ *
+ * Create a new Ray.
+ */
+Ray
+ray_init(Vector3 location, Vector3 direction)
+{
+    Ray r;
+    r.location = location;
+    r.direction = direction;
+    return r;
+}
