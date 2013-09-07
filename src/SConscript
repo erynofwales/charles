@@ -8,6 +8,7 @@ files = Split("""
     basics.c
     camera.c
     charles.c
+    object.c
     scene.c
     writer_png.c
 """)
