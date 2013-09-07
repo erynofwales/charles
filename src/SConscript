@@ -9,6 +9,7 @@ files = Split("""
     camera.c
     charles.c
     scene.c
+    writer_png.c
 """)
 
 prog = env.Program('charles', files)
