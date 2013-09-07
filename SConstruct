@@ -47,7 +47,7 @@ import os.path
 env = Environment(CC='clang',
                   CFLAGS='-Wall -fcolor-diagnostics',
                   CPPPATH=include_directories,
-                  LINKFLAGS='',
+                  LINKFLAGS='-lpng',
                   LIBPATH=lib_directories)
 
 
