@@ -10,11 +10,13 @@
 
 #include <stdio.h>
 #include "basics.h"
+#include "camera.h"
 
 
 typedef struct _Scene
 {
     int height, width;      /* Pixel dimensions. */
+    Camera *camera;
 } Scene;
 
 

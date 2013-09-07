@@ -26,6 +26,7 @@ scene_init()
     // Set some default values.
     new_scene->height = 0;
     new_scene->width = 0;
+    new_scene->camera = camera_init();
 
     return new_scene;
 }
@@ -43,6 +44,7 @@ scene_destroy(Scene *scene)
         return;
     }
 
+    camera_destroy(scene->camera);
     free(scene);
 }
 
