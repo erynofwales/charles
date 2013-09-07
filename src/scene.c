@@ -71,8 +71,8 @@ scene_load(Scene *scene, FILE *scene_file)
 void
 scene_render(Scene *scene)
 {
-    Color *pixels = malloc(sizeof(Color) * scene->height * scene->width);
-    if (pixels == NULL) {
+    scene->pixels = malloc(sizeof(Color) * scene->height * scene->width);
+    if (scene->pixels == NULL) {
         // TODO: Print an error.
         return;
     }
@@ -93,7 +93,7 @@ scene_render(Scene *scene)
             // Assemble a ray and trace it.
             direction = vector_init(xx, yy, 1);
             primary_ray = ray_init(ZeroVector3, direction);
-            pixels[y * x] = _scene_trace(scene, primary_ray, 0);
+            scene->pixels[y * scene->height + x] = _scene_trace(scene, primary_ray, 0);
         }
     }
 }
@@ -103,9 +103,10 @@ Color
 _scene_trace(Scene *scene, const Ray ray, const int depth)
 {
     Color out_color;
-    out_color.red = 0.0;
-    out_color.blue = 0.0;
-    out_color.green = 0.0;
+    out_color.red = 0;
+    out_color.blue = 0;
+    out_color.green = 0;
+    out_color.alpha = 255;
 
     return out_color;
 }

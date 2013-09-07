@@ -9,6 +9,8 @@
 #ifndef __BASICS_H
 #define __BASICS_H
 
+#include <stdint.h>
+
 
 typedef struct {
     float x, y, z;
@@ -43,7 +45,7 @@ Ray ray_init(Vector3 location, Vector3 direction);
 
 
 typedef struct {
-    float red, green, blue;
+    uint8_t red, green, blue, alpha;
 } Color;
 
 
