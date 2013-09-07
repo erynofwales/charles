@@ -51,24 +51,40 @@ write_scene_png(Scene *scene, FILE *file)
         return -5;
     }
 
+    /*
+     * Tell libpng about basic parameters for the image:
+     *   - 8 bit depth
+     *   - RGB (no alpha)
+     *   - No interlacing
+     *   - No compression
+     */
+    png_set_IHDR(png, png_info,
+                 scene->width, scene->height,
+                 8, PNG_COLOR_TYPE_RGB,
+                 PNG_INTERLACE_NONE,
+                 PNG_COMPRESSION_TYPE_DEFAULT,
+                 PNG_FILTER_TYPE_DEFAULT);
+
     // Set up output.
     png_init_io(png, file);
 
     // Write it!
+    int nbytes = 0;
     png_byte **rows = malloc(png_sizeof(png_bytep) * scene->height);
     for (int y = 0; y < scene->height; y++) {
-        rows[y] = malloc(png_sizeof(png_byte) * scene->width * 4);
+        rows[y] = malloc(png_sizeof(png_byte) * scene->width * 3);
         if (rows[y] == NULL) {
             // TODO: DANGER! WILL ROBINSON!
         }
-        for (int x = 0; x < scene->width; x += 4) {
+        for (int x = 0; x < scene->width; x += 3) {
             rows[y][x] = scene->pixels[y * scene->height + x].red;
             rows[y][x+1] = scene->pixels[y * scene->height + x].green;
             rows[y][x+2] = scene->pixels[y * scene->height + x].blue;
-            rows[y][x+3] = scene->pixels[y * scene->height + x].alpha;
+            nbytes += 3;
         }
     }
 
+    png_write_info(png, png_info);
     png_write_image(png, rows);
 
     for (int y = 0; y < scene->height; y++) {
@@ -81,7 +97,7 @@ write_scene_png(Scene *scene, FILE *file)
     png_destroy_write_struct(&png, &png_info);
 
     // TODO: Return number of bytes written.
-    return 0;
+    return nbytes;
 }
 
 
