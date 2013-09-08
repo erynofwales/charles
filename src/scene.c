@@ -19,7 +19,7 @@ struct _ObjectList
 };
 
 
-Color _scene_trace(Scene *scene, const Ray ray, const int depth);
+static Color scene_trace_ray(Scene *scene, const Ray ray, const int depth);
 
 
 /*
@@ -104,7 +104,7 @@ scene_render(Scene *scene)
             // Assemble a ray and trace it.
             direction = vector_init(xx, yy, 1);
             primary_ray = ray_init(ZeroVector3, vector_normalize(direction));
-            scene->pixels[y * scene->height + x] = _scene_trace(scene, primary_ray, 0);
+            scene->pixels[y * scene->height + x] = scene_trace_ray(scene, primary_ray, 0);
         }
     }
 
@@ -138,8 +138,8 @@ scene_add_object(Scene *scene, Object *obj)
 }
 
 
-Color
-_scene_trace(Scene *scene, const Ray ray, const int depth)
+/* static */ Color
+scene_trace_ray(Scene *scene, const Ray ray, const int depth)
 {
     Color out_color = {0, 0, 0};
 
