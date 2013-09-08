@@ -10,6 +10,7 @@ files = Split("""
     charles.c
     object.c
     scene.c
+    texture.c
     writer_png.c
 """)
 
