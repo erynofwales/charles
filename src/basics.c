@@ -90,6 +90,11 @@ vector_length(Vector3 v)
 }
 
 
+/*
+ * vector_dot --
+ *
+ * Compute the dot product of v and f.
+ */
 float
 vector_dot(Vector3 v, Vector3 f)
 {
