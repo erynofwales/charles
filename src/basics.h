@@ -51,5 +51,7 @@ typedef struct {
     uint8_t red, green, blue, alpha;
 } Color;
 
+extern const Color ColorBlack;
+
 
 #endif

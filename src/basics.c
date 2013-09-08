@@ -11,6 +11,8 @@
 
 const Vector3 ZeroVector3 = {0.0, 0.0, 0.0};
 
+const Color ColorBlack = {0, 0, 0, 0};
+
 
 /*
  * vector_init --
