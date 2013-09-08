@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "scene.h"
+#include "texture.h"
 
 
 struct _ObjectList
@@ -170,5 +171,6 @@ scene_trace_ray(Scene *scene, const Ray ray, const int depth)
         return out_color;
     }
 
-    return out_color;
+    Texture *tex = object_get_texture(intersected_obj);
+    return texture_get_color(tex);
 }
