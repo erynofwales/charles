@@ -1,0 +1,16 @@
+# SConscript
+# vim: set ft=python:
+#
+# SConscript for building tests for charles.
+#
+# Eryn Wells <eryn@erynwells.me>
+
+Import('env')
+
+files = Split("""
+
+""")
+
+
+test = env.Program('test_charles', files)
+env.alias('test', test)
