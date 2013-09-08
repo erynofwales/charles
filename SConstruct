@@ -76,16 +76,12 @@ charles_lib = env.SConscript(os.path.join(src_dir.path, 'SConscript'),
                              exports='env',
                              variant_dir=os.path.join('build', src_dir.path),
                              duplicate=0)
-charles = env.Program(os.path.join('build', 'charles'), charles_lib)
 
 # Build test
 test_dir = Dir('#test')
-test_lib = env.SConscript(os.path.join(test_dir.path, 'SConscript'),
-                          exports='env',
-                          variant_dir=os.path.join('build', test_dir.path),
-                          duplicate=0)
-test_charles = env.Program(os.path.join('build', 'test_charles'), [charles_lib, test_lib])
+env.SConscript(os.path.join(test_dir.path, 'SConscript'),
+               exports=['env', 'charles_lib'],
+               variant_dir=os.path.join('build', test_dir.path),
+               duplicate=0)
 
-env.Alias('charles', charles)
-env.Alias('test', test_charles)
-env.Default(charles)
+env.Default('charles')

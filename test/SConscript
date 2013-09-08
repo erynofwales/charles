@@ -6,6 +6,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 Import('env')
+Import('charles_lib')
 
 files = Split("""
     test_basics.c
@@ -14,5 +15,5 @@ files = Split("""
 
 test_env = env.Clone()
 test_env.Append(LIBS=['check'])
-lib = test_env.Library('test_charles', files, libs=['check'])
-Return('lib')
+prog = test_env.Program('test_charles', [charles_lib, files])
+env.Alias('test', prog)

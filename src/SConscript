@@ -7,7 +7,6 @@ Import('env')
 files = Split("""
     basics.c
     camera.c
-    charles.c
     object.c
     scene.c
     texture.c
@@ -15,4 +14,7 @@ files = Split("""
 """)
 
 lib = env.Library('charles', files)
+prog = env.Program('charles', [lib, 'charles.c'])
+env.Alias('charles', prog)
+
 Return('lib')
