@@ -1,4 +1,5 @@
 *.o
 src/charles
+build/
 
 .sconsign.dblite
