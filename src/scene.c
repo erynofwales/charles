@@ -128,6 +128,11 @@ scene_add_object(Scene *scene, Object *obj)
     ol->object = obj;
     ol->next = NULL;
 
+    if (scene->objects == NULL) {
+        scene->objects = ol;
+        return;
+    }
+
     ObjectList *ptr = scene->objects;
     while (ptr != NULL) {
         if (ptr->next == NULL) {
