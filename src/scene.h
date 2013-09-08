@@ -9,7 +9,10 @@
 #define __SCENE_H__
 
 #include <stdio.h>
+
 #include "camera.h"
+#include "object.h"
+
 
 typedef struct _ObjectList ObjectList;
 
@@ -30,6 +33,7 @@ Scene *scene_init();
 void scene_destroy(Scene *scene);
 void scene_load(Scene *scene, FILE *scene_file);
 void scene_render(Scene *scene);
+void scene_add_object(Scene *scene, Object *object);
 
 
 #endif

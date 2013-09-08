@@ -9,7 +9,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "object.h"
 #include "scene.h"
 
 
@@ -110,6 +109,32 @@ scene_render(Scene *scene)
     }
 
     scene->is_rendered = 1;
+}
+
+
+/*
+ * scene_add_object --
+ *
+ * Add an Object to the Scene.
+ */
+void
+scene_add_object(Scene *scene, Object *obj)
+{
+    ObjectList *ol = malloc(sizeof(ObjectList));
+    if (ol == NULL) {
+        return;
+    }
+
+    ol->object = obj;
+    ol->next = NULL;
+
+    ObjectList *ptr = scene->objects;
+    while (ptr != NULL) {
+        if (ptr->next == NULL) {
+            ptr->next = ol;
+        }
+        ptr = ptr->next;
+    }
 }
 
 
