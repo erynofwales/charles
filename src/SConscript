@@ -14,5 +14,5 @@ files = Split("""
     writer_png.c
 """)
 
-prog = env.Program('charles', files)
-env.Alias('charles', prog)
+lib = env.Library('charles', files)
+Return('lib')

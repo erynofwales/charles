@@ -8,8 +8,11 @@
 Import('env')
 
 files = Split("""
-
+    test_basics.c
+    test_charles.c
 """)
 
-test = env.Program('test_charles', files)
-env.Alias('test', test)
+test_env = env.Clone()
+test_env.Append(LIBS=['check'])
+lib = test_env.Library('test_charles', files, libs=['check'])
+Return('lib')

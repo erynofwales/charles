@@ -48,7 +48,7 @@ import os.path
 env = Environment(CC='clang',
                   CFLAGS='-Wall -fcolor-diagnostics',
                   CPPPATH=include_directories,
-                  LINKFLAGS='-lpng',
+                  LIBS='png',
                   LIBPATH=lib_directories)
 
 
@@ -70,12 +70,22 @@ if not BUILD_CMDS:
     env['RANLIBCOMSTR'] = generate_comstr('Indexing')
 
 
-# Build source subdirectories
-for sdir in source_directories:
-    out_dir = os.path.join('build', Dir(sdir).path)
-    env.SConscript(os.path.join(sdir, 'SConscript'),
-                   exports='env',
-                   variant_dir=out_dir,
-                   duplicate=0)
+# Build charles
+src_dir = Dir('#src')
+charles_lib = env.SConscript(os.path.join(src_dir.path, 'SConscript'),
+                             exports='env',
+                             variant_dir=os.path.join('build', src_dir.path),
+                             duplicate=0)
+charles = env.Program(os.path.join('build', 'charles'), charles_lib)
 
-Default('charles')
+# Build test
+test_dir = Dir('#test')
+test_lib = env.SConscript(os.path.join(test_dir.path, 'SConscript'),
+                          exports='env',
+                          variant_dir=os.path.join('build', test_dir.path),
+                          duplicate=0)
+test_charles = env.Program(os.path.join('build', 'test_charles'), [charles_lib, test_lib])
+
+env.Alias('charles', charles)
+env.Alias('test', test_charles)
+env.Default(charles)
