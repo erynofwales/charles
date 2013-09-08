@@ -104,7 +104,7 @@ scene_render(Scene *scene)
 
             // Assemble a ray and trace it.
             direction = vector_init(xx, yy, 1);
-            primary_ray = ray_init(ZeroVector3, direction);
+            primary_ray = ray_init(ZeroVector3, vector_normalize(direction));
             scene->pixels[y * scene->height + x] = _scene_trace(scene, primary_ray, 0);
         }
     }
@@ -116,11 +116,7 @@ scene_render(Scene *scene)
 Color
 _scene_trace(Scene *scene, const Ray ray, const int depth)
 {
-    Color out_color;
-    out_color.red = 0;
-    out_color.blue = 0;
-    out_color.green = 0;
-    out_color.alpha = 255;
+    Color out_color = {0, 0, 0};
 
     return out_color;
 }
