@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <math.h>
 #include <stdlib.h>
+
 #include "basics.h"
 #include "object.h"
 
@@ -16,6 +17,7 @@
 struct _Object {
     ObjectType type;
     Vector3 location;
+    Texture *texture;
     void *shape;
 
     int (*does_intersect)(Object *obj, Ray ray, float **t);
@@ -41,6 +43,10 @@ object_init(ObjectType type)
     if (obj == NULL) {
         return NULL;
     }
+
+    obj->type = type;
+    obj->location = ZeroVector3;
+    obj->texture = NULL;
 
     switch (type) {
         case ObjectTypeSphere: {
@@ -95,6 +101,27 @@ object_set_location(Object *obj, Vector3 location)
 {
     assert(obj != NULL);
     obj->location = location;
+}
+
+
+/*
+ * object_get_texture --
+ * object_set_texture --
+ *
+ * Get and set the object's texture.
+ */
+Texture *
+object_get_texture(Object *obj)
+{
+    assert(obj != NULL);
+    return obj->texture;
+}
+
+void
+object_set_texture(Object *obj, Texture *tex)
+{
+    assert(obj != NULL);
+    obj->texture = tex;
 }
 
 

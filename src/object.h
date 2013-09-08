@@ -10,6 +10,7 @@
 #define __OBJECT_H
 
 #include "basics.h"
+#include "texture.h"
 
 
 typedef enum {
@@ -24,6 +25,8 @@ void object_destroy(Object *obj);
 
 Vector3 object_get_location(Object *obj);
 void object_set_location(Object *obj, Vector3 location);
+Texture *object_get_texture(Object *obj);
+void object_set_texture(Object *obj, Texture *tex);
 
 int object_does_intersect(Object *obj, Ray ray, float **t);
 
