@@ -53,6 +53,18 @@ vector_mult_vector(Vector3 v, Vector3 f)
 
 
 /*
+ * vector_sub_vector --
+ *
+ * Subtract s from m. Return a new vector.
+ */
+Vector3
+vector_sub_vector(Vector3 m, Vector3 s)
+{
+    return vector_init(m.x - s.x, m.y - s.y, m.z - s.z);
+}
+
+
+/*
  * vector_length2 --
  *
  * Return the length-squared of the given vector.
@@ -73,6 +85,13 @@ float
 vector_length(Vector3 v)
 {
     return sqrt(vector_length2(v));
+}
+
+
+float
+vector_dot(Vector3 v, Vector3 f)
+{
+    return (v.x * f.x) + (v.y * f.x) + (v.z * f.z);
 }
 
 
