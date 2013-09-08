@@ -115,6 +115,7 @@ vector_normalize(Vector3 v)
         return v;
     }
 
+    // Multiplying by the inverse of the length is more efficient than dividing by the length.
     float inverse_length = 1 / sqrt(length2);
     return vector_init(v.x * inverse_length, v.y * inverse_length, v.z * inverse_length);
 }
