@@ -11,6 +11,7 @@ Import('charles_lib')
 files = Split("""
     test_basics.c
     test_charles.c
+    test_object.c
 """)
 
 test_env = env.Clone()
