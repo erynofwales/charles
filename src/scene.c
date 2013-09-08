@@ -160,6 +160,7 @@ _scene_trace(Scene *scene, const Ray ray, const int depth)
         ptr = ptr->next;
     }
 
+    // If there was no intersection, return black.
     if (intersected_obj == NULL) {
         return out_color;
     }
