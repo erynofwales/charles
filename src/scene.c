@@ -143,5 +143,26 @@ _scene_trace(Scene *scene, const Ray ray, const int depth)
 {
     Color out_color = {0, 0, 0};
 
+    // Find intersections of this ray with objects in the scene.
+    Object *intersected_obj = NULL;
+    float *t = NULL;
+    float nearest_t;
+    int nints;
+    ObjectList *ptr = scene->objects;
+    while (ptr != NULL) {
+        nints = object_does_intersect(ptr->object, ray, &t);
+        for (int i = 0; i < nints; i++) {
+            if (t[i] < nearest_t) {
+                intersected_obj = ptr->object;
+                nearest_t = t[i];
+            }
+        }
+        ptr = ptr->next;
+    }
+
+    if (intersected_obj == NULL) {
+        return out_color;
+    }
+
     return out_color;
 }
