@@ -32,8 +32,10 @@ main(int argc,
     Texture *tex = texture_init();
     Color color = {255, 0, 0, 255};
     texture_set_color(tex, color);
+    Vector3 loc = {233, 290, 0};
+    object_set_location(obj, loc);
     object_set_texture(obj, tex);
-    object_sphere_set_radius(obj, 1);
+    object_sphere_set_radius(obj, 100);
     scene_add_object(scene, obj);
 
     scene_render(scene);
