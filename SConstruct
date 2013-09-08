@@ -54,10 +54,10 @@ env = Environment(CC='clang',
 # Handle command line variables
 DEBUG = bool(int(ARGUMENTS.get('DEBUG', DEBUG)))
 if DEBUG:
-    env.Append(CXXFLAGS=' -g -O0')
+    env.Append(CFLAGS=' -g -O0')
     env.Append(CPPDEFINES=['DEBUG'])
 else:
-    env.Append(CXXFLAGS=' -O2')
+    env.Append(CFLAGS=' -O2')
 
 BUILD_CMDS = bool(int(ARGUMENTS.get('BUILD_CMDS', BUILD_CMDS)))
 if not BUILD_CMDS:
