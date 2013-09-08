@@ -70,7 +70,9 @@ if not BUILD_CMDS:
 
 
 # Build source subdirectories
-env.SConscript([os.path.join(dir, 'SConscript') for dir in source_directories],
-               exports='env')
+env.SConscript([os.path.join(sdir, 'SConscript') for sdir in source_directories],
+               exports='env',
+               variant_dir='build',
+               duplicate=0)
 
 Default('charles')
