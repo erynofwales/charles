@@ -157,11 +157,14 @@ scene_trace_ray(Scene *scene, const Ray ray, const int depth)
     ObjectList *ptr = scene->objects;
     while (ptr != NULL) {
         nints = object_does_intersect(ptr->object, ray, &t);
-        for (int i = 0; i < nints; i++) {
-            if (t[i] < nearest_t) {
-                intersected_obj = ptr->object;
-                nearest_t = t[i];
+        if (nints > 0) {
+            for (int i = 0; i < nints; i++) {
+                if (t[i] < nearest_t) {
+                    intersected_obj = ptr->object;
+                    nearest_t = t[i];
+                }
             }
+            free(t);
         }
         ptr = ptr->next;
     }
