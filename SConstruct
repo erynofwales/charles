@@ -28,6 +28,7 @@ lib_directories = Split("""
 # added here.
 source_directories = lib_directories + Split("""
         #src
+        #test
 """)
 
 # Include directories. Where should scons look for headers during preprocessing
@@ -70,9 +71,11 @@ if not BUILD_CMDS:
 
 
 # Build source subdirectories
-env.SConscript([os.path.join(sdir, 'SConscript') for sdir in source_directories],
-               exports='env',
-               variant_dir='build',
-               duplicate=0)
+for sdir in source_directories:
+    out_dir = os.path.join('build', Dir(sdir).path)
+    env.SConscript(os.path.join(sdir, 'SConscript'),
+                   exports='env',
+                   variant_dir=out_dir,
+                   duplicate=0)
 
 Default('charles')

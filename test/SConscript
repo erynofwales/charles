@@ -11,6 +11,5 @@ files = Split("""
 
 """)
 
-
 test = env.Program('test_charles', files)
-env.alias('test', test)
+env.Alias('test', test)
