@@ -89,22 +89,14 @@ scene_render(Scene *scene)
     scene->width = 640;
     scene->height = 480;
 
-    float fov = 30.0;
-    float aspect_ratio = scene->width / scene->height;
-    float angle = tan(M_PI * 0.5 * fov / 180.0);
-
-    float xx, yy;
     Ray primary_ray;
-    Vector3 direction;
+    Vector3 location, direction;
     for (int y = 0; y < scene->height; y++) {
         for (int x = 0; x < scene->width; x++) {
-            // Compute (x, y) of ray direction.
-            xx = (2 * ((x + 0.5) / scene->width) - 1) * angle * aspect_ratio;
-            yy = (1 - 2 * ((y + 0.5) / scene->height)) * angle;
-
             // Assemble a ray and trace it.
-            direction = vector_init(xx, yy, 1);
-            primary_ray = ray_init(ZeroVector3, vector_normalize(direction));
+            location = vector_init(x, y, -1000);
+            direction = vector_init(0, 0, 1);
+            primary_ray = ray_init(location, vector_normalize(direction));
             scene->pixels[y * scene->height + x] = scene_trace_ray(scene, primary_ray, 0);
         }
     }
