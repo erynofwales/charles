@@ -9,7 +9,10 @@
 
 #include <png.h>
 
+#include "basics.h"
+#include "object.h"
 #include "scene.h"
+#include "texture.h"
 #include "writer_png.h"
 
 char *OUT_FILE = "charles_out.png";
@@ -25,6 +28,13 @@ main(int argc,
     }
 
     Scene *scene = scene_init();
+    Object *obj = object_init(ObjectTypeSphere);
+    Texture *tex = texture_init();
+    Color color = {255, 0, 0, 255};
+    texture_set_color(tex, color);
+    object_set_texture(obj, tex);
+    object_sphere_set_radius(obj, 1);
+    scene_add_object(scene, obj);
 
     scene_render(scene);
     write_scene_png(scene, out_file);
