@@ -29,6 +29,8 @@ typedef struct _Sphere {
 } Sphere;
 
 static int sphere_does_intersect(Object *obj, Ray ray, float **t);
+static int sphere_point_lies_on_surface(Object *obj, Vector3 p);
+static Vector3 sphere_compute_normal(Object *obj, Vector3 p);
 
 
 /*
@@ -225,4 +227,45 @@ sphere_does_intersect(Object *obj, Ray ray, float **t)
     }
 
     return nints;
+}
+
+
+/*
+ * sphere_point_lies_on_surface --
+ *
+ * Determine if a point lies on the given sphere.
+ */
+int
+sphere_point_lies_on_surface(Object *obj, Vector3 p)
+{
+    assert(obj != NULL && obj->type == ObjectTypeSphere);
+
+    Vector3 loc = object_get_location(obj);
+    float x = p.x - loc.x;
+    float y = p.y - loc.y;
+    float z = p.z - loc.z;
+    float r = object_sphere_get_radius(obj);
+
+    return (x * x) + (y * y) + (z * z) == (r * r);
+}
+
+
+/*
+ * sphere_compute_normal --
+ *
+ * Compute the normal for the given Object (which must be a Sphere) at the given point. This point must lie on the
+ * surface of the object.
+ */
+/* static */ Vector3
+sphere_compute_normal(Object *obj, Vector3 p)
+{
+    assert(obj != NULL && obj->type == ObjectTypeSphere);
+
+    // Make sure the given point is actually on the surface of the sphere.
+    if (!sphere_point_lies_on_surface(obj, p)) {
+        return Vector3Zero;
+    }
+
+    // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
+    return p;
 }
