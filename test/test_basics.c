@@ -85,6 +85,19 @@ START_TEST(test_vector_sub_vector)
 END_TEST
 
 
+START_TEST(test_vector_negate)
+{
+    Vector3 v, neg;
+
+    v = vector_init(1, 2, 3);
+    neg = vector_negate(v);
+    ck_assert(neg.x == -1);
+    ck_assert(neg.y == -2);
+    ck_assert(neg.z == -3);
+}
+END_TEST
+
+
 START_TEST(test_vector_length2)
 {
     Vector3 v = vector_init(2, 2, 1);
@@ -135,6 +148,7 @@ test_basics_create_suite()
     tcase_add_test(tc_vector, test_vector_add_vector);
     tcase_add_test(tc_vector, test_vector_mul_scalar);
     tcase_add_test(tc_vector, test_vector_sub_vector);
+    tcase_add_test(tc_vector, test_vector_negate);
     tcase_add_test(tc_vector, test_vector_length2);
     tcase_add_test(tc_vector, test_vector_length);
     tcase_add_test(tc_vector, test_vector_dot);
