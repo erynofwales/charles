@@ -173,17 +173,17 @@ object_sphere_set_radius(Object *obj, float r)
 int
 sphere_does_intersect(Object *obj, Ray ray, float **t)
 {
-    // Distance from vector point to center of sphere.
-    Vector3 dist = vector_sub_vector(ray.location, object_get_location(obj));
+    // Location of the vector in object space.
+    Vector3 ray_loc_obj = vector_sub_vector(ray.location, object_get_location(obj));
     float r = object_sphere_get_radius(obj);
 
     // Coefficients for quadratic equation.
     float a = vector_dot(ray.direction, ray.direction);
-    float b = vector_dot(vector_mul_scalar(dist, 2), ray.direction);
-    float c = vector_dot(dist, dist) - (r * r);
+    float b = vector_dot(ray.direction, ray_loc_obj) * 2.0;
+    float c = vector_dot(ray_loc_obj, ray_loc_obj) - (r * r);
 
-    // Discriminant for quadratic equation.
-    float discrim = b * b - 4.0 * a * c;
+    // Discriminant for the quadratic equation.
+    float discrim = (b * b) - (4.0 * a * c);
 
     // If the discriminant is less than zero, there are no real (as in not imaginary) solutions to this intersection.
     if (discrim < 0) {
@@ -192,7 +192,7 @@ sphere_does_intersect(Object *obj, Ray ray, float **t)
 
     /*
      * Compute most of the quadratic equation as q. Doing this first helps avoid precision errors when
-     * b =~ * sqrt(b^2 - 4ac).
+     * b =~ sqrt(b^2 - 4ac).
      *
      * See: http://wiki.cgsociety.org/index.php/Ray_Sphere_Intersection
      */
@@ -205,7 +205,7 @@ sphere_does_intersect(Object *obj, Ray ray, float **t)
         q = (-b + sqrt_discrim) / 2.0;
     }
 
-    // Compute the intersections. Spheres have at most two intersections.
+    // Compute the intersections, the roots of the quadratic equation. Spheres have at most two intersections.
     float t0 = q / a;
     float t1 = c / q;
 

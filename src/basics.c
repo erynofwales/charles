@@ -57,7 +57,7 @@ vector_mul_scalar(Vector3 v, float f)
 /*
  * vector_sub_vector --
  *
- * Subtract s from m. Return a new vector.
+ * m - s. Return a new vector.
  */
 Vector3
 vector_sub_vector(Vector3 m, Vector3 s)
