@@ -190,24 +190,10 @@ sphere_does_intersect(Object *obj, Ray ray, float **t)
         return 0;
     }
 
-    /*
-     * Compute most of the quadratic equation as q. Doing this first helps avoid precision errors when
-     * b =~ sqrt(b^2 - 4ac).
-     *
-     * See: http://wiki.cgsociety.org/index.php/Ray_Sphere_Intersection
-     */
-    float q;
-    float sqrt_discrim = sqrtf(discrim);
-    if (b < 0) {
-        q = (-b - sqrt_discrim) / 2.0;
-    }
-    else {
-        q = (-b + sqrt_discrim) / 2.0;
-    }
-
     // Compute the intersections, the roots of the quadratic equation. Spheres have at most two intersections.
-    float t0 = q / a;
-    float t1 = c / q;
+    float sqrt_discrim = sqrtf(discrim);
+    float t0 = (-b - sqrt_discrim) / (2.0 * a);
+    float t1 = (-b + sqrt_discrim) / (2.0 * a);
 
     // If t[1] is less than t[0], swap them (t[0] will always be the first intersection).
     if (t1 < t0) {
