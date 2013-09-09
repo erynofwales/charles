@@ -98,7 +98,7 @@ vector_length2(Vector3 v)
 float
 vector_length(Vector3 v)
 {
-    return sqrt(vector_length2(v));
+    return sqrtf(vector_length2(v));
 }
 
 
@@ -110,7 +110,7 @@ vector_length(Vector3 v)
 float
 vector_dot(Vector3 v, Vector3 f)
 {
-    return (v.x * f.x) + (v.y * f.x) + (v.z * f.z);
+    return (v.x * f.x) + (v.y * f.y) + (v.z * f.z);
 }
 
 
@@ -128,7 +128,7 @@ vector_normalize(Vector3 v)
     }
 
     // Multiplying by the inverse of the length is more efficient than dividing by the length.
-    float inverse_length = 1 / sqrt(length2);
+    float inverse_length = 1.0 / sqrtf(length2);
     return vector_init(v.x * inverse_length, v.y * inverse_length, v.z * inverse_length);
 }
 
