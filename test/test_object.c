@@ -36,6 +36,7 @@ START_TEST(test_sphere_does_intersect)
 
     loc = vector_init(0, -5, 0);
     dir = vector_init(0, 1, 0);
+    ray = ray_init(loc, dir);
     tvectors[0] = vector_init(0, -1, 0);
     tvectors[1] = vector_init(0, 1, 0);
     check_sphere_intersection(sphere, ray, tvectors, 2);
