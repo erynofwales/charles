@@ -80,14 +80,14 @@ scene_load(Scene *scene, FILE *scene_file)
 void
 scene_render(Scene *scene)
 {
+    scene->width = 80;
+    scene->height = 25;
+
     scene->pixels = malloc(sizeof(Color) * scene->height * scene->width);
     if (scene->pixels == NULL) {
         // TODO: Print an error.
         return;
     }
-
-    scene->width = 640;
-    scene->height = 480;
 
     Ray primary_ray;
     Vector3 location, direction;
@@ -97,7 +97,7 @@ scene_render(Scene *scene)
             location = vector_init(x, y, -1000);
             direction = vector_init(0, 0, 1);
             primary_ray = ray_init(location, vector_normalize(direction));
-            scene->pixels[y * scene->height + x] = scene_trace_ray(scene, primary_ray, 0);
+            scene->pixels[y * scene->width + x] = scene_trace_ray(scene, primary_ray, 0);
         }
     }
 
