@@ -13,7 +13,7 @@
 #include "test_suites.h"
 
 
-void check_sphere_intersection(Object *sphere, Ray ray, int expected_nints);
+void check_sphere_intersection(Object *sphere, Ray ray, Vector3 *tvectors, int ntvectors);
 
 
 START_TEST(test_sphere_does_intersect)
@@ -23,25 +23,40 @@ START_TEST(test_sphere_does_intersect)
     object_sphere_set_radius(sphere, 1.0);
 
     Vector3 loc, dir;
+    Vector3 tvectors[2];
     Ray ray;
 
     loc = vector_init(0, 0, -5);
     dir = vector_init(0, 0, 1);
     ray = ray_init(loc, dir);
-    check_sphere_intersection(sphere, ray, 2);
+    tvectors[0] = vector_init(0, 0, -1);
+    tvectors[1] = vector_init(0, 0, 1);
+    check_sphere_intersection(sphere, ray, tvectors, 2);
 
     loc = vector_init(0, -5, 0);
-    dir = vector_init(
+    dir = vector_init(0, 1, 0);
+    tvectors[0] = vector_init(0, -1, 0);
+    tvectors[1] = vector_init(0, 1, 0);
+    check_sphere_intersection(sphere, ray, tvectors, 2);
 }
 END_TEST
 
 
 void
-check_sphere_intersection(Object *sphere, Ray ray, int expected_nints)
+check_sphere_intersection(Object *sphere, Ray ray, Vector3 *tvectors, int ntvectors)
 {
     float *t;
     int nints = object_does_intersect(sphere, ray, &t);
-    ck_assert(nints == expected_nints);
+    ck_assert(nints == ntvectors);
+
+    Vector3 rp;
+    for (int i = 0; i < nints; i++) {
+        rp = ray_parameterize(ray, t[i]);
+        ck_assert(rp.x == tvectors[i].x);
+        ck_assert(rp.y == tvectors[i].y);
+        ck_assert(rp.z == tvectors[i].z);
+    }
+
     if (nints > 0) {
         free(t);
     }
