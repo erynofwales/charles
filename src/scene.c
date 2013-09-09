@@ -80,8 +80,8 @@ scene_load(Scene *scene, FILE *scene_file)
 void
 scene_render(Scene *scene)
 {
-    scene->width = 80;
-    scene->height = 25;
+    scene->width = 640;
+    scene->height = 480;
 
     scene->pixels = malloc(sizeof(Color) * scene->height * scene->width);
     if (scene->pixels == NULL) {
