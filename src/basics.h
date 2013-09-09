@@ -17,13 +17,14 @@ typedef struct {
 } Vector3;
 
 
-extern const Vector3 ZeroVector3;
+extern const Vector3 Vector3Zero;
 
 
 Vector3 vector_init(float x, float y, float z);
-Vector3 vector_mult_scalar(Vector3 v, float f);
-Vector3 vector_mult_vector(Vector3 v, Vector3 f);
+Vector3 vector_add_vector(Vector3 v, Vector3 a);
+Vector3 vector_mul_scalar(Vector3 v, float f);
 Vector3 vector_sub_vector(Vector3 m, Vector3 s);
+Vector3 vector_negate(Vector3 v);
 float vector_length2(Vector3 v);
 float vector_length(Vector3 v);
 float vector_dot(Vector3 v, Vector3 f);
@@ -45,6 +46,7 @@ typedef struct {
 } Ray;
 
 Ray ray_init(Vector3 location, Vector3 direction);
+Vector3 ray_parameterize(Ray ray, float t);
 
 
 typedef struct {

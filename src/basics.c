@@ -9,7 +9,7 @@
 #include "basics.h"
 
 
-const Vector3 ZeroVector3 = {0.0, 0.0, 0.0};
+const Vector3 Vector3Zero = {0.0, 0.0, 0.0};
 
 const Color ColorBlack = {0, 0, 0, 0};
 
@@ -31,26 +31,26 @@ vector_init(float x, float y, float z)
 
 
 /*
- * vector_mult_scalar --
+ * vector_add_vector
  *
- * Multiply a vector by a scalar. Return a new vector.
+ * Add a vector to another vector. Return a new vector.
  */
 Vector3
-vector_mult_scalar(Vector3 v, float f)
+vector_add_vector(Vector3 v, Vector3 a)
 {
-    return vector_init(f * v.x, f * v.y, f * v.z);
+    return vector_init(v.x + a.x, v.y + a.y, v.z + a.z);
 }
 
 
 /*
- * vector_mult_vector --
+ * vector_mul_scalar --
  *
- * Multiply a vector by another vector. Return a new vector.
+ * Multiply a vector by a scalar. Return a new vector.
  */
 Vector3
-vector_mult_vector(Vector3 v, Vector3 f)
+vector_mul_scalar(Vector3 v, float f)
 {
-    return vector_init(v.x * f.x, v.y * f.y, v.z * f.z);
+    return vector_init(f * v.x, f * v.y, f * v.z);
 }
 
 
@@ -63,6 +63,18 @@ Vector3
 vector_sub_vector(Vector3 m, Vector3 s)
 {
     return vector_init(m.x - s.x, m.y - s.y, m.z - s.z);
+}
+
+
+/*
+ * vector_negate --
+ *
+ * Negate a vector. Return a new vector.
+ */
+Vector3
+vector_negate(Vector3 v)
+{
+    return vector_init(-v.x, -v.y, -v.z);
 }
 
 
@@ -111,7 +123,7 @@ Vector3
 vector_normalize(Vector3 v)
 {
     float length2 = vector_length2(v);
-    if (length2 <= 0) {
+    if (length2 <= 0.0) {
         return v;
     }
 
@@ -156,4 +168,11 @@ ray_init(Vector3 location, Vector3 direction)
     r.location = location;
     r.direction = direction;
     return r;
+}
+
+
+Vector3
+ray_parameterize(Ray ray, float t)
+{
+    return vector_add_vector(ray.location, vector_mul_scalar(ray.direction, t));
 }
