@@ -10,6 +10,7 @@
 #include <check.h>
 
 #include "object.h"
+#include "test_asserts.h"
 #include "test_suites.h"
 
 
@@ -52,9 +53,9 @@ check_sphere_intersection(Object *sphere, Ray ray, Vector3 *tvectors, int ntvect
     Vector3 rp;
     for (int i = 0; i < nints; i++) {
         rp = ray_parameterize(ray, t[i]);
-        ck_assert(rp.x == tvectors[i].x);
-        ck_assert(rp.y == tvectors[i].y);
-        ck_assert(rp.z == tvectors[i].z);
+        test_assert_within_epsilon(rp.x, tvectors[i].x, 1e-4);
+        test_assert_within_epsilon(rp.y, tvectors[i].y, 1e-4);
+        test_assert_within_epsilon(rp.z, tvectors[i].z, 1e-4);
     }
 
     if (nints > 0) {
