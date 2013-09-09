@@ -19,6 +19,72 @@ START_TEST(test_vector_init)
 END_TEST
 
 
+START_TEST(test_vector_add_vector)
+{
+    Vector3 v, a, sum;
+
+    v = vector_init(1, 2, 3);
+
+    a = vector_init(4, 5, 6);
+    sum = vector_add_vector(v, a);
+    ck_assert(sum.x == 5);
+    ck_assert(sum.y == 7);
+    ck_assert(sum.z == 9);
+
+    a = vector_init(0, 0, 0);
+    sum = vector_add_vector(v, a);
+    ck_assert(sum.x == v.x);
+    ck_assert(sum.y == v.y);
+    ck_assert(sum.z == v.z);
+
+    a = vector_init(-3, -7, -13);
+    sum = vector_add_vector(v, a);
+    ck_assert(sum.x == -2);
+    ck_assert(sum.y == -5);
+    ck_assert(sum.z == -10);
+}
+END_TEST
+
+
+START_TEST(test_vector_mul_scalar)
+{
+    Vector3 v, p;
+
+    v = vector_init(1, 2, 3);
+
+    p = vector_mul_scalar(v, 7);
+    ck_assert(p.x == 7);
+    ck_assert(p.y == 14);
+    ck_assert(p.z == 21);
+
+    p = vector_mul_scalar(v, 0);
+    ck_assert(p.x == 0);
+    ck_assert(p.y == 0);
+    ck_assert(p.z == 0);
+
+    p = vector_mul_scalar(v, -13);
+    ck_assert(p.x == -13);
+    ck_assert(p.y == -26);
+    ck_assert(p.z == -39);
+}
+END_TEST
+
+
+START_TEST(test_vector_sub_vector)
+{
+    Vector3 v, s, diff;
+
+    v = vector_init(1, 2, 3);
+
+    s = vector_init(4, 5, 6);
+    diff = vector_sub_vector(v, s);
+    ck_assert(diff.x == -3);
+    ck_assert(diff.y == -3);
+    ck_assert(diff.z == -3);
+}
+END_TEST
+
+
 START_TEST(test_vector_length2)
 {
     Vector3 v = vector_init(2, 2, 1);
@@ -66,6 +132,9 @@ test_basics_create_suite()
 
     TCase *tc_vector = tcase_create("vector");
     tcase_add_test(tc_vector, test_vector_init);
+    tcase_add_test(tc_vector, test_vector_add_vector);
+    tcase_add_test(tc_vector, test_vector_mul_scalar);
+    tcase_add_test(tc_vector, test_vector_sub_vector);
     tcase_add_test(tc_vector, test_vector_length2);
     tcase_add_test(tc_vector, test_vector_length);
     tcase_add_test(tc_vector, test_vector_dot);
