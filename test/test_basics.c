@@ -120,9 +120,9 @@ START_TEST(test_vector_dot)
     Vector3 b = vector_init(1, 1, 1);
     ck_assert(vector_dot(a, b) == 3.0);
 
-    a = vector_init(2, 3, 4);
-    b = vector_init(4, 4, 4);
-    ck_assert(vector_dot(a, b) == (2 * 4) + (3 * 4) + (4 * 4));
+    a = vector_init(3, 5, 7);
+    b = vector_init(7, 3, 5);
+    ck_assert(vector_dot(a, b) == 71.0);
 }
 END_TEST
 
