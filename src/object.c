@@ -45,7 +45,7 @@ object_init(ObjectType type)
     }
 
     obj->type = type;
-    obj->location = ZeroVector3;
+    obj->location = Vector3Zero;
     obj->texture = NULL;
 
     switch (type) {
@@ -179,7 +179,7 @@ sphere_does_intersect(Object *obj, Ray ray, float **t)
 
     // Coefficients for quadratic equation.
     float a = vector_dot(ray.direction, ray.direction);
-    float b = vector_dot(vector_mult_scalar(dist, 2), ray.direction);
+    float b = vector_dot(vector_mul_scalar(dist, 2), ray.direction);
     float c = vector_dot(dist, dist) - (r * r);
 
     // Discriminant for quadratic equation.
