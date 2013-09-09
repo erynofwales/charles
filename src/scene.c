@@ -145,7 +145,7 @@ scene_trace_ray(Scene *scene, const Ray ray, const int depth)
     // Find intersections of this ray with objects in the scene.
     Object *intersected_obj = NULL;
     float *t = NULL;
-    float nearest_t = 1e8;
+    float nearest_t = INFINITY;
     int nints;
     ObjectList *ptr = scene->objects;
     while (ptr != NULL) {
