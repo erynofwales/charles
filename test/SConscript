@@ -9,6 +9,7 @@ Import('env')
 Import('charles_lib')
 
 files = Split("""
+    test_asserts.c
     test_basics.c
     test_charles.c
     test_object.c
