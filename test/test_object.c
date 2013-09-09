@@ -64,6 +64,20 @@ check_sphere_intersection(Object *sphere, Ray ray, Vector3 *tvectors, int ntvect
 }
 
 
+START_TEST(test_sphere_point_lies_on_surface)
+{
+    ck_assert(0);
+}
+END_TEST
+
+
+START_TEST(test_sphere_compute_normal)
+{
+    ck_assert(0);
+}
+END_TEST
+
+
 Suite *
 test_object_create_suite()
 {
@@ -71,6 +85,8 @@ test_object_create_suite()
 
     TCase *tc_sphere = tcase_create("sphere");
     tcase_add_test(tc_sphere, test_sphere_does_intersect);
+    tcase_add_test(tc_sphere, test_sphere_point_lies_on_surface);
+    tcase_add_test(tc_sphere, test_sphere_compute_normal);
     suite_add_tcase(s, tc_sphere);
 
     return s;
