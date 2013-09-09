@@ -68,35 +68,32 @@ write_scene_png(Scene *scene, FILE *file)
     // Set up output.
     png_init_io(png, file);
 
+    // Write header information.
+    png_write_info(png, png_info);
+
     // Write it!
     int nbytes = 0;
-    png_byte **rows = malloc(png_sizeof(png_bytep) * scene->height);
     for (int y = 0; y < scene->height; y++) {
-        rows[y] = malloc(png_sizeof(png_byte) * scene->width * 3);
-        if (rows[y] == NULL) {
+        png_byte *row = malloc(png_sizeof(png_byte) * scene->width * 3);
+        if (row == NULL) {
             // TODO: DANGER! WILL ROBINSON!
         }
-        for (int x = 0; x < scene->width; x += 3) {
-            rows[y][x] = scene->pixels[y * scene->height + x].red;
-            rows[y][x+1] = scene->pixels[y * scene->height + x].green;
-            rows[y][x+2] = scene->pixels[y * scene->height + x].blue;
+        for (int x = 0; x < scene->width; x++) {
+            row[x*3+0] = scene->pixels[y * scene->width + x].red;
+            row[x*3+1] = scene->pixels[y * scene->width + x].green;
+            row[x*3+2] = scene->pixels[y * scene->width + x].blue;
             nbytes += 3;
+
         }
+        png_write_row(png, row);
+        free(row);
     }
-
-    png_write_info(png, png_info);
-    png_write_image(png, rows);
-
-    for (int y = 0; y < scene->height; y++) {
-        free(rows[y]);
-    }
-    free(rows);
 
     // Clean up!
     png_write_end(png, png_info);
     png_destroy_write_struct(&png, &png_info);
 
-    // TODO: Return number of bytes written.
+    // Return number of bytes written.
     return nbytes;
 }
 
