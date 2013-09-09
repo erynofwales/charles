@@ -130,6 +130,7 @@ scene_add_object(Scene *scene, Object *obj)
     while (ptr != NULL) {
         if (ptr->next == NULL) {
             ptr->next = ol;
+            break;
         }
         ptr = ptr->next;
     }
