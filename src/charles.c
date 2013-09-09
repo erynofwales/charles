@@ -28,13 +28,34 @@ main(int argc,
     }
 
     Scene *scene = scene_init();
+
     Object *obj = object_init(ObjectTypeSphere);
     Texture *tex = texture_init();
     Color color = {255, 0, 0, 255};
     texture_set_color(tex, color);
+    object_set_texture(obj, tex);
     Vector3 loc = {233, 290, 0};
     object_set_location(obj, loc);
+    object_sphere_set_radius(obj, 100);
+    scene_add_object(scene, obj);
+
+    obj = object_init(ObjectTypeSphere);
+    tex = texture_init();
+    Color color2 = {0, 255, 0, 255};
+    texture_set_color(tex, color2);
     object_set_texture(obj, tex);
+    loc = vector_init(407, 290, 0);
+    object_set_location(obj, loc);
+    object_sphere_set_radius(obj, 100);
+    scene_add_object(scene, obj);
+
+    obj = object_init(ObjectTypeSphere);
+    tex = texture_init();
+    Color color3 = {0, 0, 255, 255};
+    texture_set_color(tex, color3);
+    object_set_texture(obj, tex);
+    loc = vector_init(320, 140, 0);
+    object_set_location(obj, loc);
     object_sphere_set_radius(obj, 100);
     scene_add_object(scene, obj);
 
