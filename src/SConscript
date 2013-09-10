@@ -6,6 +6,8 @@ Import('env')
 
 files = Split("""
     basics.cc
+    object.cc
+    object_sphere.cc
 """)
 
 lib = env.Library('charles', files)
