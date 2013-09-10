@@ -1,6 +1,9 @@
 /* scene.h
  *
- * Definition of Scene type and related functions.
+ * Definition of the Scene class.
+ *
+ * Scenes are the top level object in charles. Scenes contain objects, lights, a camera,
+ * etc. and can be rendered to pixel data and written to a file.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
@@ -8,32 +11,33 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include <stdio.h>
+#include <list>
 
-#include "camera.h"
-#include "object.h"
-
-
-typedef struct _ObjectList ObjectList;
+class Shape;
 
 
-typedef struct _Scene
+class Scene
 {
-    int height, width;      /* Pixel dimensions. */
-    Camera *camera;
+public:
+    Scene();
+    ~Scene();
 
-    ObjectList *objects;
+    bool is_rendered() const;
 
-    int is_rendered;
+    void read(FILE *f);
+    void write(FILE *f);
+    void render();
+
+    void add_shape(Shape *obj);
+
+private:
+    Color trace_ray(const Ray &ray, const int depth);
+
+    int height, width;
+    std::list<Shape *> shapes;
+
+    bool _is_rendered;
     Color *pixels;
-} Scene;
-
-
-Scene *scene_init();
-void scene_destroy(Scene *scene);
-void scene_load(Scene *scene, FILE *scene_file);
-void scene_render(Scene *scene);
-void scene_add_object(Scene *scene, Object *object);
-
+};
 
 #endif
