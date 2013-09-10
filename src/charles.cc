@@ -9,7 +9,7 @@
 
 #include "basics.h"
 
-char *OUT_FILE = "charles_out.png";
+const char *OUT_FILE = "charles_out.png";
 
 
 int
