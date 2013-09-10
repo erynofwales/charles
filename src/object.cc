@@ -14,155 +14,38 @@
 #include "object.h"
 
 
-struct _Object {
-    ObjectType type;
-    Vector3 location;
-    Texture *texture;
-    void *shape;
-
-    int (*does_intersect)(Object *obj, Ray ray, float **t);
-};
-
-
-typedef struct _Sphere {
-    float radius;
-} Sphere;
-
 static int sphere_does_intersect(Object *obj, Ray ray, float **t);
 static int sphere_point_lies_on_surface(Object *obj, Vector3 p);
 static Vector3 sphere_compute_normal(Object *obj, Vector3 p);
 
 
 /*
- * object_init ---
+ * Object::Object --
  *
- * Create a new object of the given type.
+ * Default constructor. Create a new Object with an origin at (0, 0, 0).
  */
-Object *
-object_init(ObjectType type)
-{
-    Object *obj = malloc(sizeof(Object));
-    if (obj == NULL) {
-        return NULL;
-    }
-
-    obj->type = type;
-    obj->location = Vector3Zero;
-    obj->texture = NULL;
-
-    switch (type) {
-        case ObjectTypeSphere: {
-            Sphere *s = malloc(sizeof(Sphere));
-            if (s == NULL) {
-                // TODO: DANGER! WILL ROBINSON!
-            }
-            obj->shape = s;
-            s->radius = 0.0;
-            obj->does_intersect = sphere_does_intersect;
-            break;
-        }
-        default:
-            assert(0);
-    }
-
-    return obj;
-}
+Object::Object()
+    : origin()
+{ }
 
 
 /*
- * object_destroy --
+ * Object::get_origin --
+ * Object::set_origin --
  *
- * Destroy the given object.
- */
-void
-object_destroy(Object *obj)
-{
-    assert(obj != NULL);
-    assert(obj->shape != NULL);
-
-    free(obj->shape);
-    free(obj);
-}
-
-
-/*
- * object_get_location --
- * object_set_location --
- *
- * Get and set the location of the object.
+ * Get and set the Object's origin.
  */
 Vector3
-object_get_location(Object *obj)
+Object::get_origin()
 {
-    assert(obj != NULL);
-    return obj->location;
+    return origin;
 }
 
 void
-object_set_location(Object *obj, Vector3 location)
+Object::set_origin(Vector3 v)
 {
-    assert(obj != NULL);
-    obj->location = location;
+    origin = v;
 }
-
-
-/*
- * object_get_texture --
- * object_set_texture --
- *
- * Get and set the object's texture.
- */
-Texture *
-object_get_texture(Object *obj)
-{
-    assert(obj != NULL);
-    return obj->texture;
-}
-
-void
-object_set_texture(Object *obj, Texture *tex)
-{
-    assert(obj != NULL);
-    obj->texture = tex;
-}
-
-
-/*
- * object_does_intersect --
- *
- * Determine if a ray intersects with the object.
- */
-int
-object_does_intersect(Object *obj, Ray ray, float **t)
-{
-    assert(obj != NULL && obj->does_intersect != NULL);
-    return obj->does_intersect(obj, ray, t);
-}
-
-/*
- * Sphere functions
- */
-
-/*
- * object_sphere_get_radius --
- * object_sphere_set_radius --
- *
- * Get and set the radius of a Sphere object.
- */
-float
-object_sphere_get_radius(Object *obj)
-{
-    assert(obj != NULL && obj->type == ObjectTypeSphere);
-    return ((Sphere *)obj->shape)->radius;
-}
-
-void
-object_sphere_set_radius(Object *obj, float r)
-{
-    assert(obj != NULL && obj->type == ObjectTypeSphere);
-    ((Sphere *)obj->shape)->radius = r;
-}
-
 
 /*
  * sphere_does_intersect --

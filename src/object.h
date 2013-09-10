@@ -1,38 +1,37 @@
 /* object.h
  *
- * Declaration of scene Objects.
+ * Declaration of abstract, top-level scene objects. The Object class is the top of this hierarchy. All other scene
+ * objects are based on it. The Shape class defines a visible shape in the scene.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
 
-
-#ifndef __OBJECT_H
-#define __OBJECT_H
+#ifndef __OBJECT_H__
+#define __OBJECT_H__
 
 #include "basics.h"
 #include "texture.h"
 
 
-typedef enum {
-    ObjectTypeSphere = 1,
-} ObjectType;
+class Object
+{
+public:
+    Object();
 
-typedef struct _Object Object;
+    Vector3 get_origin();
+    void set_origin(Vector3 v);
+
+private:
+    Vector3 origin;
+};
 
 
-Object *object_init(ObjectType type);
-void object_destroy(Object *obj);
-
-Vector3 object_get_location(Object *obj);
-void object_set_location(Object *obj, Vector3 location);
-Texture *object_get_texture(Object *obj);
-void object_set_texture(Object *obj, Texture *tex);
-
-int object_does_intersect(Object *obj, Ray ray, float **t);
-
-// Sphere methods
-float object_sphere_get_radius(Object *obj);
-void object_sphere_set_radius(Object *obj, float r);
-
+class Shape
+    : public Object
+{
+public:
+    virtual int does_intersect(const Ray &ray, float **t) = 0;
+    virtual Vector3 compute_normal(const Vector3 &p) = 0;
+};
 
 #endif
