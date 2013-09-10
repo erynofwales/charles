@@ -8,6 +8,7 @@ files = Split("""
     basics.cc
     object.cc
     object_sphere.cc
+    scene.cc
 """)
 
 lib = env.Library('charles', files)
