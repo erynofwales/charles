@@ -46,7 +46,8 @@ import os.path
 
 cflags='-Wall -fcolor-diagnostics'
 env = Environment(CC='clang', CXX='clang++',
-                  CFLAGS=cflags, CXXFLAGS=cflags,
+                  CFLAGS=cflags + ' -std=c99',
+                  CXXFLAGS=cflags + ' -std=c++11',
                   CPPPATH=include_directories,
                   LIBS='png',
                   LIBPATH=lib_directories)
@@ -65,8 +66,9 @@ else:
 BUILD_CMDS = bool(int(ARGUMENTS.get('BUILD_CMDS', BUILD_CMDS)))
 if not BUILD_CMDS:
     def generate_comstr(action):
-        return '%12s: $TARGET' % (action,)
-    env['CCCOMSTR'] = generate_comstr('Building'),
+        return '%18s: $TARGET' % (action,)
+    env['CCCOMSTR'] = generate_comstr('Building (C)'),
+    env['CXXCOMSTR'] = generate_comstr('Building (C++)'),
     env['LINKCOMSTR'] = generate_comstr('Linking'),
     env['ARCOMSTR'] = generate_comstr('Archiving'),
     env['RANLIBCOMSTR'] = generate_comstr('Indexing')
