@@ -5,10 +5,11 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include <assert.h>
-#include <math.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cmath>
+#include <cstdlib>
 
+#include "basics.h"
 #include "object.h"
 #include "object_sphere.h"
 
@@ -34,8 +35,8 @@ Sphere::Sphere(float r)
 
 
 Sphere::Sphere(Vector3 o, float r)
-    : Object(o),
-      float(r)
+    : Shape(o),
+      radius(r)
 { }
 
 
@@ -110,7 +111,7 @@ Sphere::does_intersect(const Ray &ray, float **t)
      */
     int nints = (t0 != t1) ? 2 : 1;
     if (t != NULL) {
-        *t = malloc(sizeof(float) * nints);
+        *t = new float[nints];
         if (*t == NULL) {
             return 0;
         }
@@ -129,6 +130,7 @@ Sphere::does_intersect(const Ray &ray, float **t)
  *
  * Determine if a point lies on the given sphere.
  */
+#if 0
 int
 sphere_point_lies_on_surface(Object *obj, Vector3 p)
 {
@@ -142,6 +144,7 @@ sphere_point_lies_on_surface(Object *obj, Vector3 p)
 
     return (x * x) + (y * y) + (z * z) == (r * r);
 }
+#endif
 
 
 /*
@@ -150,6 +153,7 @@ sphere_point_lies_on_surface(Object *obj, Vector3 p)
  * Compute the normal for the given Object (which must be a Sphere) at the given point. This point must lie on the
  * surface of the object.
  */
+#if 0
 /* static */ Vector3
 sphere_compute_normal(Object *obj, Vector3 p)
 {
@@ -163,3 +167,4 @@ sphere_compute_normal(Object *obj, Vector3 p)
     // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
     return p;
 }
+#endif
