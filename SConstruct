@@ -27,14 +27,14 @@ lib_directories = Split("""
 # Source directories. New directories should contain a SConscript file and be
 # added here.
 source_directories = lib_directories + Split("""
-        #src
-        #test
+    #src
+    #test
 """)
 
 # Include directories. Where should scons look for headers during preprocessing
 # and compiling?
 include_directories = Split("""
-        #src
+    #src
 """)
  
 
@@ -44,9 +44,9 @@ include_directories = Split("""
 
 import os.path
 
-
-env = Environment(CC='clang',
-                  CFLAGS='-Wall -fcolor-diagnostics',
+cflags='-Wall -fcolor-diagnostics'
+env = Environment(CC='clang', CXX='clang++',
+                  CFLAGS=cflags, CXXFLAGS=cflags,
                   CPPPATH=include_directories,
                   LIBS='png',
                   LIBPATH=lib_directories)
@@ -55,10 +55,12 @@ env = Environment(CC='clang',
 # Handle command line variables
 DEBUG = bool(int(ARGUMENTS.get('DEBUG', DEBUG)))
 if DEBUG:
-    env.Append(CFLAGS=' -g -O0')
+    debug_flags=' -g -O0'
+    env.Append(CFLAGS=debug_flags, CXXFLAGS=debug_flags)
     env.Append(CPPDEFINES=['DEBUG'])
 else:
-    env.Append(CFLAGS=' -O2')
+    flags = ' -O2'
+    env.Append(CFLAGS=flags, CXXFLAGS=flags)
 
 BUILD_CMDS = bool(int(ARGUMENTS.get('BUILD_CMDS', BUILD_CMDS)))
 if not BUILD_CMDS:
