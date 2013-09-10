@@ -37,6 +37,16 @@ Vector3::Vector3(float _x, float _y, float _z)
 { }
 
 
+inline Vector3 &
+Vector3::operator=(const Vector3 &v)
+{
+    x = v.x;
+    y = v.y;
+    z = v.z;
+    return *this;
+}
+
+
 /*
  * Vector3::operator+ --
  *
@@ -220,3 +230,14 @@ Color::Color()
 Color::Color(float r, float g, float b, float a)
     : red(r), green(g), blue(b), alpha(a)
 { }
+
+
+inline Color &
+Color::operator=(const Color &c)
+{
+    red = c.red;
+    green = c.green;
+    blue = c.blue;
+    alpha = c.alpha;
+    return *this;
+}

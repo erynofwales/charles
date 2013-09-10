@@ -17,6 +17,8 @@ struct Vector3
     Vector3();
     Vector3(float x, float y, float z);
 
+    Vector3 &operator=(const Vector3 &v);
+
     Vector3 operator+(Vector3 v) const;
     Vector3 operator*(float a) const;
     Vector3 operator-(Vector3 v) const;
@@ -50,6 +52,8 @@ struct Color
 {
     Color();
     Color(float r, float g, float b, float a);
+
+    Color &operator=(const Color &c);
 
     static const Color Black;
     static const Color White;
