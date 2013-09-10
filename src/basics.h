@@ -1,12 +1,16 @@
 /* basics.h
  *
- * Declaration of basic types: Vector.
+ * Declaration of basic types.
+ *
+ *   - Vector3 is a three tuple vector of x, y, and z.
+ *   - Ray is a vector plus a direction.
+ *   - Color is a four tuple of red, green, blue, and alpha.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#ifndef __BASICS_H
-#define __BASICS_H
+#ifndef __BASICS_H__
+#define __BASICS_H__
 
 struct Vector3
 {

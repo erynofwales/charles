@@ -1,6 +1,10 @@
 /* basics.c
  *
- * Definition of basic types: Vector.
+ * Definition of basic types.
+ *
+ *   - Vector3 is a three tuple vector of x, y, and z.
+ *   - Ray is a vector plus a direction.
+ *   - Color is a four tuple of red, green, blue, and alpha.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
@@ -8,22 +12,36 @@
 #include <cmath>
 #include "basics.h"
 
-
 #pragma mark - Vectors
 
 const Vector3 Vector3::Zero = Vector3();
 
 
+/*
+ * Vector3::Vector3 --
+ *
+ * Default constructor. Create a zero vector.
+ */
 Vector3::Vector3()
     : Vector3(0.0, 0.0, 0.0)
 { }
 
 
+/*
+ * Vector3::Vector3 --
+ *
+ * Constructor. Create a vector consisting of the given coordinates.
+ */
 Vector3::Vector3(float _x, float _y, float _z)
     : x(_x), y(_y), z(_z)
 { }
 
 
+/*
+ * Vector3::operator+ --
+ *
+ * Add the given vector to this vector. Return a new vector.
+ */
 inline Vector3
 Vector3::operator+(Vector3 v)
 {
@@ -31,6 +49,11 @@ Vector3::operator+(Vector3 v)
 }
 
 
+/*
+ * Vector3::operator* --
+ *
+ * Multiply the given scalar by this vector. Return a new vector.
+ */
 inline Vector3
 Vector3::operator*(float a)
 {
@@ -38,6 +61,11 @@ Vector3::operator*(float a)
 }
 
 
+/*
+ * Vector3::operator- --
+ *
+ * Subtract the given vector from this vector. Return a new vector.
+ */
 inline Vector3
 Vector3::operator-(Vector3 v)
 {
@@ -45,6 +73,11 @@ Vector3::operator-(Vector3 v)
 }
 
 
+/*
+ * Vector3::operator- --
+ *
+ * Negate this vector. Return a new vector.
+ */
 inline Vector3
 Vector3::operator-()
 {
@@ -52,6 +85,11 @@ Vector3::operator-()
 }
 
 
+/*
+ * Vector3::length2 --
+ *
+ * Compute and return the length-squared of this vector.
+ */
 inline float
 Vector3::length2()
 {
@@ -59,6 +97,11 @@ Vector3::length2()
 }
 
 
+/*
+ * Vector3::length --
+ *
+ * Compute and return the length of this vector.
+ */
 inline float
 Vector3::length()
 {
@@ -66,6 +109,11 @@ Vector3::length()
 }
 
 
+/*
+ * Vector3::dot --
+ *
+ * Compute and return the dot product of this and the given vectors.
+ */
 inline float
 Vector3::dot(Vector3 v)
 {
@@ -73,6 +121,11 @@ Vector3::dot(Vector3 v)
 }
 
 
+/*
+ * Vector3::normalize --
+ *
+ * Normalize this vector in place. That is, make this vector's magnitude (length) 1.0.
+ */
 void
 Vector3::normalize()
 {
@@ -89,26 +142,45 @@ Vector3::normalize()
 }
 
 
-Vector3
+/*
+ * operator* --
+ *
+ * Multiply the given float by the given vector. Return a new vector.
+ */
+inline Vector3
 operator*(float a, Vector3 v)
 {
     return v * a;
 }
 
-
 #pragma mark - Rays
 
+/*
+ * Ray::Ray --
+ *
+ * Default constructor. Create a ray at the origin (0, 0, 0) with direction (0, 0, 0).
+ */
 Ray::Ray()
     : Ray(Vector3::Zero, Vector3::Zero)
 { }
 
 
+/*
+ * Ray::Ray --
+ *
+ * Constructor. Create a ray with the given origin and direction.
+ */
 Ray::Ray(Vector3 o, Vector3 d)
     : origin(o), direction(d)
 { }
 
 
-Vector3
+/*
+ * Ray::parameterize --
+ *
+ * Compute and return the point given by parameterizing this Ray by time t.
+ */
+inline Vector3
 Ray::parameterize(float t)
 {
     return origin + t * direction;
@@ -123,11 +195,21 @@ const Color Color::Green  = Color(0.0, 1.0, 0.0, 1.0);
 const Color Color::Blue   = Color(0.0, 0.0, 1.0, 1.0);
 
 
+/*
+ * Color::Color --
+ *
+ * Default constructor. Create a new Color with zeros for all components (black).
+ */
 Color::Color()
     : Color(0.0, 0.0, 0.0, 0.0)
 { }
 
 
+/*
+ * Color::Color --
+ *
+ * Constructor. Create a new Color with the given components.
+ */
 Color::Color(float r, float g, float b, float a)
     : red(r), green(g), blue(b), alpha(a)
 { }
