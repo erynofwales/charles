@@ -44,6 +44,7 @@ Vector3::Vector3(float _x, float _y, float _z)
  */
 inline Vector3
 Vector3::operator+(Vector3 v)
+    const
 {
     return Vector3(x + v.x, y + v.y, z + v.z);
 }
@@ -56,6 +57,7 @@ Vector3::operator+(Vector3 v)
  */
 inline Vector3
 Vector3::operator*(float a)
+    const
 {
     return Vector3(a*x, a*y, a*z);
 }
@@ -68,6 +70,7 @@ Vector3::operator*(float a)
  */
 inline Vector3
 Vector3::operator-(Vector3 v)
+    const
 {
     return Vector3(x - v.x, y - v.y, z - v.z);
 }
@@ -80,6 +83,7 @@ Vector3::operator-(Vector3 v)
  */
 inline Vector3
 Vector3::operator-()
+    const
 {
     return Vector3(-x, -y, -z);
 }
@@ -92,6 +96,7 @@ Vector3::operator-()
  */
 inline float
 Vector3::length2()
+    const
 {
     return x*x + y*y + z*z;
 }
@@ -104,6 +109,7 @@ Vector3::length2()
  */
 inline float
 Vector3::length()
+    const
 {
     return sqrtf(length2());
 }
@@ -116,6 +122,7 @@ Vector3::length()
  */
 inline float
 Vector3::dot(Vector3 v)
+    const
 {
     return x*v.x + y*v.x + z*v.z;
 }

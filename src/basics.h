@@ -17,14 +17,14 @@ struct Vector3
     Vector3();
     Vector3(float x, float y, float z);
 
-    Vector3 operator+(Vector3 v);
-    Vector3 operator*(float a);
-    Vector3 operator-(Vector3 v);
-    Vector3 operator-();
+    Vector3 operator+(Vector3 v) const;
+    Vector3 operator*(float a) const;
+    Vector3 operator-(Vector3 v) const;
+    Vector3 operator-() const;
 
-    float length2();
-    float length();
-    float dot(Vector3 v);
+    float length2() const;
+    float length() const;
+    float dot(Vector3 v) const;
 
     void normalize();
 
