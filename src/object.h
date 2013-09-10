@@ -17,8 +17,9 @@ class Object
 {
 public:
     Object();
+    Object(Vector3 o);
 
-    Vector3 get_origin();
+    Vector3 get_origin() const;
     void set_origin(Vector3 v);
 
 private:
@@ -30,6 +31,9 @@ class Shape
     : public Object
 {
 public:
+    Shape();
+    Shape(Vector3 o);
+
     virtual int does_intersect(const Ray &ray, float **t) = 0;
     virtual Vector3 compute_normal(const Vector3 &p) = 0;
 };
