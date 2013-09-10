@@ -5,11 +5,11 @@
 Import('env')
 
 files = Split("""
-    basics.cpp
+    basics.cc
 """)
 
 lib = env.Library('charles', files)
-prog = env.Program('charles', [lib, 'charles.c'])
+prog = env.Program('charles', [lib, 'charles.cc'])
 env.Alias('charles', prog)
 
 Return('lib')
