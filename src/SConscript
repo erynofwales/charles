@@ -5,12 +5,7 @@
 Import('env')
 
 files = Split("""
-    basics.c
-    camera.c
-    object.c
-    scene.c
-    texture.c
-    writer_png.c
+    basics.cpp
 """)
 
 lib = env.Library('charles', files)

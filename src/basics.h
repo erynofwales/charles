@@ -5,55 +5,55 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-
 #ifndef __BASICS_H
 #define __BASICS_H
 
-#include <stdint.h>
+struct Vector3
+{
+    Vector3();
+    Vector3(float x, float y, float z);
 
+    Vector3 operator+(Vector3 v);
+    Vector3 operator*(float a);
+    Vector3 operator-(Vector3 v);
+    Vector3 operator-();
 
-typedef struct {
+    float length2();
+    float length();
+    float dot(Vector3 v);
+
+    void normalize();
+
+    static const Vector3 Zero;
     float x, y, z;
-} Vector3;
+};
+
+Vector3 operator*(float a, Vector3 v);
 
 
-extern const Vector3 Vector3Zero;
+struct Ray
+{
+    Ray();
+    Ray(Vector3 o, Vector3 d);
+
+    Vector3 parameterize(float t);
+
+    Vector3 origin, direction;
+};
 
 
-Vector3 vector_init(float x, float y, float z);
-Vector3 vector_add_vector(Vector3 v, Vector3 a);
-Vector3 vector_mul_scalar(Vector3 v, float f);
-Vector3 vector_sub_vector(Vector3 m, Vector3 s);
-Vector3 vector_negate(Vector3 v);
-float vector_length2(Vector3 v);
-float vector_length(Vector3 v);
-float vector_dot(Vector3 v, Vector3 f);
+struct Color
+{
+    Color();
+    Color(float r, float g, float b, float a);
 
-Vector3 vector_normalize(Vector3 v);
+    static const Color Black;
+    static const Color White;
+    static const Color Red;
+    static const Color Green;
+    static const Color Blue;
 
-
-typedef struct {
-    float x, y;
-    float w, h;
-} Rect;
-
-Rect rect_init(float x, float y, float h, float w);
-
-
-typedef struct {
-    Vector3 location;
-    Vector3 direction;
-} Ray;
-
-Ray ray_init(Vector3 location, Vector3 direction);
-Vector3 ray_parameterize(Ray ray, float t);
-
-
-typedef struct {
-    uint8_t red, green, blue, alpha;
-} Color;
-
-extern const Color ColorBlack;
-
+    float red, green, blue, alpha;
+};
 
 #endif
