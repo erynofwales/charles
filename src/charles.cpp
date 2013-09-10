@@ -5,15 +5,9 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include <stdio.h>
-
-#include <png.h>
+#include <cstdio>
 
 #include "basics.h"
-#include "object.h"
-#include "scene.h"
-#include "texture.h"
-#include "writer_png.h"
 
 char *OUT_FILE = "charles_out.png";
 
@@ -22,6 +16,7 @@ int
 main(int argc,
      const char *argv[])
 {
+#if 0
     FILE *out_file = fopen(OUT_FILE, "wb");
     if (!out_file) {
         return -1;
@@ -64,6 +59,7 @@ main(int argc,
 
     scene_destroy(scene);
     fclose(out_file);
+#endif
 
     return 0;
 }
