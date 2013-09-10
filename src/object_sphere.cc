@@ -1,51 +1,62 @@
-/* object.c
+/* object_sphere.h
  *
- * Definition of scene Objects.
+ * Spheres are Scene objects defined by a center point and a radius.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#include <assert.h>
+#include <math.h>
+#include <stdlib.h>
 
-#include <cassert>
-#include <cmath>
-#include <cstdlib>
-
-#include "basics.h"
 #include "object.h"
-
-
-static int sphere_does_intersect(Object *obj, Ray ray, float **t);
-static int sphere_point_lies_on_surface(Object *obj, Vector3 p);
-static Vector3 sphere_compute_normal(Object *obj, Vector3 p);
+#include "object_sphere.h"
 
 
 /*
- * Object::Object --
+ * Sphere::Sphere --
  *
- * Default constructor. Create a new Object with an origin at (0, 0, 0).
+ * Default constructor. Create a Sphere with radius 1.0.
  */
-Object::Object()
-    : origin()
+Sphere::Sphere()
+    : Sphere(1.0)
 { }
 
 
 /*
- * Object::get_origin --
- * Object::set_origin --
+ * Sphere::Sphere --
  *
- * Get and set the Object's origin.
+ * Constructor. Create a Sphere with the given radius.
  */
-Vector3
-Object::get_origin()
+Sphere::Sphere(float r)
+    : Sphere(Vector3::Zero, r)
+{ }
+
+
+Sphere::Sphere(Vector3 o, float r)
+    : Object(o),
+      float(r)
+{ }
+
+
+/*
+ * Sphere::get_radius --
+ * Sphere::set_radius --
+ *
+ * Get and set the radius of this Sphere.
+ */
+float
+Sphere::get_radius()
 {
-    return origin;
+    return radius;
 }
 
 void
-Object::set_origin(Vector3 v)
+Sphere::set_radius(float r)
 {
-    origin = v;
+    radius = (radius >= 0.0) ? r : -r;
 }
+
 
 /*
  * Sphere::does_intersect --
@@ -121,7 +132,7 @@ Sphere::does_intersect(const Ray &ray, float **t)
 int
 sphere_point_lies_on_surface(Object *obj, Vector3 p)
 {
-    assert(obj != NULL && obj->type == ObjectTypeSphere);
+    assert(obj != NULL && object_get_type(obj) == ObjectTypeSphere);
 
     Vector3 loc = object_get_location(obj);
     float x = p.x - loc.x;
@@ -142,7 +153,7 @@ sphere_point_lies_on_surface(Object *obj, Vector3 p)
 /* static */ Vector3
 sphere_compute_normal(Object *obj, Vector3 p)
 {
-    assert(obj != NULL && obj->type == ObjectTypeSphere);
+    assert(obj != NULL && object_get_type(obj) == ObjectTypeSphere);
 
     // Make sure the given point is actually on the surface of the sphere.
     if (!sphere_point_lies_on_surface(obj, p)) {
