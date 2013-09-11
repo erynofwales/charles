@@ -37,7 +37,7 @@ Vector3::Vector3(float _x, float _y, float _z)
 { }
 
 
-inline Vector3 &
+Vector3 &
 Vector3::operator=(const Vector3 &v)
 {
     x = v.x;
@@ -52,7 +52,7 @@ Vector3::operator=(const Vector3 &v)
  *
  * Add the given vector to this vector. Return a new vector.
  */
-inline Vector3
+Vector3
 Vector3::operator+(Vector3 v)
     const
 {
@@ -65,7 +65,7 @@ Vector3::operator+(Vector3 v)
  *
  * Multiply the given scalar by this vector. Return a new vector.
  */
-inline Vector3
+Vector3
 Vector3::operator*(float a)
     const
 {
@@ -78,7 +78,7 @@ Vector3::operator*(float a)
  *
  * Subtract the given vector from this vector. Return a new vector.
  */
-inline Vector3
+Vector3
 Vector3::operator-(Vector3 v)
     const
 {
@@ -91,7 +91,7 @@ Vector3::operator-(Vector3 v)
  *
  * Negate this vector. Return a new vector.
  */
-inline Vector3
+Vector3
 Vector3::operator-()
     const
 {
@@ -104,7 +104,7 @@ Vector3::operator-()
  *
  * Compute and return the length-squared of this vector.
  */
-inline float
+float
 Vector3::length2()
     const
 {
@@ -117,7 +117,7 @@ Vector3::length2()
  *
  * Compute and return the length of this vector.
  */
-inline float
+float
 Vector3::length()
     const
 {
@@ -130,11 +130,11 @@ Vector3::length()
  *
  * Compute and return the dot product of this and the given vectors.
  */
-inline float
+float
 Vector3::dot(Vector3 v)
     const
 {
-    return x*v.x + y*v.x + z*v.z;
+    return x*v.x + y*v.y + z*v.z;
 }
 
 
@@ -164,7 +164,7 @@ Vector3::normalize()
  *
  * Multiply the given float by the given vector. Return a new vector.
  */
-inline Vector3
+Vector3
 operator*(float a, Vector3 v)
 {
     return v * a;
@@ -197,7 +197,7 @@ Ray::Ray(Vector3 o, Vector3 d)
  *
  * Compute and return the point given by parameterizing this Ray by time t.
  */
-inline Vector3
+Vector3
 Ray::parameterize(float t)
 {
     return origin + t * direction;
@@ -232,7 +232,7 @@ Color::Color(float r, float g, float b, float a)
 { }
 
 
-inline Color &
+Color &
 Color::operator=(const Color &c)
 {
     red = c.red;
