@@ -42,10 +42,17 @@ public:
 private:
     Color trace_ray(const Ray &ray, const int depth);
 
+    // Pixel dimensions of the image.
     int width, height;
+
+    // Ray tracing parameters.
+    int max_depth;
+
+    // Scene objects.
     std::list<Shape *> shapes;
     std::list<Light *> lights;
 
+    // Rendering output.
     bool _is_rendered;
     Color *pixels;
 };
