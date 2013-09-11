@@ -128,25 +128,21 @@ Sphere::does_intersect(const Ray &ray, float **t)
 
 
 /*
- * sphere_point_lies_on_surface --
+ * Sphere::point_is_on_surface --
  *
- * Determine if a point lies on the given sphere.
+ * Determine if a point lies on the surface of this Sphere.
  */
-#if 0
-int
-sphere_point_lies_on_surface(Object *obj, Vector3 p)
+bool
+Sphere::point_is_on_surface(const Vector3 &p)
+    const
 {
-    assert(obj != NULL && object_get_type(obj) == ObjectTypeSphere);
+    Vector3 o = get_origin();
+    float x = p.x - o.x;
+    float y = p.y - o.y;
+    float z = p.z - o.z;
 
-    Vector3 loc = object_get_location(obj);
-    float x = p.x - loc.x;
-    float y = p.y - loc.y;
-    float z = p.z - loc.z;
-    float r = object_sphere_get_radius(obj);
-
-    return (x * x) + (y * y) + (z * z) == (r * r);
+    return x*x + y*y + z*z == radius*radius;
 }
-#endif
 
 
 /*
@@ -159,8 +155,11 @@ Vector3
 Sphere::compute_normal(const Vector3 &p)
     const
 {
-    // TODO: Make sure the given point is actually on the surface of the sphere.
+    // Make sure the given point is actually on the surface of the sphere.
+    if (!point_is_on_surface(p)) {
+        return Vector3::Zero;
+    }
 
     // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
-    return Vector3::Zero;
+    return p - get_origin();
 }

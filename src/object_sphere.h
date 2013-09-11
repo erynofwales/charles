@@ -24,6 +24,7 @@ public:
     void set_radius(float r);
 
     int does_intersect(const Ray &ray, float **t) const;
+    bool point_is_on_surface(const Vector3 &p) const;
     Vector3 compute_normal(const Vector3 &p) const;
 private:
     float radius;
