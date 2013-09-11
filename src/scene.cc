@@ -115,6 +115,11 @@ Scene::render()
 }
 
 
+/*
+ * Scene::add_shape --
+ *
+ * Add a shape to the scene.
+ */
 void
 Scene::add_shape(Shape *shape)
 {
@@ -122,6 +127,23 @@ Scene::add_shape(Shape *shape)
 }
 
 
+/*
+ * Scene::add_light --
+ *
+ * Add a light to the scene.
+ */
+void
+Scene::add_light(Light *light)
+{
+    lights.push_back(light);
+}
+
+
+/*
+ * Scene::trace_ray --
+ *
+ * Trace the given ray through the scene, recursing until depth has been reached.
+ */
 Color
 Scene::trace_ray(const Ray &ray, const int depth)
 {
@@ -144,7 +166,7 @@ Scene::trace_ray(const Ray &ray, const int depth)
     }
 
     // If there was no intersection, return black.
-    if (intersected_shape == NULL) {
+    if (intersected_shape != NULL) {
         return Color::Black;
     }
 

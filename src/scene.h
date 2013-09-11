@@ -16,6 +16,7 @@
 #include "basics.h"
 
 
+class Light;
 class Shape;
 class Writer;
 
@@ -36,12 +37,14 @@ public:
     void render();
 
     void add_shape(Shape *obj);
+    void add_light(Light *light);
 
 private:
     Color trace_ray(const Ray &ray, const int depth);
 
     int width, height;
     std::list<Shape *> shapes;
+    std::list<Light *> lights;
 
     bool _is_rendered;
     Color *pixels;
