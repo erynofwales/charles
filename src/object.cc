@@ -10,6 +10,7 @@
 #include <cstdlib>
 
 #include "basics.h"
+#include "material.h"
 #include "object.h"
 
 #pragma mark - Objects
@@ -74,46 +75,22 @@ Shape::Shape(Vector3 o)
     : Object(o)
 { }
 
-/*
- * sphere_point_lies_on_surface --
- *
- * Determine if a point lies on the given sphere.
- */
-#if 0
-int
-sphere_point_lies_on_surface(Object *obj, Vector3 p)
-{
-    assert(obj != NULL && obj->type == ObjectTypeSphere);
-
-    Vector3 loc = object_get_location(obj);
-    float x = p.x - loc.x;
-    float y = p.y - loc.y;
-    float z = p.z - loc.z;
-    float r = object_sphere_get_radius(obj);
-
-    return (x * x) + (y * y) + (z * z) == (r * r);
-}
-#endif
-
 
 /*
- * sphere_compute_normal --
+ * Shape::get_material --
+ * Shape::set_material --
  *
- * Compute the normal for the given Object (which must be a Sphere) at the given point. This point must lie on the
- * surface of the object.
+ * Get and set the Material applied to this shape.
  */
-#if 0
-/* static */ Vector3
-sphere_compute_normal(Object *obj, Vector3 p)
+Material &
+Shape::get_material()
+    const
 {
-    assert(obj != NULL && obj->type == ObjectTypeSphere);
-
-    // Make sure the given point is actually on the surface of the sphere.
-    if (!sphere_point_lies_on_surface(obj, p)) {
-        return Vector3Zero;
-    }
-
-    // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
-    return p;
+    return *material;
 }
-#endif
+
+void
+Shape::set_material(Material *mat)
+{
+    material = mat;
+}

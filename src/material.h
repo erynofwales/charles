@@ -14,7 +14,7 @@
 class Material
 {
 public:
-    Color get_color();
+    Color get_color() const;
     void set_color(const Color &c);
 
 private:

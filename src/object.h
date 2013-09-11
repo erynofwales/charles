@@ -10,6 +10,7 @@
 #define __OBJECT_H__
 
 #include "basics.h"
+#include "material.h"
 #include "texture.h"
 
 
@@ -34,9 +35,15 @@ public:
     Shape();
     Shape(Vector3 o);
 
+    Material &get_material() const;
+    void set_material(Material *mat);
+
     virtual int does_intersect(const Ray &ray, float **t) const = 0;
     virtual bool point_is_on_surface(const Vector3 &p) const = 0;
     virtual Vector3 compute_normal(const Vector3 &p) const = 0;
+
+private:
+    Material *material;
 };
 
 #endif
