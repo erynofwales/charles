@@ -198,7 +198,8 @@ Ray::Ray(Vector3 o, Vector3 d)
  * Compute and return the point given by parameterizing this Ray by time t.
  */
 Vector3
-Ray::parameterize(float t)
+Ray::parameterize(const float t)
+    const
 {
     return origin + t * direction;
 }
@@ -239,5 +240,15 @@ Color::operator=(const Color &c)
     green = c.green;
     blue = c.blue;
     alpha = c.alpha;
+    return *this;
+}
+
+
+Color &
+Color::operator*=(const float f)
+{
+    red *= f;
+    green *= f;
+    blue *= f;
     return *this;
 }

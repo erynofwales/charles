@@ -42,7 +42,7 @@ struct Ray
     Ray();
     Ray(Vector3 o, Vector3 d);
 
-    Vector3 parameterize(float t);
+    Vector3 parameterize(const float t) const;
 
     Vector3 origin, direction;
 };
@@ -54,6 +54,7 @@ struct Color
     Color(float r, float g, float b, float a);
 
     Color &operator=(const Color &c);
+    Color &operator*=(const float c);
 
     static const Color Black;
     static const Color White;
