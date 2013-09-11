@@ -167,11 +167,10 @@ Scene::trace_ray(const Ray &ray, const int depth)
     }
 
     // If there was no intersection, return black.
-    if (intersected_shape != NULL) {
+    if (intersected_shape == NULL) {
         return Color::Black;
     }
 
     // TODO: Lighting.
-
-    return Color::Red;
+    return intersected_shape->get_material().get_color();
 }
