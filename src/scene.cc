@@ -9,6 +9,7 @@
 #include <cstdio>
 
 #include "basics.h"
+#include "light.h"
 #include "object.h"
 #include "scene.h"
 #include "writer.h"
@@ -148,11 +149,12 @@ Scene::add_light(Light *light)
 Color
 Scene::trace_ray(const Ray &ray, const int depth)
 {
-    // Find intersections of this ray with objects in the scene.
     Shape *intersected_shape = NULL;
     float *t = NULL;
     float nearest_t = INFINITY;
     int nints;
+
+    // Find intersections of this ray with objects in the scene.
     for (Shape *s : shapes) {
         nints = s->does_intersect(ray, &t);
         if (nints > 0) {
