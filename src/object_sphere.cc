@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstdlib>
+#include <cstdio>
 
 #include "basics.h"
 #include "object.h"
@@ -68,6 +69,7 @@ Sphere::set_radius(float r)
  */
 int
 Sphere::does_intersect(const Ray &ray, float **t)
+    const
 {
     // Origin of the vector in object space.
     Vector3 ray_origin_obj = ray.origin - get_origin();
@@ -148,23 +150,17 @@ sphere_point_lies_on_surface(Object *obj, Vector3 p)
 
 
 /*
- * sphere_compute_normal --
+ * Sphere::compute_normal --
  *
- * Compute the normal for the given Object (which must be a Sphere) at the given point. This point must lie on the
- * surface of the object.
+ * Compute the normal for this Sphere at the given point. If the point does not lie on the surface of the sphere, a zero
+ * vector is returned.
  */
-#if 0
-/* static */ Vector3
-sphere_compute_normal(Object *obj, Vector3 p)
+Vector3
+Sphere::compute_normal(const Vector3 &p)
+    const
 {
-    assert(obj != NULL && object_get_type(obj) == ObjectTypeSphere);
-
-    // Make sure the given point is actually on the surface of the sphere.
-    if (!sphere_point_lies_on_surface(obj, p)) {
-        return Vector3Zero;
-    }
+    // TODO: Make sure the given point is actually on the surface of the sphere.
 
     // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
-    return p;
+    return Vector3::Zero;
 }
-#endif

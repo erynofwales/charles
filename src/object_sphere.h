@@ -15,6 +15,7 @@
 class Sphere
     : public Shape
 {
+public:
     Sphere();
     Sphere(float r);
     Sphere(Vector3 o, float r);
@@ -22,7 +23,8 @@ class Sphere
     float get_radius();
     void set_radius(float r);
 
-    int does_intersect(const Ray &ray, float **t);
+    int does_intersect(const Ray &ray, float **t) const;
+    Vector3 compute_normal(const Vector3 &p) const;
 private:
     float radius;
 };
