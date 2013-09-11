@@ -9,6 +9,7 @@ files = Split("""
     object.cc
     object_sphere.cc
     scene.cc
+    writer_png.cc
 """)
 
 lib = env.Library('charles', files)

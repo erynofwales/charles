@@ -5,15 +5,17 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#ifndef __WRITER_PNG_H__
+#define __WRITER_PNG_H__
 
-#ifndef __WRITER_PNG_H
-#define __WRITER_PNG_H
-
-#include <stdio.h>
-#include "scene.h"
+#include "writer.h"
 
 
-int write_scene_png(Scene *scene, FILE *file);
-
+class PNGWriter
+    : public Writer
+{
+public:
+    int write_scene(const Scene &scene, const std::string &filename);
+};
 
 #endif
