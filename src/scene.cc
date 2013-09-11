@@ -6,13 +6,16 @@
  */
 
 #include <cmath>
+#include <cstdio>
+
 #include "basics.h"
 #include "object.h"
 #include "scene.h"
+#include "writer.h"
 
 
 Scene::Scene()
-    : height(640), width(480),
+    : width(640), height(480),
       pixels(NULL)
 { }
 
@@ -34,13 +37,37 @@ Scene::is_rendered()
 }
 
 
+int
+Scene::get_width()
+    const
+{
+    return width;
+}
+
+
+int
+Scene::get_height()
+    const
+{
+    return height;
+}
+
+
+const Color *
+Scene::get_pixels()
+    const
+{
+    return pixels;
+}
+
+
 /*
  * scene_load --
  *
  * Load scene objects into this Scene from the given file.
  */
 void
-Scene::read(FILE *file)
+Scene::read(const std::string &filename)
 { }
 
 
@@ -50,8 +77,10 @@ Scene::read(FILE *file)
  * Write a rendered scene to the given file.
  */
 void
-Scene::write(FILE *file)
-{ }
+Scene::write(Writer &writer, const std::string &filename)
+{
+    writer.write_scene(*this, filename);
+}
 
 
 /*
@@ -77,7 +106,8 @@ Scene::render()
             d = Vector3(0, 0, 1);
             d.normalize();
             primary_ray = Ray(o, d);
-            pixels[y * width + x] = trace_ray(primary_ray, 0);
+            Color c = trace_ray(primary_ray, 0);
+            pixels[y * width + x] = c;
         }
     }
 
@@ -95,8 +125,6 @@ Scene::add_shape(Shape *shape)
 Color
 Scene::trace_ray(const Ray &ray, const int depth)
 {
-    Color out_color = Color::Black;
-
     // Find intersections of this ray with objects in the scene.
     Shape *intersected_shape = NULL;
     float *t = NULL;
@@ -117,7 +145,7 @@ Scene::trace_ray(const Ray &ray, const int depth)
 
     // If there was no intersection, return black.
     if (intersected_shape == NULL) {
-        return out_color;
+        return Color::Black;
     }
 
     // TODO: Lighting.

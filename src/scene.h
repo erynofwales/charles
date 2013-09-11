@@ -12,8 +12,12 @@
 #define __SCENE_H__
 
 #include <list>
+#include <string>
+#include "basics.h"
+
 
 class Shape;
+class Writer;
 
 
 class Scene
@@ -23,9 +27,12 @@ public:
     ~Scene();
 
     bool is_rendered() const;
+    int get_width() const;
+    int get_height() const;
+    const Color *get_pixels() const;
 
-    void read(FILE *f);
-    void write(FILE *f);
+    void read(const std::string &filename);
+    void write(Writer &writer, const std::string &filename);
     void render();
 
     void add_shape(Shape *obj);
@@ -33,7 +40,7 @@ public:
 private:
     Color trace_ray(const Ray &ray, const int depth);
 
-    int height, width;
+    int width, height;
     std::list<Shape *> shapes;
 
     bool _is_rendered;

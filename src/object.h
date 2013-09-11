@@ -34,8 +34,8 @@ public:
     Shape();
     Shape(Vector3 o);
 
-    virtual int does_intersect(const Ray &ray, float **t) = 0;
-    virtual Vector3 compute_normal(const Vector3 &p) = 0;
+    virtual int does_intersect(const Ray &ray, float **t) const = 0;
+    virtual Vector3 compute_normal(const Vector3 &p) const = 0;
 };
 
 #endif
