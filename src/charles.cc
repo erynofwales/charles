@@ -8,6 +8,7 @@
 #include <cstdio>
 
 #include "basics.h"
+#include "light.h"
 #include "object_sphere.h"
 #include "scene.h"
 #include "writer_png.h"
@@ -28,6 +29,11 @@ main(int argc,
     scene.add_shape(s1);
     scene.add_shape(s2);
     scene.add_shape(s3);
+
+    Light *l1 = new Light(Vector3(0.0, 240.0, -100.0), 1.0);
+    Light *l2 = new Light(Vector3(640.0, 240.0, -10000.0), 0.6);
+    scene.add_light(l1);
+    scene.add_light(l2);
 
     // Render.
     scene.render();
