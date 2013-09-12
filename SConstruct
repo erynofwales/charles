@@ -77,7 +77,7 @@ if not BUILD_CMDS:
 # Build charles
 src_dir = Dir('#src')
 charles_lib = env.SConscript(os.path.join(src_dir.path, 'SConscript'),
-                             exports='env',
+                             exports=['env'],
                              variant_dir=os.path.join('build', src_dir.path),
                              duplicate=0)
 

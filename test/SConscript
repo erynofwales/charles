@@ -10,11 +10,7 @@ Import('gtest')
 Import('charles_lib')
 
 files = Split("""
-    test_asserts.c
-    test_basics.c
-    test_charles.c
-    test_object.c
 """)
 
-prog = env.Program('test_charles', [gtest, charles_lib, files])
+prog = env.Program('test_charles', [gtest, charles, files])
 env.Alias('test', prog)
