@@ -82,9 +82,14 @@ charles_lib = env.SConscript(os.path.join(src_dir.path, 'SConscript'),
                              duplicate=0)
 
 # Build test
+gtest_dir = Dir('#gtest')
+gtest = env.SConscript(os.path.join(gtest_dir.path, 'SConscript'),
+                       exports=['env'],
+                       variant_dir=os.path.join('build', gtest_dir.path),
+                       duplicate=0)
 test_dir = Dir('#test')
 env.SConscript(os.path.join(test_dir.path, 'SConscript'),
-               exports=['env', 'charles_lib'],
+               exports=['env', 'gtest', 'charles_lib'],
                variant_dir=os.path.join('build', test_dir.path),
                duplicate=0)
 

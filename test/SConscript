@@ -6,6 +6,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 Import('env')
+Import('gtest')
 Import('charles_lib')
 
 files = Split("""
@@ -15,7 +16,5 @@ files = Split("""
     test_object.c
 """)
 
-test_env = env.Clone()
-test_env.Append(LIBS=['check'])
-prog = test_env.Program('test_charles', [charles_lib, files])
+prog = env.Program('test_charles', [gtest, charles_lib, files])
 env.Alias('test', prog)
