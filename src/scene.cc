@@ -175,9 +175,7 @@ Scene::trace_ray(const Ray &ray, const int depth)
     Vector3 normal = intersected_shape->compute_normal(intersection);
 
     for (Light *l : lights) {
-        Vector3 light_direction = intersection - l->get_origin();
-        light_direction.normalize();
-
+        Vector3 light_direction = (intersection - l->get_origin()).normalize();
         float ldotn = light_direction.dot(normal);
         out_color.red *= ((ldotn >= 0.0) ? ldotn : 0.0) * l->get_intensity();
         out_color.green *= ((ldotn >= 0.0) ? ldotn : 0.0) * l->get_intensity();
