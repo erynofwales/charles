@@ -37,6 +37,11 @@ Vector3::Vector3(float _x, float _y, float _z)
 { }
 
 
+/*
+ * Vector3::operator= --
+ *
+ * Copy the given vector's values into this vector. Return a reference to this vector.
+ */
 Vector3 &
 Vector3::operator=(const Vector3 &v)
 {
@@ -85,7 +90,6 @@ Vector3::operator-=(const Vector3 &rhs)
 {
     return *this += -rhs;
 }
-
 
 
 /*
@@ -264,22 +268,95 @@ Color::Color(float r, float g, float b, float a)
 { }
 
 
+/*
+ * Color::operator*= --
+ * Color::operator/= --
+ * Color::operator+= --
+ * Color::operator-= --
+ *
+ * Perform the corresponding arithmetic operation on this color and the given scalar. These methods are destructive and
+ * a reference to this color is returned.
+ */
 Color &
-Color::operator=(const Color &c)
+Color::operator*=(const float &rhs)
 {
-    red = c.red;
-    green = c.green;
-    blue = c.blue;
-    alpha = c.alpha;
+    red *= rhs;
+    green *= rhs;
+    blue *= rhs;
     return *this;
 }
 
+Color &
+Color::operator/=(const float &rhs)
+{
+    return *this *= (1.0 / rhs);
+}
 
 Color &
-Color::operator*=(const float f)
+Color::operator+=(const float &rhs)
 {
-    red *= f;
-    green *= f;
-    blue *= f;
+    red += rhs;
+    green += rhs;
+    blue += rhs;
+    alpha += rhs;
+    return *this;
+}
+
+Color &
+Color::operator-=(const float &rhs)
+{
+    return *this += -rhs;
+}
+
+
+/*
+ * Color::operator* --
+ * Color::operator/ --
+ * Color::operator+ --
+ * Color::operator- --
+ *
+ * Perform the corresponding operation on a copy of this color and the given scalar. Return a new vector.
+ */
+Color
+Color::operator*(const float &rhs)
+    const
+{
+    return Color(*this) *= rhs;
+}
+
+Color
+Color::operator/(const float &rhs)
+    const
+{
+    return Color(*this) /= rhs;
+}
+
+Color
+Color::operator+(const float &rhs)
+    const
+{
+    return Color(*this) += rhs;
+}
+
+Color
+Color::operator-(const float &rhs)
+    const
+{
+    return Color(*this) -= rhs;
+}
+
+
+/*
+ * Color::operator= --
+ *
+ * Copy the given color's values into this color. Return a reference to this color.
+ */
+Color &
+Color::operator=(const Color &rhs)
+{
+    red = rhs.red;
+    green = rhs.green;
+    blue = rhs.blue;
+    alpha = rhs.alpha;
     return *this;
 }

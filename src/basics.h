@@ -57,8 +57,16 @@ struct Color
     Color();
     Color(float r, float g, float b, float a);
 
-    Color &operator=(const Color &c);
-    Color &operator*=(const float c);
+    Color &operator*=(const float &rhs);
+    Color &operator/=(const float &rhs);
+    Color &operator+=(const float &rhs);
+    Color &operator-=(const float &rhs);
+    Color operator*(const float &rhs) const;
+    Color operator/(const float &rhs) const;
+    Color operator+(const float &rhs) const;
+    Color operator-(const float &rhs) const;
+
+    Color &operator=(const Color &rhs);
 
     static const Color Black;
     static const Color White;
