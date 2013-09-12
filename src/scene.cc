@@ -5,6 +5,7 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#include <chrono>
 #include <cmath>
 #include <cstdio>
 
@@ -18,6 +19,7 @@
 Scene::Scene()
     : width(640), height(480),
       max_depth(5),
+      nrays(0),
       pixels(NULL)
 { }
 
@@ -93,6 +95,9 @@ Scene::write(Writer &writer, const std::string &filename)
 void
 Scene::render()
 {
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
+
     pixels = new Color[width * height];
 
     Ray primary_ray;
@@ -109,7 +114,11 @@ Scene::render()
         }
     }
 
+    end = std::chrono::system_clock::now();
+    std::chrono::duration<float> seconds = end - start;
+
     _is_rendered = true;
+    printf("Scene rendered. %d rays traced in %f seconds.\n", nrays, seconds.count());
 }
 
 
@@ -149,6 +158,9 @@ Scene::trace_ray(const Ray &ray, const int depth)
     float *t = NULL;
     float nearest_t = INFINITY;
     int nints;
+
+    // Keep stats.
+    nrays++;
 
     // Find intersections of this ray with objects in the scene.
     for (Shape *s : shapes) {

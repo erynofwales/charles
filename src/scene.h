@@ -52,6 +52,9 @@ private:
     std::list<Shape *> shapes;
     std::list<Light *> lights;
 
+    // Rendering stats
+    unsigned int nrays;
+
     // Rendering output.
     bool _is_rendered;
     Color *pixels;
