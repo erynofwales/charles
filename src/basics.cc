@@ -143,19 +143,15 @@ Vector3::dot(Vector3 v)
  *
  * Normalize this vector in place. That is, make this vector's magnitude (length) 1.0.
  */
-void
+Vector3 &
 Vector3::normalize()
 {
-    float len2 = length2();
-    if (len2 <= 0.0) {
-        return;
-    }
-
     // Multiplying by the inverse of the length is more efficient than dividing by the length.
-    float inverse_length = 1.0 / sqrtf(len2);
+    float inverse_length = 1.0 / sqrtf(length2());
     x *= inverse_length;
     y *= inverse_length;
     z *= inverse_length;
+    return *this;
 }
 
 

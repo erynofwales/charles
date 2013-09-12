@@ -28,7 +28,7 @@ struct Vector3
     float length() const;
     float dot(Vector3 v) const;
 
-    void normalize();
+    Vector3 &normalize();
 
     static const Vector3 Zero;
     float x, y, z;
