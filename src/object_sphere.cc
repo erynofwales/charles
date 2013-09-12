@@ -155,11 +155,8 @@ Vector3
 Sphere::compute_normal(const Vector3 &p)
     const
 {
-    // Make sure the given point is actually on the surface of the sphere.
-    if (!point_is_on_surface(p)) {
-        return Vector3::Zero;
-    }
-
     // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
-    return p - get_origin();
+    Vector3 normal = p - get_origin();
+    normal.normalize();
+    return normal;
 }
