@@ -41,7 +41,7 @@ main(int argc,
     scene.add_shape(s2);
     scene.add_shape(s3);
 
-    Light *l1 = new Light(Vector3(0.0, 240.0, -100.0), 1.0);
+    Light *l1 = new Light(Vector3(500.0, 100.0, 600.0), 1.0);
     scene.add_light(l1);
 
     // Render.
