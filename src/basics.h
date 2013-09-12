@@ -19,14 +19,21 @@ struct Vector3
 
     Vector3 &operator=(const Vector3 &v);
 
-    Vector3 operator+(Vector3 v) const;
-    Vector3 operator*(float a) const;
-    Vector3 operator-(Vector3 v) const;
+    Vector3 &operator*=(const float &rhs);
+    Vector3 &operator/=(const float &rhs);
+    Vector3 &operator+=(const Vector3 &rhs);
+    Vector3 &operator-=(const Vector3 &rhs);
+
+    Vector3 operator*(const float &rhs) const;
+    Vector3 operator/(const float &rhs) const;
+    Vector3 operator+(const Vector3 &rhs) const;
+    Vector3 operator-(const Vector3 &rhs) const;
+
     Vector3 operator-() const;
 
     float length2() const;
     float length() const;
-    float dot(Vector3 v) const;
+    float dot(const Vector3 &v) const;
 
     Vector3 &normalize();
 
@@ -34,7 +41,7 @@ struct Vector3
     float x, y, z;
 };
 
-Vector3 operator*(float a, Vector3 v);
+const Vector3 operator*(const float &lhs, const Vector3 &rhs);
 
 
 struct Ray

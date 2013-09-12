@@ -48,41 +48,80 @@ Vector3::operator=(const Vector3 &v)
 
 
 /*
- * Vector3::operator+ --
+ * Vector3::operator*= --
+ * Vector3::operator/= --
+ * Vector3::operator+= --
+ * Vector3::operator-= --
  *
- * Add the given vector to this vector. Return a new vector.
+ * Perform the corresponding arithmetic operation on this vector and the given vector. These methods are destructive and
+ * a reference to this vector is returned.
  */
-Vector3
-Vector3::operator+(Vector3 v)
-    const
+Vector3 &
+Vector3::operator*=(const float &rhs)
 {
-    return Vector3(x + v.x, y + v.y, z + v.z);
+    x *= rhs;
+    y *= rhs;
+    z *= rhs;
+    return *this;
 }
+
+Vector3 &
+Vector3::operator/=(const float &rhs)
+{
+    return *this *= (1.0f / rhs);
+}
+
+Vector3 &
+Vector3::operator+=(const Vector3 &rhs)
+{
+    x += rhs.x;
+    y += rhs.y;
+    z += rhs.z;
+    return *this;
+}
+
+Vector3 &
+Vector3::operator-=(const Vector3 &rhs)
+{
+    return *this += -rhs;
+}
+
 
 
 /*
  * Vector3::operator* --
- *
- * Multiply the given scalar by this vector. Return a new vector.
- */
-Vector3
-Vector3::operator*(float a)
-    const
-{
-    return Vector3(a*x, a*y, a*z);
-}
-
-
-/*
+ * Vector3::operator/ --
+ * Vector3::operator+ --
  * Vector3::operator- --
  *
- * Subtract the given vector from this vector. Return a new vector.
+ * Perform the corresponding operation on a copy of this vector. Return a new vector.
  */
 Vector3
-Vector3::operator-(Vector3 v)
+Vector3::operator*(const float &rhs)
     const
 {
-    return Vector3(x - v.x, y - v.y, z - v.z);
+    return Vector3(*this) *= rhs;
+}
+
+Vector3
+Vector3::operator/(const float &rhs)
+    const
+{
+    return Vector3(*this) /= rhs;
+}
+
+Vector3
+Vector3::operator+(const Vector3 &rhs)
+    const
+{
+    return Vector3(*this) += rhs;
+}
+
+Vector3
+Vector3::operator-(const Vector3 &rhs)
+    const
+{
+    return Vector3(*this) -= rhs;
 }
 
 
@@ -131,7 +170,7 @@ Vector3::length()
  * Compute and return the dot product of this and the given vectors.
  */
 float
-Vector3::dot(Vector3 v)
+Vector3::dot(const Vector3 &v)
     const
 {
     return x*v.x + y*v.y + z*v.z;
@@ -146,12 +185,8 @@ Vector3::dot(Vector3 v)
 Vector3 &
 Vector3::normalize()
 {
-    // Multiplying by the inverse of the length is more efficient than dividing by the length.
-    float inverse_length = 1.0 / sqrtf(length2());
-    x *= inverse_length;
-    y *= inverse_length;
-    z *= inverse_length;
-    return *this;
+    // Use the overloaded /= compound operator to do this.
+    return *this /= length();
 }
 
 
@@ -160,10 +195,10 @@ Vector3::normalize()
  *
  * Multiply the given float by the given vector. Return a new vector.
  */
-Vector3
-operator*(float a, Vector3 v)
+const Vector3
+operator*(const float &lhs, const Vector3 &rhs)
 {
-    return v * a;
+    return rhs * lhs;
 }
 
 #pragma mark - Rays
