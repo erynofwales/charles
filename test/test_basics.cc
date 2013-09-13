@@ -64,35 +64,32 @@ TEST_F(Vector3Test, OperatorMul)
 }
 
 
-// TODO: Test divison.
-#if 0
 TEST_F(Vector3Test, OperatorDiv)
 {
     Vector3 out;
 
     out = v1 / 5.0;
-    EXPECT_EQ(1.0/5.0, out.x);
-    EXPECT_EQ(3.0/5.0, out.y);
-    EXPECT_EQ(5.0/5.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/5.0, out.x);
+    EXPECT_FLOAT_EQ(3.0/5.0, out.y);
+    EXPECT_FLOAT_EQ(5.0/5.0, out.z);
 
     out = v1 / -7.0;
-    EXPECT_EQ(1.0/-7.0, out.x);
-    EXPECT_EQ(3.0/-7.0, out.y);
-    EXPECT_EQ(5.0/-7.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/-7.0, out.x);
+    EXPECT_FLOAT_EQ(3.0/-7.0, out.y);
+    EXPECT_FLOAT_EQ(5.0/-7.0, out.z);
 
     out = v1;
     out /= 5.0;
-    EXPECT_EQ(1.0/5.0, out.x);
-    EXPECT_EQ(3.0/5.0, out.y);
-    EXPECT_EQ(5.0/5.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/5.0, out.x);
+    EXPECT_FLOAT_EQ(3.0/5.0, out.y);
+    EXPECT_FLOAT_EQ(5.0/5.0, out.z);
 
     out = v1;
     out /= -7.0;
-    EXPECT_EQ(1.0/-7.0, out.x);
-    EXPECT_EQ(3.0/-7.0, out.y);
-    EXPECT_EQ(5.0/-7.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/-7.0, out.x);
+    EXPECT_FLOAT_EQ(3.0/-7.0, out.y);
+    EXPECT_FLOAT_EQ(5.0/-7.0, out.z);
 }
-#endif
 
 
 TEST_F(Vector3Test, OperatorAdd)
@@ -149,7 +146,11 @@ TEST_F(Vector3Test, Length2)
 }
 
 
-// TODO: Test length()
+TEST_F(Vector3Test, Length)
+{
+    EXPECT_FLOAT_EQ(5.916079783099616, v1.length());
+    EXPECT_FLOAT_EQ(22.5166604983954, v2.length());
+}
 
 
 TEST_F(Vector3Test, DotProduct)
