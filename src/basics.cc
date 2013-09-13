@@ -282,9 +282,19 @@ Color::Color()
 /*
  * Color::Color --
  *
+ * Constructor. Create a new Color with the given RGB components. Alpha is 1.0.
+ */
+Color::Color(const float &r, const float &g, const float &b)
+    : Color(r, g, b, 1.0)
+{ }
+
+
+/*
+ * Color::Color --
+ *
  * Constructor. Create a new Color with the given components.
  */
-Color::Color(float r, float g, float b, float a)
+Color::Color(const float &r, const float &g, const float &b, const float &a)
     : red(r), green(g), blue(b), alpha(a)
 { }
 

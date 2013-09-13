@@ -58,7 +58,8 @@ struct Ray
 struct Color
 {
     Color();
-    Color(float r, float g, float b, float a);
+    Color(const float &r, const float &g, const float &b);
+    Color(const float &r, const float &g, const float &b, const float &a);
 
     Color &operator*=(const float &rhs);
     Color &operator/=(const float &rhs);
