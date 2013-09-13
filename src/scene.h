@@ -16,7 +16,8 @@
 #include "basics.h"
 
 
-class Light;
+class AmbientLight;
+class PointLight;
 class Shape;
 class Writer;
 
@@ -37,7 +38,7 @@ public:
     void render();
 
     void add_shape(Shape *obj);
-    void add_light(Light *light);
+    void add_light(PointLight *light);
 
 private:
     Color trace_ray(const Ray &ray, const int depth);
@@ -50,7 +51,7 @@ private:
 
     // Scene objects.
     std::list<Shape *> shapes;
-    std::list<Light *> lights;
+    std::list<PointLight *> lights;
 
     // Rendering stats
     unsigned int nrays;

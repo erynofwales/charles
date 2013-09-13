@@ -12,19 +12,36 @@
 #include "object.h"
 
 
-class Light
-    : public Object
+class AmbientLight
 {
 public:
-    Light();
-    Light(float i);
-    Light(Vector3 o, float i);
+    AmbientLight();
+    AmbientLight(const Color &c);
+    AmbientLight(const Color &c, const float &i);
 
-    float get_intensity() const;
-    void set_intensity(float i);
+    const Color &get_color() const;
+    const float &get_intensity() const;
+
+    Color compute_color_contribution() const;
+
+protected:
+    Color color;
+    float intensity;
 
 private:
-    float intensity;
+    void _clamp_intensity();
+};
+
+
+class PointLight
+    : public AmbientLight,
+      public Object
+{
+public:
+    PointLight();
+    PointLight(const Vector3 &o);
+    PointLight(const Vector3 &o, const Color &c);
+    PointLight(const Vector3 &o, const Color &c, const float &i);
 };
 
 #endif

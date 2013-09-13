@@ -9,38 +9,85 @@
 #include "light.h"
 #include "object.h"
 
+#pragma mark - Ambient Lights
 
-Light::Light()
-    : Light(1.0)
+AmbientLight::AmbientLight()
+    : AmbientLight(Color::White)
 { }
 
 
-Light::Light(float i)
-    : Light(Vector3::Zero, i)
+AmbientLight::AmbientLight(const Color &c)
+    : AmbientLight(c, 1.0)
 { }
 
 
-Light::Light(Vector3 o, float i)
-    : Object(o),
+AmbientLight::AmbientLight(const Color &c, const float &i)
+    : color(c),
       intensity(i)
-{ }
+{
+    _clamp_intensity();
+}
 
 
-/*
- * Light::get_intensity --
- * Light::set_intensity --
- *
- * Get and set the intensity of this light.
- */
-float
-Light::get_intensity()
+const Color &
+AmbientLight::get_color()
+    const
+{
+    return color;
+}
+
+
+const float &
+AmbientLight::get_intensity()
     const
 {
     return intensity;
 }
 
-void
-Light::set_intensity(float i)
+
+Color
+AmbientLight::compute_color_contribution()
+    const
 {
-    intensity = i;
+    return color * intensity;
 }
+
+
+void
+AmbientLight::_clamp_intensity()
+{
+    if (intensity < 0.0) {
+        intensity = 0.0;
+    }
+    else if (intensity > 1.0) {
+        intensity = 1.0;
+    }
+}
+
+#pragma mark - Point Lights
+
+PointLight::PointLight()
+    : AmbientLight(),
+      Object()
+{ }
+
+
+PointLight::PointLight(const Vector3 &o)
+    : AmbientLight(),
+      Object(o)
+{ }
+
+
+PointLight::PointLight(const Vector3 &o,
+                       const Color &c)
+    : AmbientLight(c),
+      Object(o)
+{ }
+
+
+PointLight::PointLight(const Vector3 &o,
+                       const Color &c,
+                       const float &i)
+    : AmbientLight(c, i),
+      Object(o)
+{ }

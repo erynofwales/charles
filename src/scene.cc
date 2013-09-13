@@ -140,7 +140,7 @@ Scene::add_shape(Shape *shape)
  * Add a light to the scene.
  */
 void
-Scene::add_light(Light *light)
+Scene::add_light(PointLight *light)
 {
     lights.push_back(light);
 }
@@ -186,7 +186,7 @@ Scene::trace_ray(const Ray &ray, const int depth)
     Vector3 intersection = ray.parameterize(nearest_t);
     Vector3 normal = intersected_shape->compute_normal(intersection);
 
-    for (Light *l : lights) {
+    for (PointLight *l : lights) {
         Vector3 light_direction = (intersection - l->get_origin()).normalize();
         float ldotn = light_direction.dot(normal);
         out_color.red *= ((ldotn >= 0.0) ? ldotn : 0.0) * l->get_intensity();
