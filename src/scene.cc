@@ -20,6 +20,8 @@ Scene::Scene()
     : width(640), height(480),
       max_depth(5),
       ambient(NULL),
+      shapes(),
+      lights(),
       nrays(0),
       pixels(NULL)
 { }
@@ -27,6 +29,20 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+    if (ambient != NULL) {
+        delete ambient;
+    }
+
+    for (Shape *s : shapes) {
+        delete s;
+    }
+    shapes.clear();
+
+    for (PointLight *l : lights) {
+        delete l;
+    }
+    lights.clear();
+
     if (pixels != NULL) {
         delete[] pixels;
         _is_rendered = false;
