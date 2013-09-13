@@ -143,6 +143,27 @@ Vector3::operator-()
 
 
 /*
+ * Vector3::operator== --
+ * Vector3::operator!= --
+ *
+ * Compute boolean equality and non-equality of this and the given vectors.
+ */
+bool
+Vector3::operator==(const Vector3 &rhs)
+    const
+{
+    return x == rhs.x && y == rhs.y && z == rhs.z;
+}
+
+bool
+Vector3::operator!=(const Vector3 &rhs)
+    const
+{
+    return !(*this == rhs);
+}
+
+
+/*
  * Vector3::length2 --
  *
  * Compute and return the length-squared of this vector.

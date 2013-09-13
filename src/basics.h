@@ -28,6 +28,9 @@ struct Vector3
     Vector3 operator-(const Vector3 &rhs) const;
     Vector3 operator-() const;
 
+    bool operator==(const Vector3 &rhs) const;
+    bool operator!=(const Vector3 &rhs) const;
+
     float length2() const;
     float length() const;
     float dot(const Vector3 &v) const;
