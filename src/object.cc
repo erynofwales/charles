@@ -77,6 +77,15 @@ Shape::Shape(Vector3 o)
 
 
 /*
+ * Shape::~Shape() --
+ *
+ * Destructor.
+ */
+Shape::~Shape()
+{ }
+
+
+/*
  * Shape::get_material --
  * Shape::set_material --
  *

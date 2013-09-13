@@ -34,6 +34,7 @@ class Shape
 public:
     Shape();
     Shape(Vector3 o);
+    virtual ~Shape();
 
     Material &get_material() const;
     void set_material(Material *mat);
