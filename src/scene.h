@@ -50,6 +50,7 @@ private:
     int max_depth;
 
     // Scene objects.
+    AmbientLight *ambient;
     std::list<Shape *> shapes;
     std::list<PointLight *> lights;
 

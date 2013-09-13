@@ -19,6 +19,7 @@
 Scene::Scene()
     : width(640), height(480),
       max_depth(5),
+      ambient(NULL),
       nrays(0),
       pixels(NULL)
 { }
