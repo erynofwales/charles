@@ -72,6 +72,16 @@ struct Color
 
     Color &operator=(const Color &rhs);
 
+    // These operators blend the two colors.
+    Color &operator*=(const Color &rhs);
+    Color &operator/=(const Color &rhs);
+    Color &operator+=(const Color &rhs);
+    Color &operator-=(const Color &rhs);
+    Color operator*(const Color &rhs) const;
+    Color operator/(const Color &rhs) const;
+    Color operator+(const Color &rhs) const;
+    Color operator-(const Color &rhs) const;
+
     static const Color Black;
     static const Color White;
     static const Color Red;
@@ -80,5 +90,7 @@ struct Color
 
     float red, green, blue, alpha;
 };
+
+const Color operator*(const float &lhs, const Color &rhs);
 
 #endif

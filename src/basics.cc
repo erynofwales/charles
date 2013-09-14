@@ -391,3 +391,78 @@ Color::operator=(const Color &rhs)
     alpha = rhs.alpha;
     return *this;
 }
+
+
+Color &
+Color::operator*=(const Color &rhs)
+{
+    red *= rhs.red;
+    green *= rhs.green;
+    blue *= rhs.blue;
+    return *this;
+}
+
+Color &
+Color::operator/=(const Color &rhs)
+{
+    red *= (1.0 / rhs.red);
+    green *= (1.0 / rhs.green);
+    blue *= (1.0 / rhs.blue);
+    return *this;
+}
+
+Color &
+Color::operator+=(const Color &rhs)
+{
+    red += rhs.red;
+    green += rhs.green;
+    blue += rhs.blue;
+    alpha += rhs.alpha;
+    return *this;
+}
+
+Color &
+Color::operator-=(const Color &rhs)
+{
+    red -= rhs.red;
+    green -= rhs.green;
+    blue -= rhs.blue;
+    alpha -= rhs.alpha;
+    return *this;
+}
+
+
+Color
+Color::operator*(const Color &rhs)
+    const
+{
+    return Color(*this) *= rhs;
+}
+
+Color
+Color::operator/(const Color &rhs)
+    const
+{
+    return Color(*this) /= rhs;
+}
+
+Color
+Color::operator+(const Color &rhs)
+    const
+{
+    return Color(*this) += rhs;
+}
+
+Color
+Color::operator-(const Color &rhs)
+    const
+{
+    return Color(*this) -= rhs;
+}
+
+
+const Color
+operator*(const float &lhs, const Color &rhs)
+{
+    return rhs * lhs;
+}
