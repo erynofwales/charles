@@ -208,19 +208,41 @@ Scene::trace_ray(const Ray &ray, const int depth)
     }
 
     Material shape_material = intersected_shape->get_material();
+    Color shape_color = shape_material.get_diffuse_color();
+
     Vector3 intersection = ray.parameterize(nearest_t);
     Vector3 normal = intersected_shape->compute_normal(intersection);
+    Vector3 light_direction;
+    float ldotn, diffuse_level, ambient_level;
+    Ray shadow_ray;
 
     for (PointLight *l : lights) {
-        Vector3 light_direction = (intersection - l->get_origin()).normalize();
-        float ldotn = light_direction.dot(normal);
-        if (ldotn < 0.0) {
+        light_direction = (intersection - l->get_origin()).normalize();
+        ldotn = light_direction.dot(normal);
+
+        if (ldotn < 0) {
             ldotn = 0.0;
         }
-        float diffuse_level = shape_material.get_diffuse_level();
-        float ambient_level = 1 - diffuse_level;
-        out_color += shape_material.get_diffuse_color() * (  ambient_level * ambient->compute_color_contribution()
-                                                           + diffuse_level * ldotn);
+
+        diffuse_level = shape_material.get_diffuse_level();
+        ambient_level = 1.0 - diffuse_level;
+
+        shadow_ray = Ray(intersection, light_direction);
+        for (Shape *s : shapes) {
+            // Skip the intersected shape.
+            if (s == intersected_shape) {
+                continue;
+            }
+
+            // Figure out if we're in shadow.
+            if (s->does_intersect(shadow_ray, NULL) > 0) {
+                diffuse_level = 0.0;
+                break;
+            }
+        }
+
+        out_color += shape_color * (  ambient_level * ambient->compute_color_contribution()
+                                    + diffuse_level * ldotn);
     }
 
     return out_color;
