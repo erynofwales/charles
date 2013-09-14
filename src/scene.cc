@@ -179,6 +179,7 @@ Scene::add_light(PointLight *light)
 Color
 Scene::trace_ray(const Ray &ray, const int depth)
 {
+    Color out_color = Color::Black;
     Shape *intersected_shape = NULL;
     float *t = NULL;
     float nearest_t = INFINITY;
@@ -203,20 +204,20 @@ Scene::trace_ray(const Ray &ray, const int depth)
 
     // If there was no intersection, return black.
     if (intersected_shape == NULL) {
-        return Color::Black;
+        return out_color;
     }
 
-    Color out_color = intersected_shape->get_material().get_color();
-
+    Color shape_color = intersected_shape->get_material().get_color();
     Vector3 intersection = ray.parameterize(nearest_t);
     Vector3 normal = intersected_shape->compute_normal(intersection);
 
     for (PointLight *l : lights) {
         Vector3 light_direction = (intersection - l->get_origin()).normalize();
         float ldotn = light_direction.dot(normal);
-        out_color.red *= ((ldotn >= 0.0) ? ldotn : 0.0) * l->get_intensity();
-        out_color.green *= ((ldotn >= 0.0) ? ldotn : 0.0) * l->get_intensity();
-        out_color.blue *= ((ldotn >= 0.0) ? ldotn : 0.0) * l->get_intensity();
+        if (ldotn < 0.0) {
+            ldotn = 0.0;
+        }
+        out_color += shape_color * (0.2 * ambient->compute_color_contribution() + 0.8 * ldotn);
     }
 
     return out_color;
