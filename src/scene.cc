@@ -207,7 +207,7 @@ Scene::trace_ray(const Ray &ray, const int depth)
         return out_color;
     }
 
-    Color shape_color = intersected_shape->get_material().get_color();
+    Material shape_material = intersected_shape->get_material();
     Vector3 intersection = ray.parameterize(nearest_t);
     Vector3 normal = intersected_shape->compute_normal(intersection);
 
@@ -217,7 +217,10 @@ Scene::trace_ray(const Ray &ray, const int depth)
         if (ldotn < 0.0) {
             ldotn = 0.0;
         }
-        out_color += shape_color * (0.2 * ambient->compute_color_contribution() + 0.8 * ldotn);
+        float diffuse_level = shape_material.get_diffuse_level();
+        float ambient_level = 1 - diffuse_level;
+        out_color += shape_material.get_diffuse_color() * (  ambient_level * ambient->compute_color_contribution()
+                                                           + diffuse_level * ldotn);
     }
 
     return out_color;
