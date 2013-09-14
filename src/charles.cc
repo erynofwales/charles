@@ -23,6 +23,8 @@ main(int argc,
 {
     Scene scene = Scene();
 
+    scene.get_ambient().set_intensity(1.0);
+
     Material *m1 = new Material();
     m1->set_color(Color(1, 0, 0, 1));
     Material *m2 = new Material();
