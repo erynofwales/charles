@@ -26,11 +26,14 @@ main(int argc,
     scene.get_ambient().set_intensity(1.0);
 
     Material *m1 = new Material();
-    m1->set_color(Color(1, 0, 0, 1));
+    m1->set_diffuse_color(Color::Red);
+    m1->set_diffuse_level(0.8);
     Material *m2 = new Material();
-    m2->set_color(Color(0, 1, 0, 1));
+    m2->set_diffuse_color(Color::Green);
+    m2->set_diffuse_level(0.8);
     Material *m3 = new Material();
-    m3->set_color(Color(0, 0, 1, 1));
+    m3->set_diffuse_color(Color::Blue);
+    m3->set_diffuse_level(0.8);
 
     // Make some spheres.
     Sphere *s1 = new Sphere(Vector3(233, 290, 0), 100.0);
