@@ -17,7 +17,7 @@ AmbientLight::AmbientLight()
 
 
 AmbientLight::AmbientLight(const Color &c)
-    : AmbientLight(c, 1.0)
+    : AmbientLight(c, 0.0)
 { }
 
 
@@ -44,6 +44,13 @@ AmbientLight::get_intensity()
     return intensity;
 }
 
+void
+AmbientLight::set_intensity(const float &i)
+{
+    intensity = i;
+    _clamp_intensity();
+}
+
 
 Color
 AmbientLight::compute_color_contribution()
@@ -67,21 +74,18 @@ AmbientLight::_clamp_intensity()
 #pragma mark - Point Lights
 
 PointLight::PointLight()
-    : AmbientLight(),
-      Object()
+    : PointLight(Vector3())
 { }
 
 
 PointLight::PointLight(const Vector3 &o)
-    : AmbientLight(),
-      Object(o)
+    : PointLight(o, Color::White)
 { }
 
 
 PointLight::PointLight(const Vector3 &o,
                        const Color &c)
-    : AmbientLight(c),
-      Object(o)
+    : PointLight(o, c, 1.0)
 { }
 
 

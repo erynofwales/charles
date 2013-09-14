@@ -21,6 +21,7 @@ public:
 
     const Color &get_color() const;
     const float &get_intensity() const;
+    void set_intensity(const float &i);
 
     Color compute_color_contribution() const;
 
