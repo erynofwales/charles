@@ -19,7 +19,7 @@
 Scene::Scene()
     : width(640), height(480),
       max_depth(5),
-      ambient(NULL),
+      ambient(new AmbientLight()),
       shapes(),
       lights(),
       nrays(0),
@@ -71,6 +71,14 @@ Scene::get_height()
     const
 {
     return height;
+}
+
+
+AmbientLight &
+Scene::get_ambient()
+    const
+{
+    return *ambient;
 }
 
 

@@ -31,6 +31,7 @@ public:
     bool is_rendered() const;
     int get_width() const;
     int get_height() const;
+    AmbientLight &get_ambient() const;
     const Color *get_pixels() const;
 
     void read(const std::string &filename);
