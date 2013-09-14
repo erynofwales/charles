@@ -14,11 +14,23 @@
 class Material
 {
 public:
-    Color get_color() const;
-    void set_color(const Color &c);
+    enum {
+        DiffuseLightingTypeLambert = 1,
+    } DiffuseLightingType;
+
+    Material();
+
+    float get_diffuse_level() const;
+    void set_diffuse_level(const float &kd);
+    const Color &get_diffuse_color() const;
+    void set_diffuse_color(const Color &c);
 
 private:
-    Color color;
+    void _clamp_parameter(float &param);
+
+    // Diffusion parameters.
+    float diffuse_level;
+    Color diffuse_color;
 };
 
 #endif
