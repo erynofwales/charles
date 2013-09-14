@@ -9,7 +9,9 @@
 #define __WRITER_H__
 
 #include <string>
-#include "scene.h"
+
+
+class Scene;
 
 
 class Writer
