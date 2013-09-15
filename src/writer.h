@@ -17,6 +17,10 @@ class Scene;
 class Writer
 {
 public:
+    virtual
+    ~Writer()
+    { }
+
     virtual int write_scene(const Scene &scene, const std::string &filename) = 0;
 };
 
