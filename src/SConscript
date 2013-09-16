@@ -6,6 +6,7 @@ Import('env')
 
 files = Split("""
     basics.cc
+    camera.cc
     light.cc
     material.cc
     object.cc

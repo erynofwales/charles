@@ -1,31 +1,44 @@
 /* camera.h
  *
- * Camera type and related functions.
+ * The Camera is the eye into the scene. It defines several parameters and a single compute_primary_ray method
+ * that generates rays with which the ray tracer draws the scene.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#ifndef __CAMERA_H
-#define __CAMERA_H
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
 
 #include "basics.h"
+#include "object.h"
 
 
-typedef enum {
-    CameraProjectionOrthographic = 1,
-} CameraProjection;
-
-
-typedef struct _Camera
+class Camera
+    : public Object
 {
-    CameraProjection projection;
-    Vector3 location;
-    Rect image_plane;
-} Camera;
+public:
+    Camera();
+    ~Camera();
+
+    virtual Ray compute_primary_ray(const int &x, const int &y) const = 0;
+
+private:
+    // Size of the image plane.
+    Vector3 height, width;
+
+    // Direction. A unit vector defining where the camera is pointed.
+    Vector3 direction;
+
+    // Horizontal viewing angle.
+    float angle;
+};
 
 
-Camera *camera_init();
-void camera_destroy(Camera *camera);
+class OrthographicCamera
+{
+public:
+    Ray compute_primary_ray(const int &x, const int &y) const;
+};
 
 
 #endif
