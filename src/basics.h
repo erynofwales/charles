@@ -38,6 +38,9 @@ struct Vector3
     Vector3 &normalize();
 
     static const Vector3 Zero;
+    // Unit vectors in each of the three cartesian directions.
+    static const Vector3 X, Y, Z;
+
     float x, y, z;
 };
 
