@@ -21,6 +21,96 @@ Camera::Camera()
 Camera::~Camera()
 { }
 
+
+/*
+ * Camera::get_pixel_width --
+ * Camera::set_pixel_width --
+ * Camera::get_pixel_height --
+ * Camera::set_pixel_height --
+ *
+ * Get and set pixel width and height.
+ */
+int
+Camera::get_pixel_width()
+    const
+{
+    return pwidth;
+}
+
+void
+Camera::set_pixel_width(const int &pw)
+{
+    pwidth = pw;
+}
+
+int
+Camera::get_pixel_height()
+    const
+{
+    return pheight;
+}
+
+void
+Camera::set_pixel_height(const int &ph)
+{
+    pheight = ph;
+}
+
+
+/*
+ * Camera::get_width --
+ * Camera::set_width --
+ * Camera::get_height --
+ * Camera::set_height --
+ *
+ * Get and set width and height vectors.
+ */
+const Vector3 &
+Camera::get_width()
+    const
+{
+    return width;
+}
+
+void
+Camera::set_width(const Vector3 &w)
+{
+    width = w;
+}
+
+const Vector3 &
+Camera::get_height()
+    const
+{
+    return height;
+}
+
+void
+Camera::get_height(const Vector3 &h)
+{
+    height = h;
+}
+
+
+/*
+ * Camera::get_direction --
+ * Camera::set_direction --
+ *
+ * Get and set direction vector.
+ */
+const Vector3 &
+Camera::get_direction()
+    const
+{
+    return direction;
+}
+
+void
+Camera::set_direction(const Vector3 &d)
+{
+    direction = d;
+}
+
 #pragma mark - Orthographic Camera
 
 /*
@@ -35,5 +125,13 @@ OrthographicCamera::compute_primary_ray(const int &x,
                                         const int &y)
     const
 {
-    return 0;
+    // Calculate the point on the image plane that the given (x,y) coordinate pair corresponds to.
+    float dir_x = (x / pwidth) + 0.5;
+    float dir_y = (y / pheight) + 0.5;
+    Vector3 ray_origin = (dir_x * width) + (dir_y * height) + direction;
+
+    // Calculate the direction of the ray, given the camera's origin and normalize that vector.
+    Vector3 ray_direction = (image_point - get_origin()).normalize();
+
+    return Ray(get_origin(), ray_direction);
 }
