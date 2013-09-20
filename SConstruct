@@ -37,7 +37,6 @@ include_directories = Split("""
     #src
 """)
  
-
 #
 # BUILD STUFF BELOW HERE
 #
@@ -49,7 +48,7 @@ env = Environment(CC='clang', CXX='clang++',
                   CFLAGS=cflags + ' -std=c99',
                   CXXFLAGS=cflags + ' -std=c++11',
                   CPPPATH=include_directories,
-                  LIBS='png',
+                  LIBS=['png'],
                   LIBPATH=lib_directories)
 
 
