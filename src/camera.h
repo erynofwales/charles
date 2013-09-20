@@ -20,11 +20,16 @@ public:
     Camera();
     ~Camera();
 
-    int get_pixel_height() const;
     int get_pixel_width() const;
-    const Vector3 &get_height() const;
+    void set_pixel_width(const int &w);
+    int get_pixel_height() const;
+    void set_pixel_height(const int &h);
     const Vector3 &get_width() const;
+    void set_width(const Vector3 &w);
+    const Vector3 &get_height() const;
+    void set_height(const Vector3 &h);
     const Vector3 &get_direction() const;
+    void set_direction(const Vector3 &d);
     float get_angle() const;
 
     virtual Ray compute_primary_ray(const int &x, const int &y) const = 0;
@@ -45,6 +50,7 @@ private:
 
 
 class OrthographicCamera
+    : public Camera
 {
 public:
     Ray compute_primary_ray(const int &x, const int &y) const;
