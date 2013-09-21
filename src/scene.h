@@ -42,7 +42,7 @@ public:
     void add_light(PointLight *light);
 
 private:
-    Color trace_ray(const Ray &ray, const int depth);
+    Color trace_ray(const Ray &ray, const int depth = 0, const float weight = 1.0);
 
     // Pixel dimensions of the image.
     int width, height;

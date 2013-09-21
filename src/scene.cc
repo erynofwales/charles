@@ -134,7 +134,7 @@ Scene::render()
             d = Vector3(0, 0, 1);
             d.normalize();
             primary_ray = Ray(o, d);
-            Color c = trace_ray(primary_ray, 0);
+            Color c = trace_ray(primary_ray);
             pixels[y * width + x] = c;
         }
     }
@@ -177,7 +177,9 @@ Scene::add_light(PointLight *light)
  * Trace the given ray through the scene, recursing until depth has been reached.
  */
 Color
-Scene::trace_ray(const Ray &ray, const int depth)
+Scene::trace_ray(const Ray &ray,
+                 const int depth,
+                 const float weight)
 {
     if (depth >= max_depth) {
         return Color::Black;
