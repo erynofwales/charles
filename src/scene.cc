@@ -179,6 +179,10 @@ Scene::add_light(PointLight *light)
 Color
 Scene::trace_ray(const Ray &ray, const int depth)
 {
+    if (depth >= max_depth) {
+        return Color::Black;
+    }
+
     Color out_color = Color::Black;
     Shape *intersected_shape = NULL;
     float *t = NULL;
@@ -206,6 +210,10 @@ Scene::trace_ray(const Ray &ray, const int depth)
     if (intersected_shape == NULL) {
         return out_color;
     }
+
+    /*
+     * Diffuse lighting. (Shading, etc.)
+     */
 
     Material shape_material = intersected_shape->get_material();
     Color shape_color = shape_material.get_diffuse_color();
@@ -244,6 +252,10 @@ Scene::trace_ray(const Ray &ray, const int depth)
         out_color += shape_color * (  ambient_level * ambient->compute_color_contribution()
                                     + diffuse_level * ldotn);
     }
+
+    /*
+     * Specular lighting. (Reflections, etc.)
+     */
 
     return out_color;
 }
