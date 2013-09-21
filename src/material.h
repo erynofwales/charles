@@ -25,12 +25,21 @@ public:
     const Color &get_diffuse_color() const;
     void set_diffuse_color(const Color &c);
 
+    float get_specular_level() const;
+    void set_specular_level(const float &kd);
+    const Color &get_specular_color() const;
+    void set_specular_color(const Color &c);
+
 private:
     void _clamp_parameter(float &param);
 
-    // Diffusion parameters.
+    // Diffuse parameters.
     float diffuse_level;
     Color diffuse_color;
+
+    // Specular parameters.
+    float specular_level;
+    Color specular_color;
 };
 
 #endif

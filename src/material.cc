@@ -9,8 +9,10 @@
 
 
 Material::Material()
-    : diffuse_level(1.0),
-      diffuse_color(Color::Black)
+    : diffuse_level(0.8),
+      diffuse_color(Color::White),
+      specular_level(0.5),
+      specular_color(Color::White)
 { }
 
 
@@ -42,6 +44,37 @@ void
 Material::set_diffuse_color(const Color &c)
 {
     diffuse_color = c;
+}
+
+
+float
+Material::get_specular_level()
+    const
+{
+    return specular_level;
+}
+
+
+void
+Material::set_specular_level(const float &ks)
+{
+    specular_level = ks;
+    _clamp_parameter(specular_level);
+}
+
+
+const Color &
+Material::get_specular_color()
+    const
+{
+    return specular_color;
+}
+
+
+void
+Material::set_specular_color(const Color &c)
+{
+    specular_color = c;
 }
 
 
