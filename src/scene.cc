@@ -213,15 +213,16 @@ Scene::trace_ray(const Ray &ray,
         return out_color;
     }
 
-    /*
-     * Diffuse lighting. (Shading, etc.)
-     */
-
     Material shape_material = intersected_shape->get_material();
     Color shape_color = shape_material.get_diffuse_color();
 
     Vector3 intersection = ray.parameterize(nearest_t);
     Vector3 normal = intersected_shape->compute_normal(intersection);
+
+    /*
+     * Diffuse lighting. (Shading, etc.)
+     */
+
     Vector3 light_direction;
     float ldotn, diffuse_level, ambient_level;
     Ray shadow_ray;
@@ -258,6 +259,24 @@ Scene::trace_ray(const Ray &ray,
     /*
      * Specular lighting. (Reflections, etc.)
      */
+
+    float specular_level = shape_material.get_specular_level();
+
+    /*
+     * Compute the reflection ray. Computing the direction of the reflection ray is done by the following formula:
+     *
+     *     d = dr - 2n(dr . n)
+     *
+     * where d is the direction, dr is the direction of the incoming ray, and n is the normal vector. Period (.)
+     * indicates the dot product.
+     *
+     * The origin of the reflection ray is the point on the surface where the incoming ray intersected with it.
+     */
+    Ray reflection_ray = Ray(intersection, ray.direction - 2.0 * normal * ray.direction.dot(normal));
+    Color specular_color = trace_ray(reflection_ray, depth + 1, weight * specular_level);
+
+    // TODO: Mix in specular_color of material.
+    out_color += specular_level * specular_color;
 
     return out_color;
 }
