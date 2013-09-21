@@ -22,6 +22,7 @@ BUILD_CMDS = False
 
 # Library directories. Where should scons look for .a files during linking?
 lib_directories = Split("""
+    /usr/local/lib
 """)
 
 # Source directories. New directories should contain a SConscript file and be
@@ -34,6 +35,7 @@ source_directories = lib_directories + Split("""
 # Include directories. Where should scons look for headers during preprocessing
 # and compiling?
 include_directories = Split("""
+    /usr/local/include
     #src
 """)
  
