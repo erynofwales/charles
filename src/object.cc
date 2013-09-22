@@ -54,6 +54,15 @@ Object::set_origin(Vector3 v)
     origin = v;
 }
 
+
+std::ostream &
+operator<<(std::ostream &os, const Object &o)
+{
+    // Stream objects like this: [Object origin]
+    os << "[Object " << o.origin << "]";
+    return os;
+}
+
 #pragma mark - Shapes
 
 /*

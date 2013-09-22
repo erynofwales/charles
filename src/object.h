@@ -9,6 +9,8 @@
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
 
+#include <iostream>
+
 #include "basics.h"
 #include "material.h"
 #include "texture.h"
@@ -23,9 +25,13 @@ public:
     Vector3 get_origin() const;
     void set_origin(Vector3 v);
 
+    friend std::ostream &operator<<(std::ostream &os, const Object &o);
+
 private:
     Vector3 origin;
 };
+
+std::ostream &operator<<(std::ostream &os, const Object &o);
 
 
 class Shape
