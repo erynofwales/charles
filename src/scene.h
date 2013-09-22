@@ -47,8 +47,12 @@ private:
     // Pixel dimensions of the image.
     int width, height;
 
-    // Ray tracing parameters.
+    /*
+     * Ray tracing parameters. max_depth indicates the maximum depth of the ray tree. min_weight indicates the minimum
+     * specular weight to apply before giving up.
+     */
     int max_depth;
+    float min_weight;
 
     // Scene objects.
     AmbientLight *ambient;

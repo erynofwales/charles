@@ -19,6 +19,7 @@
 Scene::Scene()
     : width(640), height(480),
       max_depth(5),
+      min_weight(1e-4),
       ambient(new AmbientLight()),
       shapes(),
       lights(),
@@ -181,7 +182,7 @@ Scene::trace_ray(const Ray &ray,
                  const int depth,
                  const float weight)
 {
-    if (depth >= max_depth) {
+    if (depth >= max_depth || weight <= min_weight) {
         return Color::Black;
     }
 
