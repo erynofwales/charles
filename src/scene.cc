@@ -256,6 +256,9 @@ Scene::trace_ray(const Ray &ray,
             }
         }
 
+        /*
+         * Compute basic Lambert diffuse shading for this object.
+         */
         out_color += shape_color * (  ambient_level * ambient->compute_color_contribution()
                                     + diffuse_level * ldotn);
     }
