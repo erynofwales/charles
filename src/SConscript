@@ -11,6 +11,7 @@ files = Split("""
     material.cc
     object.cc
     object_sphere.cc
+    object_plane.cc
     scene.cc
     writer_png.cc
 """)
