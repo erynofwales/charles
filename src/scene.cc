@@ -268,6 +268,7 @@ Scene::trace_ray(const Ray &ray,
      */
 
     float specular_level = shape_material.get_specular_level();
+    const Color &specular_color = shape_material.get_specular_color();
 
     /*
      * Compute the reflection ray. Computing the direction of the reflection ray is done by the following formula:
@@ -280,10 +281,10 @@ Scene::trace_ray(const Ray &ray,
      * The origin of the reflection ray is the point on the surface where the incoming ray intersected with it.
      */
     Ray reflection_ray = Ray(intersection, ray.direction - 2.0 * normal * ray.direction.dot(normal));
-    Color specular_color = trace_ray(reflection_ray, depth + 1, weight * specular_level);
+    Color reflection_color = trace_ray(reflection_ray, depth + 1, weight * specular_level);
 
     // TODO: Mix in specular_color of material.
-    out_color += specular_level * specular_color;
+    out_color += specular_level * specular_color * reflection_color;
 
     return out_color;
 }
