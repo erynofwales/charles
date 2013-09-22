@@ -48,7 +48,7 @@ main(int argc,
     scene.add_shape(s3);
 
     // Make a plane
-    Plane *p1 = new Plane(Vector3(0, 200, 0), Vector3::Y);
+    Plane *p1 = new Plane(Vector3(0, 420, 0), Vector3::Y);
     p1->set_material(m1);
     scene.add_shape(p1);
 
