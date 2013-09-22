@@ -200,6 +200,9 @@ Scene::trace_ray(const Ray &ray,
         nints = s->does_intersect(ray, &t);
         if (nints > 0) {
             for (int i = 0; i < nints; i++) {
+                if (t[i] < 1e-2) {
+                    break;
+                }
                 if (t[i] < nearest_t) {
                     intersected_shape = s;
                     nearest_t = t[i];
