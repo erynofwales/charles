@@ -11,6 +11,7 @@
 #include "light.h"
 #include "material.h"
 #include "object_sphere.h"
+#include "object_plane.h"
 #include "scene.h"
 #include "writer_png.h"
 
@@ -45,6 +46,11 @@ main(int argc,
     scene.add_shape(s1);
     scene.add_shape(s2);
     scene.add_shape(s3);
+
+    // Make a plane
+    Plane *p1 = new Plane(Vector3(0, 200, 0), Vector3::Y);
+    p1->set_material(m1);
+    scene.add_shape(p1);
 
     PointLight *l1 = new PointLight(Vector3(0.0, 240.0, 100.0), Color(1.0, 1.0, 1.0), 1.0);
     //Light *l2 = new Light(Vector3(640.0, 240.0, 10000.0), 0.2);
