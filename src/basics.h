@@ -12,6 +12,9 @@
 #ifndef __BASICS_H__
 #define __BASICS_H__
 
+#include <iostream>
+
+
 struct Vector3
 {
     Vector3();
@@ -46,6 +49,7 @@ struct Vector3
 };
 
 const Vector3 operator*(const float &lhs, const Vector3 &rhs);
+std::ostream &operator<<(std::ostream &os, const Vector3 &v);
 
 
 struct Ray
@@ -57,6 +61,8 @@ struct Ray
 
     Vector3 origin, direction;
 };
+
+std::ostream &operator<<(std::ostream &os, const Ray &r);
 
 
 struct Color
@@ -96,5 +102,6 @@ struct Color
 };
 
 const Color operator*(const float &lhs, const Color &rhs);
+std::ostream &operator<<(std::ostream &os, const Color &c);
 
 #endif

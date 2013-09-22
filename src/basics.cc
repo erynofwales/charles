@@ -242,6 +242,15 @@ operator*(const float &lhs, const Vector3 &rhs)
     return rhs * lhs;
 }
 
+
+std::ostream &
+operator<<(std::ostream &os, const Vector3 &v)
+{
+    // Stream the vector like this: <x, y, z>
+    os << "<" << v.x << ", " << v.y << ", " << v.z << ">";
+    return os;
+}
+
 #pragma mark - Rays
 
 /*
@@ -274,6 +283,14 @@ Ray::parameterize(const float t)
     const
 {
     return origin + t * direction;
+}
+
+
+std::ostream &
+operator<<(std::ostream &os, const Ray &r)
+{
+    os << "[Ray " << r.origin << " " << r.direction << "]";
+    return os;
 }
 
 #pragma mark - Colors
@@ -481,4 +498,13 @@ const Color
 operator*(const float &lhs, const Color &rhs)
 {
     return rhs * lhs;
+}
+
+
+std::ostream &
+operator<<(std::ostream &os, const Color &c)
+{
+    // Stream colors like this: <r, g, b, a>
+    os << "<" << c.red << ", " << c.green << ", " << c.blue << ", " << c.alpha << ">";
+    return os;
 }
