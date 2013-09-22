@@ -34,6 +34,7 @@ struct Vector3
     float length2() const;
     float length() const;
     float dot(const Vector3 &v) const;
+    Vector3 cross(const Vector3 &v) const;
 
     Vector3 &normalize();
 

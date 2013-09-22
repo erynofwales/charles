@@ -206,6 +206,19 @@ Vector3::dot(const Vector3 &v)
 
 
 /*
+ * Vector3::cross --
+ *
+ * Compute and return the cross product of this and the given vectors.
+ */
+Vector3
+Vector3::cross(const Vector3 &v)
+    const
+{
+    return Vector3(y*v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
+}
+
+
+/*
  * Vector3::normalize --
  *
  * Normalize this vector in place. That is, make this vector's magnitude (length) 1.0.
