@@ -95,6 +95,7 @@ Plane::does_intersect(const Ray &ray, float **t)
         return nints;
     }
 
+    // TODO: denom could still be 0 here!
     float t0 = numer / denom;
 
     // If the t value is negative, it's "behind" the origin of the ray, which we don't care about.
@@ -149,6 +150,10 @@ Vector3
 Plane::compute_normal(const Vector3 &p)
     const
 {
+    if (!point_is_on_surface(p)) {
+        return Vector3::Zero;
+    }
+
     // This one's easy since planes are defined by their normals. :)
     return normal;
 }
