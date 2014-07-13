@@ -1,0 +1,37 @@
+# SConscript
+# vim: set ft=python:
+#
+# Eryn Wells <eryn@erynwells.me>
+
+Import('env')
+Import('build_env')
+
+
+include_dir = env.Dir('include').srcnode()
+env.Append(CPPPATH=[include_dir])
+build_env.Append(CPPPATH=[include_dir])
+
+env.Append(CPPDEFINES=[('YAML_VERSION_STRING', '\\"0.1.5\\"'),
+                       ('YAML_VERSION_MAJOR', '0'),
+                       ('YAML_VERSION_MINOR', '1'),
+                       ('YAML_VERSION_PATCH', '5')])
+
+
+files = [
+    'api.c',
+    'dumper.c',
+    'emitter.c',
+    'loader.c',
+    'parser.c',
+    'reader.c',
+    'scanner.c',
+    'writer.c',
+]
+
+objs = []
+for f in files:
+    objs.append(env.Object(f))
+
+
+yaml = env.Library('yaml', objs)
+env.Alias('libyaml', yaml)
