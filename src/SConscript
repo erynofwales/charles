@@ -4,20 +4,31 @@
 
 Import('env')
 
-files = Split("""
-    basics.cc
-    camera.cc
-    light.cc
-    material.cc
-    object.cc
-    object_sphere.cc
-    object_plane.cc
-    scene.cc
-    writer_png.cc
-""")
+
+subdirs = [
+    # TODO: Put subdirectories here.
+]
+
+for d in subdirs:
+    env.SConscript(env.Dir(d).File('SConscript'), {'env': env})
+
+
+files = [
+    'basics.cc',
+    'camera.cc',
+    'light.cc',
+    'material.cc',
+    'object.cc',
+    'object_sphere.cc',
+    'object_plane.cc',
+    'scene.cc',
+    'writer_png.cc',
+]
+
+objs = []
+for f in files:
+    objs.append(env.Object(f))
 
 lib = env.Library('charles', files)
 prog = env.Program('charles', [lib, 'charles.cc'])
 env.Alias('charles', prog)
-
-Return('lib')

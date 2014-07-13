@@ -1,22 +1,31 @@
 # SConscript
 # vim: set ft=python:
-#
-# SConscript for building tests for charles.
-#
 # Eryn Wells <eryn@erynwells.me>
 
 Import('env')
-Import('gtest')
-Import('gtest_include_dir')
-Import('charles_lib')
 
-files = Split("""
-    test_basics.cc
-    test_charles.cc
-""")
 
 test_env = env.Clone()
-test_env.Append(CPPPATH=[gtest_include_dir])
 test_env.Append(CPPDEFINES='GTEST_USE_OWN_TR1_TUPLE')
-prog = test_env.Program('test_charles', [gtest, charles_lib, files])
+
+
+subdirs = [
+    # TODO: Put subdirectories here.
+]
+
+for d in subdirs:
+    env.SConscript(env.Dir(d).File('SConscript'), {'env': test_env})
+
+
+files = [
+    'test_basics.cc',
+    'test_charles.cc',
+]
+
+objs = []
+for f in files:
+    objs.append(env.Object(f))
+
+
+prog = test_env.Program('test_charles', files, libs=[gtest, charles])
 env.Alias('test', prog)
