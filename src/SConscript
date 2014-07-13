@@ -30,5 +30,7 @@ for f in files:
     objs.append(env.Object(f))
 
 lib = env.Library('charles', files)
-prog = env.Program('charles', [lib, 'charles.cc'])
+prog = env.Program('charles', ['charles.cc'], LIBS=[lib, 'png'])
 env.Alias('charles', prog)
+
+env.Default('charles')

@@ -5,16 +5,12 @@
 Import('env')
 
 
-test_env = env.Clone()
-test_env.Append(CPPDEFINES='GTEST_USE_OWN_TR1_TUPLE')
-
-
 subdirs = [
     # TODO: Put subdirectories here.
 ]
 
 for d in subdirs:
-    env.SConscript(env.Dir(d).File('SConscript'), {'env': test_env})
+    env.SConscript(env.Dir(d).File('SConscript'), {'env': env})
 
 
 files = [
@@ -27,5 +23,5 @@ for f in files:
     objs.append(env.Object(f))
 
 
-prog = test_env.Program('test_charles', files, libs=[gtest, charles])
+prog = env.Program('test_charles', objs, LIBS=['gtest', 'charles'])
 env.Alias('test', prog)
