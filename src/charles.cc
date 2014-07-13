@@ -50,9 +50,11 @@ main(int argc,
     scene.add_shape(s4);
 
     // Make a plane
+    /*
     Plane *p1 = new Plane(Vector3(0, 460, 400), Vector3(0, 1, 0.01));
     p1->set_material(m1);
     scene.add_shape(p1);
+    */
 
     PointLight *l1 = new PointLight(Vector3(0.0, 240.0, 100.0), Color::White, 1.0);
     scene.add_light(l1);
