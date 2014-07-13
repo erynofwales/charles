@@ -144,8 +144,11 @@ def create_env(name, appends=None):
 def do_sconscript(env, build_env, src_dir, out_dir):
     sconscript = src_dir.File('SConscript')
     print 'Reading {}'.format(sconscript)
+    # Swapping env and build_env here is a bit wacky. Doing so means that env is
+    # always the Environment that the SConscript should be building with, while
+    # build_env is the Environment we're using to put everything together.
     env.SConscript(sconscript,
-                   {'env': build_env},
+                   {'env': build_env, 'build_env': env},
                    variant_dir=out_dir)
 
 
@@ -161,7 +164,7 @@ beta_env = create_env('beta', {
 
 release_env = create_env('release', {
     'CPPDEFINES': ['NRELEASE'],
-    'CCFLAGS': ['-O2']
+    'CCFLAGS': ['-O3']
 })
 
 
@@ -191,8 +194,6 @@ for mode in build_modes:
     # Process all lib dirs.
     for lib in os.listdir(LIB_DIR.abspath):
         lib_out_dir = out_dir.Dir('lib').Dir(lib)
-        if not os.path.isdir(lib_out_dir.abspath):
-            continue
         do_sconscript(env, lib_env, LIB_DIR.Dir(lib), lib_out_dir)
         env.Append(LIBPATH=[lib_out_dir])
 
