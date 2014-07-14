@@ -29,9 +29,8 @@ int
 main(int argc,
      const char *argv[])
 {
-    Scene scene = Scene();
+    Scene scene;
 
-#if 0
     scene.get_ambient().set_intensity(1.0);
 
     Material *m1 = new Material();
@@ -56,23 +55,17 @@ main(int argc,
     scene.add_shape(s2);
     scene.add_shape(s3);
     scene.add_shape(s4);
-
+#if 0
     // Make a plane
     /*
     Plane *p1 = new Plane(Vector3(0, 460, 400), Vector3(0, 1, 0.01));
     p1->set_material(m1);
     scene.add_shape(p1);
     */
+#endif
 
     PointLight *l1 = new PointLight(Vector3(0.0, 240.0, 100.0), Color::White, 1.0);
     scene.add_light(l1);
-
-    // Render.
-    scene.render();
-
-    Writer *writer = new PNGWriter();
-    scene.write(*writer, OUT_FILE);
-#endif
 
     std::string outfile, infile;
 
@@ -104,8 +97,13 @@ main(int argc,
     for (int i = optind; i < argc; i++) {
         reader.read_file(infile);
     }
-    /* TODO: Call tracer. */
-    /* TODO: Write rendered scene to PNG file. */
+
+    /* Call tracer. */
+    scene.render();
+
+    /* Write rendered scene to PNG file. */
+    PNGWriter writer;
+    scene.write(writer, outfile);
 
     return 0;
 }
