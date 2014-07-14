@@ -6,16 +6,23 @@
  */
 
 #include <cstdio>
+#include <unistd.h>
 
 #include "basics.h"
 #include "light.h"
 #include "material.h"
 #include "object_sphere.h"
 #include "object_plane.h"
+#include "reader_yaml.hh"
 #include "scene.h"
 #include "writer_png.h"
 
-const char *OUT_FILE = "charles_out.png";
+
+static void
+usage(const char *progname)
+{
+    fprintf(stderr, "Usage: %s [-hv] [-o <outfile>] <infile ...>\n", progname);
+}
 
 
 int
@@ -24,6 +31,7 @@ main(int argc,
 {
     Scene scene = Scene();
 
+#if 0
     scene.get_ambient().set_intensity(1.0);
 
     Material *m1 = new Material();
@@ -64,6 +72,40 @@ main(int argc,
 
     Writer *writer = new PNGWriter();
     scene.write(*writer, OUT_FILE);
+#endif
+
+    std::string outfile, infile;
+
+    int opt;
+    while ((opt = getopt(argc, (char *const *)argv, "ho:v")) != -1) {
+        switch (opt) {
+            case 'h':
+                usage(argv[0]);
+                break;
+            case 'o':
+                outfile = optarg;
+                break;
+            case 'v':
+                /* TODO: Verbosity levels. */
+                break;
+        }
+    }
+
+    if (optind >= argc) {
+        fprintf(stderr, "Input file required.\n");
+        usage(argv[0]);
+        return -1;
+    }
+
+    infile = argv[optind];
+
+    /* Parse YAML files. */
+    YAMLReader reader(scene);
+    for (int i = optind; i < argc; i++) {
+        reader.read_file(infile);
+    }
+    /* TODO: Call tracer. */
+    /* TODO: Write rendered scene to PNG file. */
 
     return 0;
 }
