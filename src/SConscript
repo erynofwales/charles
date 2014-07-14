@@ -21,6 +21,7 @@ files = [
     'object.cc',
     'object_sphere.cc',
     'object_plane.cc',
+    'reader_yaml.cc',
     'scene.cc',
     'writer_png.cc',
 ]
@@ -30,7 +31,7 @@ for f in files:
     objs.append(env.Object(f))
 
 lib = env.Library('charles', files)
-prog = env.Program('charles', ['charles.cc'], LIBS=[lib, 'png'])
+prog = env.Program('charles', ['charles.cc'], LIBS=[lib, 'png', 'yaml'])
 env.Alias('charles', prog)
 
 env.Default('charles')
