@@ -30,7 +30,9 @@ public:
 
     bool is_rendered() const;
     int get_width() const;
+    void set_width(int w) { width = w; }
     int get_height() const;
+    void set_height(int h) { height = h; }
     AmbientLight &get_ambient() const;
     const Color *get_pixels() const;
 
