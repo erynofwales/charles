@@ -100,6 +100,33 @@ private:
     CallbackFunction mCallback;
 };
 
+
+/**
+ * Defines traits for the ParseScalar function. In particular, defines the
+ * format strings for supported scalar types.
+ */
+template<typename T>
+struct ScalarParserTraits
+{
+    static const char* fmt;
+};
+
+
+/**
+ * Parse a YAML scalar value into a native datatype.
+ *
+ * @param [in] scalarValue The YAML scalar value
+ * @param [out] value The parsed value of the scalar value
+ * @returns `true` if the conversion succeeded
+ */
+template<typename T>
+bool
+ParseScalar(const std::string& scalarValue,
+            T& value)
+{
+    return sscanf(scalarValue.c_str(), ScalarParserTraits<T>::fmt, &value) == EOF;
+}
+
 } /* namespace yaml */
 
 #endif /* __YAML_PARSERS_HH__ */
