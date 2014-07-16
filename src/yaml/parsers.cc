@@ -15,6 +15,8 @@
 
 namespace yaml {
 
+#pragma mark Parser
+
 Parser::Parser(Scene& scene,
                ParserStack& parsers)
     : mScene(scene),
@@ -68,5 +70,13 @@ Parser::GetParsers()
 {
     return mParsers;
 }
+
+#pragma mark ParseScalar
+
+template<>
+const char* ScalarParserTraits<int>::fmt = "%d";
+
+template<>
+const char* ScalarParserTraits<double>::fmt = "%ld";
 
 } /* namespace yaml */
