@@ -1,0 +1,18 @@
+# SConscript
+# vim: set ft=python:
+# Eryn Wells <eryn@erynwells.me>
+
+Import('env')
+
+
+files = [
+    'parsers.cc',
+    'scene_parser.cc',
+]
+
+objs = []
+for f in files:
+    objs.append(env.Object(f))
+
+print objs
+Return('objs')

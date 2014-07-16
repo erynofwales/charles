@@ -5,12 +5,16 @@
 Import('env')
 
 
+objs = []
+
 subdirs = [
-    # TODO: Put subdirectories here.
+    'yaml',
 ]
 
 for d in subdirs:
-    env.SConscript(env.Dir(d).File('SConscript'), {'env': env})
+    dir_objs = env.SConscript(env.Dir(d).File('SConscript'), {'env': env})
+    print dir_objs
+    objs.extend(dir_objs)
 
 
 files = [
@@ -26,11 +30,10 @@ files = [
     'writer_png.cc',
 ]
 
-objs = []
 for f in files:
     objs.append(env.Object(f))
 
-lib = env.Library('charles', files)
+lib = env.Library('charles', objs)
 prog = env.Program('charles', ['charles.cc'], LIBS=[lib, 'png', 'yaml'])
 env.Alias('charles', prog)
 

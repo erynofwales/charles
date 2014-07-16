@@ -15,228 +15,47 @@
 
 #include "reader_yaml.hh"
 
-
-struct Parser;
-typedef std::stack<Parser *> ParserStack;
-
-
-struct Parser
-{
-    Parser(Scene& scene,
-           ParserStack& parsers)
-        : mScene(scene),
-          mParsers(parsers)
-    { }
-
-    virtual
-    ~Parser()
-    { }
-
-    virtual void
-    handle_event(yaml_event_t& event)
-    {
-        /* TODO: Shouldn't ever get here. */
-        abort(); 
-    }
-
-    bool
-    done()
-        const
-    {
-        return mDone;
-    }
-
-protected:
-    Scene& mScene;
-    ParserStack &mParsers;
-    bool mDone;
-};
+#include "yaml/parsers.hh"
+#include "yaml/scene_parser.hh"
 
 
-struct SceneParser
+#if 0
+struct ObjectParser
     : public Parser
 {
-    SceneParser(Scene& scene, ParserStack& parsers)
+    ObjectParser(Scene& scene, ParserStack& parsers)
         : Parser(scene, parsers),
-          mSection(SceneParser::NoSection),
-          mDimension(SceneParser::NoDimension)
+          mSection(NoSection)
     {
-        printf("SceneParser\n");
+        printf("ObjectParser\n");
     }
 
-    ~SceneParser()
+    ~ObjectParser()
     {
-        printf("~SceneParser\n");
+        printf("~ObjectParser\n");
     }
-    
+
     void
     handle_event(yaml_event_t& event)
     {
         switch (mSection) {
             case NoSection:
-                handle_toplevel_event(event);
                 break;
-            case CameraSection:
-                handle_camera_event(event);
+            case TypeSection:
                 break;
-            case DimensionsSection:
-                handle_dimensions_event(event);
-                break;
-            case ObjectsSection:
-                handle_objects_event(event);
-                break;
-            default:
-                /* TODO: WHAT. Fail gracefully. */
-                abort();
+            case OriginSection:
                 break;
         }
     }
-
-    void
-    handle_toplevel_event(yaml_event_t& event)
-    {
-        static const std::string CAMERA = "camera";
-        static const std::string DIMENSIONS = "dimensions";
-        static const std::string OBJECTS = "objects";
-
-        if (event.type == YAML_MAPPING_END_EVENT) {
-            mDone = true;
-            return;
-        }
-
-        if (event.type != YAML_SCALAR_EVENT) {
-            /* TODO: Invalid event type for top-level Scene. Fail. */
-            abort();
-        }
-
-        std::string key = (char *)event.data.scalar.value;
-        if (key == CAMERA) {
-            mSection = SceneParser::CameraSection;
-        }
-        else if (key == DIMENSIONS) {
-            mSection = SceneParser::DimensionsSection;
-        }
-        else if (key == OBJECTS) {
-            mSection = SceneParser::ObjectsSection;
-        }
-        else {
-            /* TODO: Invalid key. Fail. */
-            abort();
-        }
-    }
-
-    void
-    handle_camera_event(yaml_event_t& event)
-    { }
-
-    void
-    handle_dimensions_event(yaml_event_t& event)
-    {
-        int dim;
-
-        switch (mDimension) {
-            case NoDimension:
-                switch (event.type) {
-                    case YAML_SEQUENCE_START_EVENT:
-                        printf("  start dimensions\n");
-                        mDimension = SceneParser::WidthDimension;
-                        break;
-                    default:
-                        /* TODO: Fail gracefully. */
-                        abort();
-                }
-                break;
-            case WidthDimension:
-                switch (event.type) {
-                    case YAML_SCALAR_EVENT:
-                        printf("  width = %s\n", event.data.scalar.value);
-                        sscanf((char *)event.data.scalar.value, "%d", &dim);
-                        mScene.set_width(dim);
-                        mDimension = SceneParser::HeightDimension;
-                        break;
-                    default:
-                        /* TODO: Fail gracefully. */
-                        abort();
-                }
-                break;
-            case HeightDimension:
-                if (event.type == YAML_SCALAR_EVENT) {
-                    printf("  height = %s\n", event.data.scalar.value);
-                    sscanf((char *)event.data.scalar.value, "%d", &dim);
-                    mScene.set_height(dim);
-                    mDimension = SceneParser::DoneDimension;
-                }
-                else {
-                    /* TODO: Fail gracefully. */
-                    abort();
-                }
-                break;
-            case DoneDimension:
-                if (event.type == YAML_SEQUENCE_END_EVENT) {
-                    printf("  end dimensions\n");
-                    mSection = NoSection;
-                }
-                else {
-                    /* TODO: Fail gracefully. */
-                    abort();
-                }
-                break;
-        }
-    }
-
-    void
-    handle_objects_event(yaml_event_t& event)
-    { }
 
 private:
     enum {
         NoSection,
-        CameraSection,
-        DimensionsSection,
-        ObjectsSection,
+        TypeSection,
+        OriginSection,
     } mSection;
-
-    enum {
-        NoDimension,
-        HeightDimension,
-        WidthDimension,
-        DoneDimension
-    } mDimension;
 };
-
-
-struct DocumentParser
-    : public Parser
-{
-    DocumentParser(Scene& scene,
-                   ParserStack& parsers)
-        : Parser(scene, parsers)
-    {
-        printf("DocumentParser\n");
-    }
-
-    ~DocumentParser()
-    {
-        printf("~DocumentParser\n");
-    }
-
-    void
-    handle_event(yaml_event_t& event)
-    {
-        switch (event.type) {
-            case YAML_DOCUMENT_END_EVENT:
-                mDone = true;
-                break;
-            case YAML_MAPPING_START_EVENT:
-                mParsers.push(new SceneParser(mScene, mParsers));
-                break;
-            default:
-                /* TODO: Fail gracefully. */
-                abort();
-                break;
-        }
-    }
-};
+#endif
 
 
 ssize_t
@@ -255,7 +74,7 @@ YAMLReader::read_file(const std::string& filename)
     printf("Reading file: %s\n", filename.c_str());
     yaml_parser_set_input_file(&parser, yaml_infile);
 
-    ParserStack parsers;
+    yaml::ParserStack parsers;
     bool success = true;
     bool done = false;
     yaml_event_t event;
@@ -280,16 +99,22 @@ YAMLReader::read_file(const std::string& filename)
 
             case YAML_DOCUMENT_START_EVENT:
                 printf("YAML_DOCUMENT_START_EVENT\n");
-                parsers.push(new DocumentParser(mScene, parsers));
+                break;
+            case YAML_DOCUMENT_END_EVENT:
+                printf("YAML_DOCUMENT_END_EVENT\n");
+                break;
+
+            case YAML_MAPPING_START_EVENT:
+                parsers.push(new yaml::SceneParser(mScene, parsers));
                 break;
 
             default:
-                if (parsers.top()->done()) {
-                    delete parsers.top();
-                    parsers.pop();
-                }
                 if (!parsers.empty()) {
-                    parsers.top()->handle_event(event);
+                    parsers.top()->HandleEvent(event);
+                    if (parsers.top()->GetDone()) {
+                        delete parsers.top();
+                        parsers.pop();
+                    }
                 }
 
 #if 0
