@@ -70,14 +70,14 @@ private:
 
 
 /**
- * UtilityParsers handle small reusable bits of YAML and their constructors take
- * a C++11 lambda, which will be called back with the result of the parsed data.
+ * UtilityParsers handle small reusable bits of YAML. Their constructors take a
+ * C++11 lambda, which will be called back with the result of the parsed data.
  */
-template<typename CallbackType>
+template<typename T>
 struct UtilityParser
     : public Parser
 {
-    typedef std::function<CallbackType> CallbackFunction;
+    typedef std::function<void (T)> CallbackFunction;
 
     UtilityParser(Scene& scene,
                   ParserStack& parsers,
@@ -89,6 +89,12 @@ struct UtilityParser
     virtual
     ~UtilityParser()
     { }
+
+    void
+    Notify(T value)
+    {
+        mCallback(value);
+    }
 
 private:
     CallbackFunction mCallback;
