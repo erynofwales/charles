@@ -31,13 +31,6 @@ private:
         DimensionsSection,
         ObjectsSection,
     } mSection;
-
-    enum {
-        NoDimension,
-        HeightDimension,
-        WidthDimension,
-        DoneDimension
-    } mDimension;
 };
 
 } /* namespace yaml */

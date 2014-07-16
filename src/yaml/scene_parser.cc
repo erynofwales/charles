@@ -10,6 +10,7 @@
 #include <string>
 
 #include "scene_parser.hh"
+#include "vector_parser.hh"
 
 
 namespace yaml {
@@ -17,8 +18,7 @@ namespace yaml {
 SceneParser::SceneParser(Scene& scene,
                          ParserStack& parsers)
     : Parser(scene, parsers),
-      mSection(SceneParser::NoSection),
-      mDimension(SceneParser::NoDimension)
+      mSection(SceneParser::NoSection)
 { }
 
 
@@ -85,55 +85,22 @@ SceneParser::HandleTopLevelEvent(yaml_event_t& event)
 void
 SceneParser::HandleDimensionsEvent(yaml_event_t& event)
 {
-    int dim;
+    auto onDone = [this](std::vector<int> dimensions) {
+        if (dimensions.size() < 2) {
+            assert(dimensions.size() < 2);
+        }
+        Scene& sc = GetScene();
+        sc.set_width(dimensions.at(0));
+        sc.set_height(dimensions.at(1));
+    };
 
-    switch (mDimension) {
-        case NoDimension:
-            switch (event.type) {
-                case YAML_SEQUENCE_START_EVENT:
-                    printf("  start dimensions\n");
-                    mDimension = SceneParser::WidthDimension;
-                    break;
-                default:
-                    /* TODO: Fail gracefully. */
-                    abort();
-            }
+    switch (event.type) {
+        case YAML_SEQUENCE_START_EVENT:
+            GetParsers().push(new VectorParser<int>(GetScene(), GetParsers(), onDone));
             break;
-        case WidthDimension:
-            switch (event.type) {
-                case YAML_SCALAR_EVENT:
-                    printf("  width = %s\n", event.data.scalar.value);
-                    sscanf((char *)event.data.scalar.value, "%d", &dim);
-                    GetScene().set_width(dim);
-                    mDimension = SceneParser::HeightDimension;
-                    break;
-                default:
-                    /* TODO: Fail gracefully. */
-                    abort();
-            }
-            break;
-        case HeightDimension:
-            if (event.type == YAML_SCALAR_EVENT) {
-                printf("  height = %s\n", event.data.scalar.value);
-                sscanf((char *)event.data.scalar.value, "%d", &dim);
-                GetScene().set_height(dim);
-                mDimension = SceneParser::DoneDimension;
-            }
-            else {
-                /* TODO: Fail gracefully. */
-                abort();
-            }
-            break;
-        case DoneDimension:
-            if (event.type == YAML_SEQUENCE_END_EVENT) {
-                printf("  end dimensions\n");
-                mSection = NoSection;
-            }
-            else {
-                /* TODO: Fail gracefully. */
-                abort();
-            }
-            break;
+        default:
+            /* TODO: Fail gracefully. */
+            assert(false);
     }
 }
 
