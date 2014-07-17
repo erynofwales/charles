@@ -39,22 +39,17 @@ main(int argc,
     m2->set_diffuse_color(Color::Green);
     Material *m3 = new Material();
     m3->set_diffuse_color(Color::Blue);
-    Material *m4 = new Material();
-    m4->set_diffuse_color(Color(1.0, 0.0, 1.0));
 
     // Make some spheres.
-    Sphere *s1 = new Sphere(Vector3(233, 290, 0), 80.0);
-    Sphere *s2 = new Sphere(Vector3(407, 290, 0), 80.0);
-    Sphere *s3 = new Sphere(Vector3(320, 140, 0), 80.0);
-    Sphere *s4 = new Sphere(Vector3(620, 360, 0), 20.0);
+    Sphere *s1 = new Sphere(Vector3(0, 0.5, 2), 0.33);
+    Sphere *s2 = new Sphere(Vector3(-0.33, 0, 2), 0.33);
+    Sphere *s3 = new Sphere(Vector3(0.33, 0, 2), 0.33);
     s1->set_material(m1);
     s2->set_material(m2);
     s3->set_material(m3);
-    s4->set_material(m4);
     scene.add_shape(s1);
     scene.add_shape(s2);
     scene.add_shape(s3);
-    scene.add_shape(s4);
 #if 0
     // Make a plane
     /*
@@ -64,7 +59,7 @@ main(int argc,
     */
 #endif
 
-    PointLight *l1 = new PointLight(Vector3(0.0, 240.0, 100.0), Color::White, 1.0);
+    PointLight *l1 = new PointLight(Vector3(6.0, -4.0, 2), Color::White, 1.0);
     scene.add_light(l1);
 
     std::string outfile, infile;
