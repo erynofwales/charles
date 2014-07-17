@@ -29,19 +29,21 @@ public:
     float get_angle() const;
 
     virtual Ray compute_primary_ray(const int &x, const int &y) const = 0;
+    const Vector3& GetRight() const;
+    void SetRight(const Vector3& right);
+    const Vector3& GetUp() const;
+    void SetUp(const Vector3& up);
+
 
 private:
-    // Pixel dimensions of the image plane.
-    int pwidth, pheight;
-
     // Size of the image plane.
     Vector3 height, width;
 
     // Direction. A normalized vector defining where the camera is pointed.
     Vector3 direction;
+    Vector3 mRight;
+    Vector3 mUp;
 
-    // Horizontal viewing angle.
-    float angle;
 };
 
 
