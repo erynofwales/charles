@@ -120,8 +120,10 @@ Camera::SetUp(const Vector3& up)
  * the view into the scene.
  */
 Ray
-OrthographicCamera::compute_primary_ray(const int &x,
-                                        const int &y)
+OrthographicCamera::compute_primary_ray(const int x,
+                                        const int width,
+                                        const int y,
+                                        const int height)
     const
 {
     // Calculate the point on the image plane that the given (x,y) coordinate pair corresponds to.

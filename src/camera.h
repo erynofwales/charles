@@ -28,12 +28,13 @@ public:
     void set_direction(const Vector3 &d);
     float get_angle() const;
 
-    virtual Ray compute_primary_ray(const int &x, const int &y) const = 0;
     const Vector3& GetRight() const;
     void SetRight(const Vector3& right);
     const Vector3& GetUp() const;
     void SetUp(const Vector3& up);
 
+    virtual Ray compute_primary_ray(const int x, const int width,
+                                    const int y, const int height) const = 0;
 
 private:
     // Size of the image plane.
@@ -51,7 +52,8 @@ class OrthographicCamera
     : public Camera
 {
 public:
-    Ray compute_primary_ray(const int &x, const int &y) const;
+    Ray compute_primary_ray(const int x, const int width,
+                            const int y, const int height) const;
 };
 
 
