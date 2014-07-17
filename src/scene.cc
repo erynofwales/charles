@@ -18,6 +18,7 @@
 
 Scene::Scene()
     : width(640), height(480),
+      camera(new PerspectiveCamera()),
       max_depth(5),
       min_weight(1e-4),
       ambient(new AmbientLight()),
@@ -30,6 +31,11 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+    if (camera) {
+        delete camera;
+        camera = NULL;
+    }
+
     if (ambient != NULL) {
         delete ambient;
     }
@@ -130,11 +136,7 @@ Scene::render()
     Vector3 o, d;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            // Assemble a ray and trace it.
-            o = Vector3(x, y, -1000);
-            d = Vector3(0, 0, 1);
-            d.normalize();
-            primary_ray = Ray(o, d);
+            primary_ray = camera->compute_primary_ray(x, width, y, height);
             Color c = trace_ray(primary_ray);
             pixels[y * width + x] = c;
         }

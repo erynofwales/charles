@@ -14,6 +14,7 @@
 #include <list>
 #include <string>
 #include "basics.h"
+#include "camera.h"
 
 
 class AmbientLight;
@@ -48,6 +49,8 @@ private:
 
     // Pixel dimensions of the image.
     int width, height;
+
+    Camera *camera;
 
     /*
      * Ray tracing parameters. max_depth indicates the maximum depth of the ray tree. min_weight indicates the minimum
