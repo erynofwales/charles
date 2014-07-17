@@ -18,12 +18,8 @@ class Camera
 {
 public:
     Camera();
-    ~Camera();
+    virtual ~Camera();
 
-    int get_pixel_width() const;
-    void set_pixel_width(const int &w);
-    int get_pixel_height() const;
-    void set_pixel_height(const int &h);
     const Vector3 &get_width() const;
     void set_width(const Vector3 &w);
     const Vector3 &get_height() const;

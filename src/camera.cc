@@ -23,41 +23,6 @@ Camera::~Camera()
 
 
 /*
- * Camera::get_pixel_width --
- * Camera::set_pixel_width --
- * Camera::get_pixel_height --
- * Camera::set_pixel_height --
- *
- * Get and set pixel width and height.
- */
-int
-Camera::get_pixel_width()
-    const
-{
-    return pwidth;
-}
-
-void
-Camera::set_pixel_width(const int &w)
-{
-    pwidth = w;
-}
-
-int
-Camera::get_pixel_height()
-    const
-{
-    return pheight;
-}
-
-void
-Camera::set_pixel_height(const int &h)
-{
-    pheight = h;
-}
-
-
-/*
  * Camera::get_width --
  * Camera::set_width --
  * Camera::get_height --
