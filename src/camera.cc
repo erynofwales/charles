@@ -127,12 +127,12 @@ OrthographicCamera::compute_primary_ray(const int x,
     const
 {
     // Calculate the point on the image plane that the given (x,y) coordinate pair corresponds to.
-    float dir_x = (x / get_pixel_width()) + 0.5;
-    float dir_y = (y / get_pixel_height()) + 0.5;
+    float dir_x = (x / width) + 0.5;
+    float dir_y = (y / height) + 0.5;
     Vector3 ray_origin = (dir_x * get_width()) + (dir_y * get_height()) + get_direction();
 
     // Calculate the direction of the ray, given the camera's origin and normalize that vector.
     Vector3 ray_direction = (ray_origin - get_origin()).normalize();
 
-    return Ray(get_origin(), ray_direction);
+    return Ray(ray_origin, ray_direction);
 }
