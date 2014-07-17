@@ -251,6 +251,17 @@ operator<<(std::ostream &os, const Vector3 &v)
     return os;
 }
 
+
+Vector3
+LinearCombination(const double k1, const Vector3& v1,
+                  const double k2, const Vector3& v2,
+                  const double k3, const Vector3& v3)
+{
+    return Vector3(k1 * v1.x + k2 * v2.x + k3 * v3.x,
+                   k1 * v1.y + k2 * v2.y + k3 * v3.y,
+                   k1 * v1.z + k2 * v2.z + k3 * v3.z);
+}
+
 #pragma mark - Rays
 
 /*

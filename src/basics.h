@@ -52,6 +52,11 @@ const Vector3 operator*(const float &lhs, const Vector3 &rhs);
 std::ostream &operator<<(std::ostream &os, const Vector3 &v);
 
 
+Vector3 LinearCombination(const double k1, const Vector3& v1,
+                          const double k2, const Vector3& v2,
+                          const double k3, const Vector3& v3);
+
+
 struct Ray
 {
     Ray();
