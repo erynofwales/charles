@@ -112,9 +112,11 @@ Camera::SetUp(const Vector3& up)
 
 /*
  * OrthographicCamera::compute_primary_ray --
- *
- * Compute a primary ray given an (x,y) coordinate pair. The orthographic camera projects rays parallel to the viewing
- * direction through the (x,y) coordinate given. Thus, the size of the orthographic camera should be set to the size of
+ */
+/**
+ * Compute a primary ray given an (x,y) coordinate pair. The orthographic camera
+ * projects rays parallel to the viewing direction through the (x,y) coordinate
+ * given. Thus, the size of the orthographic camera should be set to the size of
  * the view into the scene.
  */
 Ray
