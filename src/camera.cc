@@ -108,6 +108,28 @@ Camera::SetUp(const Vector3& up)
     mUp = up;
 }
 
+#pragma mark - Perspective Camera
+
+Ray
+PerspectiveCamera::compute_primary_ray(const int x,
+                                       const int width,
+                                       const int y,
+                                       const int height)
+    const
+{
+    /*
+     * Center x and y in the pixel and convert them to be coordinates between
+     * -0.5 and 0.5.
+     */
+    double x0 = (x + 0.5) / width - 0.5;
+    double y0 = ((height - 1.0) - (y - 0.5)) / height - 0.5;
+
+    Vector3 direction = LinearCombination(1.0, get_direction(),
+                                          x0, GetRight(),
+                                          y0, GetUp());
+    return Ray(get_origin(), direction);
+}
+
 #pragma mark - Orthographic Camera
 
 /*

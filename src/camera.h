@@ -44,7 +44,14 @@ private:
     Vector3 direction;
     Vector3 mRight;
     Vector3 mUp;
+};
 
+
+class PerspectiveCamera
+    : public Camera
+{
+    Ray compute_primary_ray(const int x, const int width,
+                            const int y, const int height) const;
 };
 
 
