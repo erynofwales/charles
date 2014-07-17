@@ -14,7 +14,9 @@
 Camera::Camera()
     : height(Vector3::Y),
       width(4.0 / 3.0 * Vector3::X),
-      direction(Vector3::Z)
+      direction(Vector3::Z),
+      mRight(1.33, 0, 0),
+      mUp(Vector3::Y)
 { }
 
 
@@ -77,16 +79,33 @@ Camera::set_direction(const Vector3 &d)
 }
 
 
-/*
- * Camera::get_angle --
- *
- * Get the angle of view.
- */
-float
-Camera::get_angle()
+const Vector3&
+Camera::GetRight()
     const
 {
-    return angle;
+    return mRight;
+}
+
+
+void
+Camera::SetRight(const Vector3& right)
+{
+    mRight = right;
+}
+
+
+const Vector3&
+Camera::GetUp()
+    const
+{
+    return mUp;
+}
+
+
+void
+Camera::SetUp(const Vector3& up)
+{
+    mUp = up;
 }
 
 #pragma mark - Orthographic Camera
