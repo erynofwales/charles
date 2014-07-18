@@ -77,6 +77,6 @@ template<>
 const char* ScalarParserTraits<int>::fmt = "%d";
 
 template<>
-const char* ScalarParserTraits<double>::fmt = "%ld";
+const char* ScalarParserTraits<double>::fmt = "%lf";
 
 } /* namespace yaml */
