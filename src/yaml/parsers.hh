@@ -115,9 +115,9 @@ struct ScalarParserTraits
 /**
  * Parse a YAML scalar value into a native datatype.
  *
- * @param [in] scalarValue The YAML scalar value
- * @param [out] value The parsed value of the scalar value
- * @returns `true` if the conversion succeeded
+ * @param [in]  scalarValue The YAML scalar value
+ * @param [out] value       The parsed value of the scalar value
+ * @return `true` if the conversion succeeded
  */
 template<typename T>
 bool
