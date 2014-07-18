@@ -197,10 +197,10 @@ for mode in build_modes:
         do_sconscript(env, lib_env, LIB_DIR.Dir(lib), lib_out_dir)
         env.Append(LIBPATH=[lib_out_dir])
 
+    # Get test binaries.
+    do_sconscript(env, env, TEST_DIR, out_dir.Dir('test'))
+
     # Get source files.
     src_out_dir = out_dir.Dir('src')
     do_sconscript(env, env, SRC_DIR, src_out_dir)
     env.Append(LIBPATH=[src_out_dir])
-
-    # Get test binaries.
-    do_sconscript(env, env, TEST_DIR, out_dir.Dir('test'))
