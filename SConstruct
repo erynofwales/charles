@@ -153,17 +153,17 @@ def do_sconscript(env, build_env, src_dir, out_dir):
 
 
 debug_env = create_env('debug', {
-    'CPPDEFINES': ['NDEBUG'],
+    'CPPDEFINES': ['DEBUG', 'NRELEASE'],
     'CCFLAGS': ['-O0', '-g'],
 })
 
 beta_env = create_env('beta', {
-    'CPPDEFINES': ['NDEBUG'],
+    'CPPDEFINES': ['DEBUG', 'NRELEASE'],
     'CCFLAGS': ['-O3', '-g'],
 })
 
 release_env = create_env('release', {
-    'CPPDEFINES': ['NRELEASE'],
+    'CPPDEFINES': ['NDEBUG', 'RELEASE'],
     'CCFLAGS': ['-O3']
 })
 
