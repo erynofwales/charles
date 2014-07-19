@@ -76,6 +76,7 @@ void
 ObjectParser::HandleColorEvent(yaml_event_t& event)
 {
     if (event.type != YAML_SEQUENCE_START_EVENT) {
+        /* TODO: Clean this up. */
         assert(event.type != YAML_SEQUENCE_START_EVENT);
         return;
     }
@@ -102,7 +103,8 @@ ObjectParser::HandleOriginEvent(yaml_event_t& event)
 {
     if (event.type != YAML_SEQUENCE_START_EVENT) {
         /* TODO: Clean this up. */
-        assert(false);
+        assert(event.type != YAML_SEQUENCE_START_EVENT);
+        return;
     }
 
     auto onDone = [this](std::vector<double> origin) {
@@ -136,6 +138,7 @@ ObjectParser::HandleRadiusEvent(yaml_event_t& event)
     }
     mObject->set_radius(radius);
     mSection = NoSection;
+    SetShouldExpectKey(true);
 }
 
 } /* namespace yaml */
