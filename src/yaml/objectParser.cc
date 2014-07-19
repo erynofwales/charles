@@ -36,8 +36,9 @@ void
 ObjectParser::HandleKeyEvent(const std::string& key)
 {
     static const std::map<std::string, Section> sSections = {
+        {"color", ColorSection},
         {"origin", OriginSection},
-        {"color", ColorSection}
+        {"radius", RadiusSection}
     };
 
     printf("%s: got key = %s", __PRETTY_FUNCTION__, key.c_str());
