@@ -77,6 +77,7 @@ YAMLReader::read_file(const std::string& filename)
     yaml::ParserStack parsers;
     bool success = true;
     bool done = false;
+    bool sawDocument = false;
     yaml_event_t event;
     while (!done) {
         if (!yaml_parser_parse(&parser, &event)) {
@@ -89,7 +90,6 @@ YAMLReader::read_file(const std::string& filename)
                 printf("YAML_NO_EVENT\n");
                 break;
 
-            /* Don't care about these... */
             case YAML_STREAM_START_EVENT:
                 printf("YAML_STREAM_START_EVENT\n");
                 break;
@@ -104,20 +104,6 @@ YAMLReader::read_file(const std::string& filename)
                 printf("YAML_DOCUMENT_END_EVENT\n");
                 break;
 
-            case YAML_MAPPING_START_EVENT:
-                parsers.push(new yaml::SceneParser(mScene, parsers));
-                break;
-
-            default:
-                if (!parsers.empty()) {
-                    parsers.top()->HandleEvent(event);
-                    if (parsers.top()->GetDone()) {
-                        delete parsers.top();
-                        parsers.pop();
-                    }
-                }
-
-#if 0
             case YAML_ALIAS_EVENT:
                 printf("YAML_ALIAS_EVENT\n");
                 break;
@@ -138,7 +124,22 @@ YAMLReader::read_file(const std::string& filename)
             case YAML_MAPPING_END_EVENT:
                 printf("YAML_MAPPING_END_EVENT\n");
                 break;
-#endif
+        }
+
+        if (event.type == YAML_DOCUMENT_START_EVENT) {
+            sawDocument = true;
+            parsers.push(new yaml::SceneParser(mScene, parsers));
+        }
+        else {
+            sawDocument = false;
+            if (!parsers.empty()) {
+                parsers.top()->HandleEvent(event);
+                if (parsers.top()->GetDone()) {
+                    printf("parser done\n");
+                    delete parsers.top();
+                    parsers.pop();
+                }
+            }
         }
 
         done = (event.type == YAML_STREAM_END_EVENT);
