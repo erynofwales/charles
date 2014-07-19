@@ -10,6 +10,7 @@
 #define __YAML_OBJECTPARSER_HH__
 
 #include "yaml/parsers.hh"
+#include "yaml/scalarMappingParser.hh"
 
 
 class Sphere;
@@ -18,23 +19,29 @@ class Sphere;
 namespace yaml {
 
 struct ObjectParser
-    : public Parser
+    : public ScalarMappingParser
 {
     ObjectParser(Scene& scene, ParserStack& parsers);
+    ~ObjectParser();
 
-    void HandleEvent(yaml_event_t& event);
-    void HandleTopLevelEvent(yaml_event_t& event);
+protected:
+    void HandleKeyEvent(const std::string& key);
+    void HandleValueEvent(yaml_event_t& event);
+
+private:
+    enum Section {
+        NoSection,
+        ColorSection,
+        OriginSection,
+        RadiusSection
+    };
+
+    void HandleColorEvent(yaml_event_t& event);
     void HandleOriginEvent(yaml_event_t& event);
     void HandleRadiusEvent(yaml_event_t& event);
 
-private:
     Sphere* mObject;
-
-    enum {
-        NoSection,
-        OriginSection,
-        RadiusSection
-    } mSection;
+    Section mSection;
 };
 
 } /* namespace yaml */
