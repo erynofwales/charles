@@ -21,8 +21,11 @@ namespace yaml {
 ObjectParser::ObjectParser(Scene& scene,
                             ParserStack& parsers)
     : ScalarMappingParser(scene, parsers),
+      mObject(new Sphere()),
       mSection(NoSection)
-{ }
+{
+    GetScene().add_shape(mObject);
+}
 
 
 ObjectParser::~ObjectParser()
