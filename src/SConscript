@@ -13,7 +13,6 @@ subdirs = [
 
 for d in subdirs:
     dir_objs = env.SConscript(env.Dir(d).File('SConscript'), {'env': env})
-    print dir_objs
     objs.extend(dir_objs)
 
 

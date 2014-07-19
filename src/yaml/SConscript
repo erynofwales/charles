@@ -15,5 +15,4 @@ objs = []
 for f in files:
     objs.append(env.Object(f))
 
-print objs
 Return('objs')
