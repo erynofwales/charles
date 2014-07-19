@@ -101,7 +101,9 @@ ObjectParser::HandleRadiusEvent(yaml_event_t& event)
     }
 
     double radius;
-    if (!ParseScalar<double>((char *)event.data.scalar.value, radius)) {
+    std::string scalar((char *)event.data.scalar.value,
+                       event.data.scalar.length);
+    if (!ParseScalar<double>(scalar, radius)) {
         /* TODO: Clean this up. */
         assert(false);
     }
