@@ -96,11 +96,9 @@ SceneParser::HandleObjectsEvent(yaml_event_t& event)
 {
     if (event.type == YAML_SEQUENCE_START_EVENT) {
         /* Ignore sequence-start for now. */
-        printf("start objects\n");
         return;
     }
     else if (event.type == YAML_SEQUENCE_END_EVENT) {
-        printf("end objects\n");
         mSection = NoSection;
         SetShouldExpectKey(true);
         return;
@@ -111,7 +109,6 @@ SceneParser::HandleObjectsEvent(yaml_event_t& event)
         return;
     }
 
-    printf("start object\n");
     GetParsers().push(new ObjectParser(GetScene(), GetParsers()));
 }
 

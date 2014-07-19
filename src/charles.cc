@@ -18,6 +18,9 @@
 #include "writer_png.h"
 
 
+int verbosity = 0;
+
+
 static void
 usage(const char *progname)
 {
@@ -75,7 +78,7 @@ main(int argc,
                 outfile = optarg;
                 break;
             case 'v':
-                /* TODO: Verbosity levels. */
+                ++verbosity;
                 break;
         }
     }
@@ -87,6 +90,10 @@ main(int argc,
     }
 
     infile = argv[optind];
+
+    if (outfile.empty()) {
+        outfile = "charles_out.png";
+    }
 
     /* Parse YAML files. */
     YAMLReader reader(scene);

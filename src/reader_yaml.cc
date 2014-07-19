@@ -13,6 +13,7 @@
 
 #include "yaml.h"
 
+#include "charles.hh"
 #include "reader_yaml.hh"
 
 #include "yaml/parsers.hh"
@@ -71,7 +72,7 @@ YAMLReader::read_file(const std::string& filename)
     yaml_parser_t parser;
     yaml_parser_initialize(&parser);
 
-    printf("Reading file: %s\n", filename.c_str());
+    printf("Reading %s\n", filename.c_str());
     yaml_parser_set_input_file(&parser, yaml_infile);
 
     yaml::ParserStack parsers;
@@ -85,45 +86,47 @@ YAMLReader::read_file(const std::string& filename)
             goto error;
         }
 
-        switch (event.type) {
-            case YAML_NO_EVENT:
-                printf("YAML_NO_EVENT\n");
-                break;
+        if (verbosity >= 4) {
+            switch (event.type) {
+                case YAML_NO_EVENT:
+                    printf("YAML_NO_EVENT\n");
+                    break;
 
-            case YAML_STREAM_START_EVENT:
-                printf("YAML_STREAM_START_EVENT\n");
-                break;
-            case YAML_STREAM_END_EVENT:
-                printf("YAML_STREAM_END_EVENT\n");
-                break;
+                case YAML_STREAM_START_EVENT:
+                    printf("YAML_STREAM_START_EVENT\n");
+                    break;
+                case YAML_STREAM_END_EVENT:
+                    printf("YAML_STREAM_END_EVENT\n");
+                    break;
 
-            case YAML_DOCUMENT_START_EVENT:
-                printf("YAML_DOCUMENT_START_EVENT\n");
-                break;
-            case YAML_DOCUMENT_END_EVENT:
-                printf("YAML_DOCUMENT_END_EVENT\n");
-                break;
+                case YAML_DOCUMENT_START_EVENT:
+                    printf("YAML_DOCUMENT_START_EVENT\n");
+                    break;
+                case YAML_DOCUMENT_END_EVENT:
+                    printf("YAML_DOCUMENT_END_EVENT\n");
+                    break;
 
-            case YAML_ALIAS_EVENT:
-                printf("YAML_ALIAS_EVENT\n");
-                break;
-            case YAML_SCALAR_EVENT:
-                printf("YAML_SCALAR_EVENT\n");
-                break;
+                case YAML_ALIAS_EVENT:
+                    printf("YAML_ALIAS_EVENT\n");
+                    break;
+                case YAML_SCALAR_EVENT:
+                    printf("YAML_SCALAR_EVENT\n");
+                    break;
 
-            case YAML_SEQUENCE_START_EVENT:
-                printf("YAML_SEQUENCE_START_EVENT\n");
-                break;
-            case YAML_SEQUENCE_END_EVENT:
-                printf("YAML_SEQUENCE_END_EVENT\n");
-                break;
+                case YAML_SEQUENCE_START_EVENT:
+                    printf("YAML_SEQUENCE_START_EVENT\n");
+                    break;
+                case YAML_SEQUENCE_END_EVENT:
+                    printf("YAML_SEQUENCE_END_EVENT\n");
+                    break;
 
-            case YAML_MAPPING_START_EVENT:
-                printf("YAML_MAPPING_START_EVENT\n");
-                break;
-            case YAML_MAPPING_END_EVENT:
-                printf("YAML_MAPPING_END_EVENT\n");
-                break;
+                case YAML_MAPPING_START_EVENT:
+                    printf("YAML_MAPPING_START_EVENT\n");
+                    break;
+                case YAML_MAPPING_END_EVENT:
+                    printf("YAML_MAPPING_END_EVENT\n");
+                    break;
+            }
         }
 
         if (event.type == YAML_DOCUMENT_START_EVENT) {
@@ -135,7 +138,6 @@ YAMLReader::read_file(const std::string& filename)
             if (!parsers.empty()) {
                 parsers.top()->HandleEvent(event);
                 if (parsers.top()->GetDone()) {
-                    printf("parser done\n");
                     delete parsers.top();
                     parsers.pop();
                 }

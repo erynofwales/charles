@@ -41,8 +41,6 @@ ObjectParser::HandleKeyEvent(const std::string& key)
         {"radius", RadiusSection}
     };
 
-    printf("%s: got key = %s", __PRETTY_FUNCTION__, key.c_str());
-
     if (sSections.count(key) > 0) {
         mSection = sSections.at(key);
     }

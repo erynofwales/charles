@@ -29,8 +29,6 @@ void
 ScalarMappingParser::HandleEvent(yaml_event_t& event)
 {
     if (mShouldExpectKey && event.type == YAML_MAPPING_START_EVENT) {
-        printf("%s: start scalar mapping: tag = %s\n", __PRETTY_FUNCTION__,
-               event.data.mapping_start.tag);
         return;
     }
     else if (mShouldExpectKey && event.type == YAML_MAPPING_END_EVENT) {
