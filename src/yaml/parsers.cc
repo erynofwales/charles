@@ -20,7 +20,8 @@ namespace yaml {
 Parser::Parser(Scene& scene,
                ParserStack& parsers)
     : mScene(scene),
-      mParsers(parsers)
+      mParsers(parsers),
+      mDone(false)
 { }
 
 
