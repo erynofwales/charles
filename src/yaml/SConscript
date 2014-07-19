@@ -7,7 +7,7 @@ Import('env')
 
 files = [
     'parsers.cc',
-    'object_parser.cc',
+    'objectParser.cc',
     'scalarMappingParser.cc',
     'sceneParser.cc',
 ]
