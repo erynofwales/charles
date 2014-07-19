@@ -61,7 +61,9 @@ struct VectorParser
         }
 
         Type value;
-        if (!ParseScalar<Type>((const char *)event.data.scalar.value, value)) {
+        std::string valueString((char*)event.data.scalar.value,
+                                event.data.scalar.length);
+        if (!ParseScalar<Type>(valueString, value)) {
             assert(false);
         }
         mVector.push_back(value);
