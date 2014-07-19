@@ -11,6 +11,7 @@
 
 #include <functional>
 #include <stack>
+#include <sstream>
 
 #include "yaml.h"
 
@@ -115,16 +116,17 @@ struct ScalarParserTraits
 /**
  * Parse a YAML scalar value into a native datatype.
  *
- * @param [in]  scalarValue The YAML scalar value
- * @param [out] value       The parsed value of the scalar value
+ * @param [in]  scalar The YAML scalar value
+ * @param [out] value  The parsed value of the scalar value
  * @return `true` if the conversion succeeded
  */
 template<typename T>
 bool
-ParseScalar(const std::string& scalarValue,
+ParseScalar(const std::string& scalar,
             T& value)
 {
-    return sscanf(scalarValue.c_str(), ScalarParserTraits<T>::fmt, &value) == EOF;
+    std::stringstream s(scalar);
+    return (bool)(s >> value);
 }
 
 } /* namespace yaml */
