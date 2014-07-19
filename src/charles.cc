@@ -33,6 +33,7 @@ main(int argc,
 
     scene.get_ambient().set_intensity(1.0);
 
+#if 0
     Material *m1 = new Material();
     m1->set_diffuse_color(Color::Red);
     Material *m2 = new Material();
@@ -50,7 +51,7 @@ main(int argc,
     scene.add_shape(s1);
     scene.add_shape(s2);
     scene.add_shape(s3);
-#if 0
+
     // Make a plane
     /*
     Plane *p1 = new Plane(Vector3(0, 460, 400), Vector3(0, 1, 0.01));
