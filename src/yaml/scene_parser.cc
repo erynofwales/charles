@@ -17,7 +17,7 @@ namespace yaml {
 
 SceneParser::SceneParser(Scene& scene,
                          ParserStack& parsers)
-    : Parser(scene, parsers),
+    : ScalarMappingParser(scene, parsers),
       mSection(SceneParser::NoSection)
 { }
 
@@ -27,12 +27,25 @@ SceneParser::~SceneParser()
 
 
 void
-SceneParser::HandleEvent(yaml_event_t& event)
+SceneParser::HandleKeyEvent(const std::string& key)
+{
+    static const std::map<std::string, Section> sSections = {
+        {"dimensions", DimensionsSection},
+    };
+
+    if (sSections.count(key) > 0) {
+        mSection = sSections.at(key);
+    }
+    else {
+        mSection = NoSection;
+    }
+}
+
+
+void
+SceneParser::HandleValueEvent(yaml_event_t& event)
 {
     switch (mSection) {
-        case NoSection:
-            HandleTopLevelEvent(event);
-            break;
         case CameraSection:
             break;
         case DimensionsSection:
@@ -45,40 +58,8 @@ SceneParser::HandleEvent(yaml_event_t& event)
             assert(false);
             break;
     }
-}
 
-
-void
-SceneParser::HandleTopLevelEvent(yaml_event_t& event)
-{
-    static const std::string CAMERA = "camera";
-    static const std::string DIMENSIONS = "dimensions";
-    static const std::string OBJECTS = "objects";
-
-    if (event.type == YAML_MAPPING_END_EVENT) {
-        SetDone(true);
-        return;
-    }
-
-    if (event.type != YAML_SCALAR_EVENT) {
-        /* TODO: Invalid event type for top-level Scene. Fail. */
-        abort();
-    }
-
-    std::string key = (char *)event.data.scalar.value;
-    if (key == CAMERA) {
-        mSection = SceneParser::CameraSection;
-    }
-    else if (key == DIMENSIONS) {
-        mSection = SceneParser::DimensionsSection;
-    }
-    else if (key == OBJECTS) {
-        mSection = SceneParser::ObjectsSection;
-    }
-    else {
-        /* TODO: Invalid key. Fail. */
-        abort();
-    }
+    SetShouldExpectKey(false);
 }
 
 
@@ -94,6 +75,7 @@ SceneParser::HandleDimensionsEvent(yaml_event_t& event)
         sc.set_height(dimensions.at(1));
 
         mSection = NoSection;
+        SetShouldExpectKey(true);
     };
 
     switch (event.type) {

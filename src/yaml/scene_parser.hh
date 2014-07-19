@@ -9,28 +9,35 @@
 #ifndef __YAML_SCENE_PARSER_HH__
 #define __YAML_SCENE_PARSER_HH__
 
+#include <string>
+
 #include "parsers.hh"
+#include "scalarMappingParser.hh"
 
 
 namespace yaml {
 
 struct SceneParser
-    : public Parser
+    : public ScalarMappingParser
 {
     SceneParser(Scene& scene, ParserStack& parsers);
     ~SceneParser();
 
-    void HandleEvent(yaml_event_t& event);
-    void HandleTopLevelEvent(yaml_event_t& event);
-    void HandleDimensionsEvent(yaml_event_t& event);
+protected:
+    void HandleKeyEvent(const std::string& key);
+    void HandleValueEvent(yaml_event_t& event);
 
 private:
-    enum {
+    enum Section {
         NoSection,
         CameraSection,
         DimensionsSection,
         ObjectsSection,
-    } mSection;
+    };
+
+    void HandleDimensionsEvent(yaml_event_t& event);
+
+    Section mSection;
 };
 
 } /* namespace yaml */
