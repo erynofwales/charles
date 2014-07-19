@@ -9,6 +9,7 @@
 #include <cassert>
 #include <string>
 
+#include "objectParser.hh"
 #include "sceneParser.hh"
 #include "vector_parser.hh"
 
@@ -31,6 +32,7 @@ SceneParser::HandleKeyEvent(const std::string& key)
 {
     static const std::map<std::string, Section> sSections = {
         {"dimensions", DimensionsSection},
+        {"objects", ObjectsSection}
     };
 
     if (sSections.count(key) > 0) {
@@ -52,14 +54,13 @@ SceneParser::HandleValueEvent(yaml_event_t& event)
             HandleDimensionsEvent(event);
             break;
         case ObjectsSection:
+            HandleObjectsEvent(event);
             break;
         default:
             /* TODO: WHAT. Fail gracefully. */
             assert(false);
             break;
     }
-
-    SetShouldExpectKey(false);
 }
 
 
@@ -70,6 +71,7 @@ SceneParser::HandleDimensionsEvent(yaml_event_t& event)
         if (dimensions.size() < 2) {
             assert(dimensions.size() < 2);
         }
+
         Scene& sc = GetScene();
         sc.set_width(dimensions.at(0));
         sc.set_height(dimensions.at(1));
@@ -86,6 +88,31 @@ SceneParser::HandleDimensionsEvent(yaml_event_t& event)
             /* TODO: Fail gracefully. */
             assert(false);
     }
+}
+
+
+void
+SceneParser::HandleObjectsEvent(yaml_event_t& event)
+{
+    if (event.type == YAML_SEQUENCE_START_EVENT) {
+        /* Ignore sequence-start for now. */
+        printf("start objects\n");
+        return;
+    }
+    else if (event.type == YAML_SEQUENCE_END_EVENT) {
+        printf("end objects\n");
+        mSection = NoSection;
+        SetShouldExpectKey(true);
+        return;
+    }
+
+    if (event.type != YAML_MAPPING_START_EVENT) {
+        assert(event.type != YAML_MAPPING_START_EVENT);
+        return;
+    }
+
+    printf("start object\n");
+    GetParsers().push(new ObjectParser(GetScene(), GetParsers()));
 }
 
 } /* namespace yaml */
