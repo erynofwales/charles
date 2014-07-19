@@ -9,7 +9,7 @@
 #include <cassert>
 #include <string>
 
-#include "scene_parser.hh"
+#include "sceneParser.hh"
 #include "vector_parser.hh"
 
 

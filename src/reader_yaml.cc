@@ -16,7 +16,7 @@
 #include "reader_yaml.hh"
 
 #include "yaml/parsers.hh"
-#include "yaml/scene_parser.hh"
+#include "yaml/sceneParser.hh"
 
 
 #if 0
