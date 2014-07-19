@@ -28,6 +28,11 @@ ScalarMappingParser::~ScalarMappingParser()
 void
 ScalarMappingParser::HandleEvent(yaml_event_t& event)
 {
+    if (event.type == YAML_MAPPING_END_EVENT) {
+        SetDone(true);
+        return;
+    }
+
     if (mShouldExpectKey && event.type == YAML_SCALAR_EVENT) {
         HandleKeyEvent(std::string((char*)event.data.scalar.value,
                                    event.data.scalar.length));
