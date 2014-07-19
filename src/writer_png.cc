@@ -104,6 +104,9 @@ PNGWriter::write_scene(const Scene &scene, const std::string &filename)
 }
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+
 /*
  * png_user_error --
  *
@@ -113,9 +116,7 @@ PNGWriter::write_scene(const Scene &scene, const std::string &filename)
 /* static */ void
 png_user_error(png_structp png,
                png_const_charp msg)
-{
-
-}
+{ }
 
 
 /*
@@ -127,6 +128,6 @@ png_user_error(png_structp png,
 /* static */ void
 png_user_warning(png_structp png,
                  png_const_charp msg)
-{
+{ }
 
-}
+#pragma clang diagnostic pop
