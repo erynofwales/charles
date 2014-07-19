@@ -42,7 +42,7 @@ public:
     Shape(Vector3 o);
     virtual ~Shape();
 
-    Material &get_material() const;
+    Material* get_material() const;
     void set_material(Material *mat);
 
     virtual int does_intersect(const Ray &ray, float **t) const = 0;

@@ -100,11 +100,11 @@ Shape::~Shape()
  *
  * Get and set the Material applied to this shape.
  */
-Material &
+Material*
 Shape::get_material()
     const
 {
-    return *material;
+    return material;
 }
 
 void
