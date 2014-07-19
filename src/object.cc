@@ -49,7 +49,7 @@ Object::get_origin()
 }
 
 void
-Object::set_origin(Vector3 v)
+Object::set_origin(const Vector3& v)
 {
     origin = v;
 }
@@ -71,7 +71,7 @@ operator<<(std::ostream &os, const Object &o)
  * Default constructor. Create a new Shape with an origin at (0, 0, 0).
  */
 Shape::Shape()
-    : Object()
+    : Shape(Vector3::Zero)
 { }
 
 
@@ -81,7 +81,8 @@ Shape::Shape()
  * Constructor. Create a new Shape with an origin at o.
  */
 Shape::Shape(Vector3 o)
-    : Object(o)
+    : Object(o),
+      material(NULL)
 { }
 
 

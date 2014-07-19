@@ -23,7 +23,7 @@ public:
     Object(Vector3 o);
 
     Vector3 get_origin() const;
-    void set_origin(Vector3 v);
+    void set_origin(const Vector3& v);
 
     friend std::ostream &operator<<(std::ostream &os, const Object &o);
 
