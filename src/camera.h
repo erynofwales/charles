@@ -1,7 +1,8 @@
 /* camera.h
  *
- * The Camera is the eye into the scene. It defines several parameters and a single compute_primary_ray method
- * that generates rays with which the ray tracer draws the scene.
+ * The Camera is the eye into the scene. It defines several parameters and a
+ * single compute_primary_ray method that generates rays with which the ray
+ * tracer draws the scene.
  *
  * Eryn Wells <eryn@erynwells.me>
  */
@@ -20,10 +21,6 @@ public:
     Camera();
     virtual ~Camera();
 
-    const Vector3 &get_width() const;
-    void set_width(const Vector3 &w);
-    const Vector3 &get_height() const;
-    void set_height(const Vector3 &h);
     const Vector3 &get_direction() const;
     void set_direction(const Vector3 &d);
     float get_angle() const;
@@ -37,12 +34,19 @@ public:
                                     const int y, const int height) const = 0;
 
 private:
-    // Size of the image plane.
-    Vector3 height, width;
-
-    // Direction. A normalized vector defining where the camera is pointed.
+    /** A normalized vector defining where the camera is pointed. */
     Vector3 direction;
+
+    /**
+     * A vector defining the width of the camera's image plane. The ratio of
+     * this and mUp determine the aspect ratio of the image.
+     */
     Vector3 mRight;
+
+    /**
+     * A vector defining the height of the camera's image plane. The ratio of
+     * this and mUp determine the aspect ratio of the image.
+     */
     Vector3 mUp;
 };
 
