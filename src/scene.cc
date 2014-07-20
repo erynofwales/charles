@@ -18,7 +18,7 @@
 
 Scene::Scene()
     : width(640), height(480),
-      camera(new PerspectiveCamera()),
+      mCamera(new PerspectiveCamera()),
       max_depth(5),
       min_weight(1e-4),
       ambient(new AmbientLight()),
@@ -31,9 +31,9 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-    if (camera) {
-        delete camera;
-        camera = NULL;
+    if (mCamera) {
+        delete mCamera;
+        mCamera = NULL;
     }
 
     if (ambient != NULL) {
@@ -78,6 +78,21 @@ Scene::get_height()
     const
 {
     return height;
+}
+
+
+Camera*
+Scene::GetCamera()
+    const
+{
+    return mCamera;
+}
+
+
+void
+Scene::SetCamera(Camera* camera)
+{
+    mCamera = camera;
 }
 
 
@@ -136,7 +151,7 @@ Scene::render()
     Vector3 o, d;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            primary_ray = camera->compute_primary_ray(x, width, y, height);
+            primary_ray = mCamera->compute_primary_ray(x, width, y, height);
             Color c = trace_ray(primary_ray);
             pixels[y * width + x] = c;
         }

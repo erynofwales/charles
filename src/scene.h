@@ -30,10 +30,15 @@ public:
     ~Scene();
 
     bool is_rendered() const;
+
     int get_width() const;
     void set_width(int w) { width = w; }
     int get_height() const;
     void set_height(int h) { height = h; }
+
+    Camera* GetCamera() const;
+    void SetCamera(Camera* camera);
+
     AmbientLight &get_ambient() const;
     const Color *get_pixels() const;
 
@@ -50,7 +55,7 @@ private:
     // Pixel dimensions of the image.
     int width, height;
 
-    Camera *camera;
+    Camera *mCamera;
 
     /*
      * Ray tracing parameters. max_depth indicates the maximum depth of the ray tree. min_weight indicates the minimum
