@@ -102,7 +102,7 @@ CameraParser::HandleOriginEvent(yaml_event_t& event)
     }
 
     auto onDone = [this](Vector3 origin) {
-        mCamera->set_origin(origin);
+        mCamera->SetOrigin(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };

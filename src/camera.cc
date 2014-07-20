@@ -29,6 +29,27 @@ Camera::~Camera()
 { }
 
 
+/*
+ * Camera::GetOrigin --
+ */
+const Vector3&
+Camera::GetOrigin()
+    const
+{
+    return mOrigin;
+}
+
+
+/*
+ * Camera::SetOrigin --
+ */
+void
+Camera::SetOrigin(const Vector3 &origin)
+{
+    mOrigin = origin;
+}
+
+
 const Vector3&
 Camera::get_direction()
     const
@@ -101,7 +122,7 @@ PerspectiveCamera::compute_primary_ray(const int x,
     Vector3 direction = LinearCombination(1.0, get_direction(),
                                           x0, GetRight(),
                                           y0, GetUp());
-    return Ray(get_origin(), direction);
+    return Ray(GetOrigin(), direction);
 }
 
 #pragma mark - Orthographic Camera
@@ -139,7 +160,7 @@ OrthographicCamera::compute_primary_ray(const int x,
     double x0 = (x + 0.5) / width + 0.5;
     double y0 = ((height - 1.0) - (y - 0.5)) / height - 0.5;
 
-    Vector3 origin = LinearCombination(1.0, get_origin(),
+    Vector3 origin = LinearCombination(1.0, GetOrigin(),
                                        x0, GetRight(),
                                        y0, GetUp());
     return Ray(origin, get_direction());

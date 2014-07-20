@@ -11,23 +11,23 @@
 #define __CAMERA_H__
 
 #include "basics.h"
-#include "object.h"
 
 
 struct Camera
-    : public Object
 {
-public:
     Camera();
     Camera(const Camera& other);
     virtual ~Camera();
 
-    const Vector3 &get_direction() const;
-    void set_direction(const Vector3 &d);
-    float get_angle() const;
+    const Vector3& GetOrigin() const;
+    void SetOrigin(const Vector3& origin);
+
+    const Vector3& get_direction() const;
+    void set_direction(const Vector3& direction);
 
     const Vector3& GetRight() const;
     void SetRight(const Vector3& right);
+
     const Vector3& GetUp() const;
     void SetUp(const Vector3& up);
 
@@ -35,6 +35,12 @@ public:
                                     const int y, const int height) const = 0;
 
 private:
+    /**
+     * The location of the camera in the scene. Depending on the type of camera,
+     * this is the point from which rays will be emitted.
+     */
+    Vector3 mOrigin;
+
     /** A normalized vector defining where the camera is pointed. */
     Vector3 mDirection;
 
