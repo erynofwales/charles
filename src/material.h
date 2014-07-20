@@ -9,37 +9,49 @@
 #define __MATERIAL_H__
 
 #include "basics.h"
+#include "types.hh"
 
+namespace charles {
 
-class Material
+struct Material
 {
-public:
-    enum {
-        DiffuseLightingTypeLambert = 1,
-    } DiffuseLightingType;
+    enum class DiffuseShaderModel {
+        Lambert,
+    };
+
+    enum class SpecularShaderModel {
+        Blinn,
+        Phong
+    };
 
     Material();
 
-    float get_diffuse_level() const;
-    void set_diffuse_level(const float &kd);
-    const Color &get_diffuse_color() const;
-    void set_diffuse_color(const Color &c);
+    Double GetDiffuseIntensity() const;
+    void SetDiffuseIntensity(const Double& kd);
 
-    float get_specular_level() const;
-    void set_specular_level(const float &kd);
-    const Color &get_specular_color() const;
-    void set_specular_color(const Color &c);
+    const Color& GetDiffuseColor() const;
+    void SetDiffuseColor(const Color& c);
+
+    Double GetSpecularIntensity() const;
+    void SetSpecularIntensity(const Double& kd);
+
+    const Color &GetSpecularColor() const;
+    void SetSpecularColor(const Color& c);
 
 private:
-    void _clamp_parameter(float &param);
+    void ClampParameter(Double& param);
 
     // Diffuse parameters.
-    float diffuse_level;
-    Color diffuse_color;
+    DiffuseShaderModel mDiffuseModel;
+    Double mDiffuseIntensity;
+    Color mDiffuseColor;
 
     // Specular parameters.
-    float specular_level;
-    Color specular_color;
+    SpecularShaderModel mSpecularModel;
+    Double mSpecularIntensity;
+    Color mSpecularColor;
 };
+
+} /* namespace charles */
 
 #endif

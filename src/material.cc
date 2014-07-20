@@ -8,78 +8,82 @@
 #include "material.h"
 
 
+namespace charles {
+    
 Material::Material()
-    : diffuse_level(0.8),
-      diffuse_color(Color::White),
-      specular_level(0.5),
-      specular_color(Color::White)
+    : mDiffuseModel(DiffuseShaderModel::Lambert),
+      mDiffuseIntensity(0.8),
+      mDiffuseColor(Color::White),
+      mSpecularModel(SpecularShaderModel::Phong),
+      mSpecularIntensity(0.5),
+      mSpecularColor(Color::White)
 { }
 
 
-float
-Material::get_diffuse_level()
+Double
+Material::GetDiffuseIntensity()
     const
 {
-    return diffuse_level;
+    return mDiffuseIntensity;
 }
 
 
 void
-Material::set_diffuse_level(const float &kd)
+Material::SetDiffuseIntensity(const Double& kd)
 {
-    diffuse_level = kd;
-    _clamp_parameter(diffuse_level);
+    mDiffuseIntensity = kd;
+    ClampParameter(mDiffuseIntensity);
 }
 
 
-const Color &
-Material::get_diffuse_color()
+const Color&
+Material::GetDiffuseColor()
     const
 {
-    return diffuse_color;
+    return mDiffuseColor;
 }
 
 
 void
-Material::set_diffuse_color(const Color &c)
+Material::SetDiffuseColor(const Color& color)
 {
-    diffuse_color = c;
+    mDiffuseColor = color;
 }
 
 
-float
-Material::get_specular_level()
+Double
+Material::GetSpecularIntensity()
     const
 {
-    return specular_level;
+    return mSpecularIntensity;
 }
 
 
 void
-Material::set_specular_level(const float &ks)
+Material::SetSpecularIntensity(const Double& ks)
 {
-    specular_level = ks;
-    _clamp_parameter(specular_level);
+    mSpecularIntensity = ks;
+    ClampParameter(mSpecularIntensity);
 }
 
 
-const Color &
-Material::get_specular_color()
+const Color&
+Material::GetSpecularColor()
     const
 {
-    return specular_color;
+    return mSpecularColor;
 }
 
 
 void
-Material::set_specular_color(const Color &c)
+Material::SetSpecularColor(const Color& color)
 {
-    specular_color = c;
+    mSpecularColor = color;
 }
 
 
 void
-Material::_clamp_parameter(float &param)
+Material::ClampParameter(Double& param)
 {
     if (param < 0.0) {
         param = 0.0;
@@ -88,3 +92,5 @@ Material::_clamp_parameter(float &param)
         param = 1.0;
     }
 }
+
+} /* namespace charles */
