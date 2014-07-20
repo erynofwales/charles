@@ -23,15 +23,23 @@ namespace yaml {
  * type.
  */
 template<typename T>
-struct VectorParser
+struct ScalarSequenceParser
     : public UtilityParser<std::vector<T> >
 {
     typedef T Type;
     typedef std::vector<T> VectorType;
+    typedef typename UtilityParser<VectorType>::CallbackFunction CallbackFunction;
+
+    ScalarSequenceParser(Scene& scene,
+                         ParserStack& parsers)
+        : UtilityParser<VectorType>(scene, parsers),
+          mVector()
+    { }
 
     /** Constructor */
-    VectorParser(Scene& scene, ParserStack& parsers,
-                 typename UtilityParser<VectorType>::CallbackFunction callback)
+    ScalarSequenceParser(Scene& scene,
+                         ParserStack& parsers,
+                         CallbackFunction callback)
         : UtilityParser<VectorType>(scene, parsers, callback),
           mVector()
     { }
@@ -71,6 +79,26 @@ struct VectorParser
 
 private:
     VectorType mVector;
+};
+
+
+struct Vector3Parser
+    : ScalarSequenceParser<double>
+{
+    typedef std::function<void (Vector3)> CallbackFunction;
+
+    Vector3Parser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
+    ~Vector3Parser();
+};
+
+
+struct ColorParser
+    : ScalarSequenceParser<double>
+{
+    typedef std::function<void (Color)> CallbackFunction;
+
+    ColorParser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
+    ~ColorParser();
 };
 
 } /* namespace yaml */
