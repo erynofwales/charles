@@ -15,11 +15,11 @@
 #include <string>
 #include "basics.h"
 #include "camera.h"
+#include "object.h"
 
 
 class AmbientLight;
 class PointLight;
-class Shape;
 class Writer;
 
 
@@ -46,7 +46,7 @@ public:
     void write(Writer &writer, const std::string &filename);
     void render();
 
-    void add_shape(Shape *obj);
+    void add_shape(charles::Object::Ptr obj);
     void add_light(PointLight *light);
 
 private:
@@ -66,7 +66,7 @@ private:
 
     // Scene objects.
     AmbientLight *ambient;
-    std::list<Shape *> shapes;
+    std::list<charles::Object::Ptr> shapes;
     std::list<PointLight *> lights;
 
     // Rendering stats

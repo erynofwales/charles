@@ -15,6 +15,8 @@
 #include "scene.h"
 #include "writer.h"
 
+using namespace charles;
+
 
 Scene::Scene()
     : width(640), height(480),
@@ -37,9 +39,6 @@ Scene::~Scene()
         delete ambient;
     }
 
-    for (Shape *s : shapes) {
-        delete s;
-    }
     shapes.clear();
 
     for (PointLight *l : lights) {
@@ -177,7 +176,7 @@ Scene::render()
  * Add a shape to the scene.
  */
 void
-Scene::add_shape(Shape *shape)
+Scene::add_shape(Object::Ptr shape)
 {
     shapes.push_back(shape);
 }
@@ -210,35 +209,35 @@ Scene::trace_ray(const Ray &ray,
     }
 
     Color out_color = Color::Black;
-    Shape *intersected_shape = NULL;
-    float *t = NULL;
-    float nearest_t = INFINITY;
-    int nints;
+    Object::Ptr intersected_shape;
+    TVector ts;
+    Double nearest_t = INFINITY;
+
+    ts.reserve(2);
 
     // Find intersections of this ray with objects in the scene.
-    for (Shape *s : shapes) {
-        nints = s->does_intersect(ray, &t);
-        if (nints > 0) {
-            for (int i = 0; i < nints; i++) {
-                if (t[i] < 1e-2) {
+    for (Object::Ptr s : shapes) {
+        ts.clear();
+        if (s->DoesIntersect(ray, ts)) {
+            for (Double t : ts) {
+                if (t < 1e-2) {
                     break;
                 }
-                if (t[i] < nearest_t) {
+                if (t < nearest_t) {
                     intersected_shape = s;
-                    nearest_t = t[i];
+                    nearest_t = t;
                 }
             }
-            delete[] t;
         }
     }
 
     // If there was no intersection, return black.
-    if (intersected_shape == NULL) {
+    if (!intersected_shape) {
         return out_color;
     }
 
-    Material* shape_material = intersected_shape->get_material();
-    Color shape_color = shape_material->get_diffuse_color();
+    Material& shape_material = intersected_shape->GetMaterial();
+    const Color& shape_color = shape_material.GetDiffuseColor();
 
     Vector3 intersection = ray.parameterize(nearest_t);
     Vector3 normal = intersected_shape->compute_normal(intersection);
@@ -248,22 +247,22 @@ Scene::trace_ray(const Ray &ray,
      */
 
     Vector3 light_direction;
-    float ldotn, diffuse_level, ambient_level;
+    Double ldotn, diffuse_level, ambient_level;
     Ray shadow_ray;
 
     for (PointLight *l : lights) {
-        light_direction = (intersection - l->get_origin()).normalize();
+        light_direction = (intersection - l->GetOrigin()).normalize();
         ldotn = light_direction.dot(normal);
 
         if (ldotn < 0) {
             ldotn = 0.0;
         }
 
-        diffuse_level = shape_material->get_diffuse_level();
+        diffuse_level = shape_material.GetDiffuseIntensity();
         ambient_level = 1.0 - diffuse_level;
 
         shadow_ray = Ray(intersection, light_direction);
-        for (Shape *s : shapes) {
+        for (Object::Ptr s : shapes) {
             // Skip the intersected shape.
             if (s == intersected_shape) {
                 continue;
@@ -272,7 +271,8 @@ Scene::trace_ray(const Ray &ray,
             mStats.shadowRays++;
 
             // Figure out if we're in shadow.
-            if (s->does_intersect(shadow_ray, NULL) > 0) {
+            ts.clear();
+            if (s->DoesIntersect(shadow_ray, ts)) {
                 diffuse_level = 0.0;
                 break;
             }
@@ -289,8 +289,8 @@ Scene::trace_ray(const Ray &ray,
      * Specular lighting. (Reflections, etc.)
      */
 
-    float specular_level = shape_material->get_specular_level();
-    const Color &specular_color = shape_material->get_specular_color();
+    Double specular_level = shape_material.GetSpecularIntensity();
+    const Color& specular_color = shape_material.GetSpecularColor();
 
     /*
      * Compute the reflection ray. Computing the direction of the reflection ray
