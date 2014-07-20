@@ -14,11 +14,12 @@
 #include "object.h"
 
 
-class Camera
+struct Camera
     : public Object
 {
 public:
     Camera();
+    Camera(const Camera& other);
     virtual ~Camera();
 
     const Vector3 &get_direction() const;
@@ -35,7 +36,7 @@ public:
 
 private:
     /** A normalized vector defining where the camera is pointed. */
-    Vector3 direction;
+    Vector3 mDirection;
 
     /**
      * A vector defining the width of the camera's image plane. The ratio of

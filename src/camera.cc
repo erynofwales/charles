@@ -12,9 +12,16 @@
 #pragma mark - Generic Camera
 
 Camera::Camera()
-    : direction(Vector3::Z),
+    : mDirection(Vector3::Z),
       mRight(1.33, 0, 0),
       mUp(Vector3::Y)
+{ }
+
+
+Camera::Camera(const Camera& other)
+  : mDirection(other.mDirection),
+    mRight(other.mRight),
+    mUp(other.mUp)
 { }
 
 
@@ -22,23 +29,17 @@ Camera::~Camera()
 { }
 
 
-/*
- * Camera::get_direction --
- * Camera::set_direction --
- *
- * Get and set direction vector.
- */
-const Vector3 &
+const Vector3&
 Camera::get_direction()
     const
 {
-    return direction;
+    return mDirection;
 }
 
 void
-Camera::set_direction(const Vector3 &d)
+Camera::set_direction(const Vector3 &direction)
 {
-    direction = d;
+    mDirection = direction;
 }
 
 
