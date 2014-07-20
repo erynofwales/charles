@@ -11,9 +11,13 @@
 #include <vector>
 
 #include "material.h"
+#include "object.h"
 #include "object_sphere.h"
 #include "yaml/objectParser.hh"
 #include "yaml/vectorParser.hh"
+
+
+using namespace charles;
 
 
 namespace yaml {
@@ -80,10 +84,7 @@ ObjectParser::HandleColorEvent(yaml_event_t& event)
     }
 
     auto onDone = [this](Color color) {
-        if (!mObject->get_material()) {
-            mObject->set_material(new Material());
-        }
-        mObject->get_material()->set_diffuse_color(color);
+        mObject->GetMaterial().SetDiffuseColor(color);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
@@ -102,7 +103,7 @@ ObjectParser::HandleOriginEvent(yaml_event_t& event)
     }
 
     auto onDone = [this](Vector3 origin) {
-        mObject->set_origin(origin);
+        mObject->SetOrigin(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };

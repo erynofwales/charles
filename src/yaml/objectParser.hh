@@ -9,11 +9,9 @@
 #ifndef __YAML_OBJECTPARSER_HH__
 #define __YAML_OBJECTPARSER_HH__
 
+#include "object_sphere.h"
 #include "yaml/parsers.hh"
 #include "yaml/scalarMappingParser.hh"
-
-
-class Sphere;
 
 
 namespace yaml {
@@ -40,7 +38,7 @@ private:
     void HandleOriginEvent(yaml_event_t& event);
     void HandleRadiusEvent(yaml_event_t& event);
 
-    Sphere* mObject;
+    charles::Sphere::Ptr mObject;
     Section mSection;
 };
 
