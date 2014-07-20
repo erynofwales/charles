@@ -159,6 +159,9 @@ CameraParser::HandleTypeEvent(yaml_event_t& event)
     else {
         assert(false);
     }
+
+    mSection = NoSection;
+    SetShouldExpectKey(true);
 }
 
 

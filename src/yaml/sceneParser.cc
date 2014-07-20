@@ -76,6 +76,13 @@ SceneParser::HandleCameraEvent(yaml_event_t& event)
     }
 
     GetParsers().push(new CameraParser(GetScene(), GetParsers()));
+
+    /*
+     * When the camera parser is done, we should be back to expecting a key for
+     * the Scene.
+     */
+    mSection = NoSection;
+    SetShouldExpectKey(true);
 }
 
 
