@@ -13,6 +13,8 @@
 #include "material.h"
 #include "object.h"
 
+namespace charles {
+    
 #pragma mark - Objects
 
 /*
@@ -30,86 +32,42 @@ Object::Object()
  *
  * Constructor. Create a new Object with an origin at o.
  */
-Object::Object(Vector3 o)
-    : origin(o)
+Object::Object(Vector3 origin)
+    : mOrigin(origin),
+      mMaterial()
 { }
 
 
-/*
- * Object::get_origin --
- * Object::set_origin --
- *
- * Get and set the Object's origin.
- */
 Vector3
-Object::get_origin()
+Object::GetOrigin()
     const
 {
-    return origin;
+    return mOrigin;
 }
+
+
+Object::~Object()
+{ }
+
 
 void
-Object::set_origin(const Vector3& v)
+Object::SetOrigin(const Vector3& origin)
 {
-    origin = v;
+    mOrigin = origin;
 }
 
 
-std::ostream &
-operator<<(std::ostream &os, const Object &o)
+Material&
+Object::GetMaterial()
 {
-    // Stream objects like this: [Object origin]
-    os << "[Object " << o.origin << "]";
-    return os;
+    return mMaterial;
 }
 
-#pragma mark - Shapes
-
-/*
- * Shape::Shape --
- *
- * Default constructor. Create a new Shape with an origin at (0, 0, 0).
- */
-Shape::Shape()
-    : Shape(Vector3::Zero)
-{ }
-
-
-/*
- * Shape::Shape --
- *
- * Constructor. Create a new Shape with an origin at o.
- */
-Shape::Shape(Vector3 o)
-    : Object(o),
-      material(NULL)
-{ }
-
-
-/*
- * Shape::~Shape() --
- *
- * Destructor.
- */
-Shape::~Shape()
-{ }
-
-
-/*
- * Shape::get_material --
- * Shape::set_material --
- *
- * Get and set the Material applied to this shape.
- */
-Material*
-Shape::get_material()
-    const
-{
-    return material;
-}
 
 void
-Shape::set_material(Material *mat)
+Object::SetMaterial(const Material& material)
 {
-    material = mat;
+    mMaterial = material;
 }
+
+} /* namespace charles */

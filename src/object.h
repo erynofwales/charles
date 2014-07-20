@@ -10,47 +10,49 @@
 #define __OBJECT_H__
 
 #include <iostream>
+#include <vector>
 
 #include "basics.h"
 #include "material.h"
 #include "texture.h"
+#include "types.hh"
 
+namespace charles {
 
-class Object
+struct Object
 {
-public:
+    typedef std::shared_ptr<Object> Ptr;
+
     Object();
     Object(Vector3 o);
+    virtual ~Object();
 
-    Vector3 get_origin() const;
-    void set_origin(const Vector3& v);
+    Vector3 GetOrigin() const;
+    void SetOrigin(const Vector3& origin);
 
-    friend std::ostream &operator<<(std::ostream &os, const Object &o);
+    Material& GetMaterial();
+    void SetMaterial(const Material& material);
 
-private:
-    Vector3 origin;
-};
-
-std::ostream &operator<<(std::ostream &os, const Object &o);
-
-
-class Shape
-    : public Object
-{
-public:
-    Shape();
-    Shape(Vector3 o);
-    virtual ~Shape();
-
-    Material* get_material() const;
-    void set_material(Material *mat);
-
-    virtual int does_intersect(const Ray &ray, float **t) const = 0;
+    /**
+     * Determines if the given ray intersects with this object. All intersection
+     * t values are returned in the `t` argument, in increasing order.
+     *
+     * @param [in]  ray     The ray to test for intersection
+     * @param [out] t       A vector of all intersection t values
+     * @return `true` if the ray intersects with this object
+     */
+    virtual bool DoesIntersect(const Ray& ray, TVector& t) const = 0;
     virtual bool point_is_on_surface(const Vector3 &p) const = 0;
     virtual Vector3 compute_normal(const Vector3 &p) const = 0;
 
 private:
-    Material *material;
+    /** The location of this object. */
+    Vector3 mOrigin;
+
+    /** This object's material, surface properties, etc. */
+    Material mMaterial;
 };
+
+} /* namespace charles */
 
 #endif
