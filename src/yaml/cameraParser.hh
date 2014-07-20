@@ -34,14 +34,20 @@ private:
         UpSection
     };
 
-    Camera *mCamera;
-    Section mSection;
+    enum Type {
+        TypePerspective,
+        TypeOrthographic
+    };
 
     void HandleDirectionEvent(yaml_event_t& event);
     void HandleOriginEvent(yaml_event_t& event);
     void HandleRightEvent(yaml_event_t& event);
     void HandleTypeEvent(yaml_event_t& event);
     void HandleUpEvent(yaml_event_t& event);
+
+    Camera *mCamera;
+    Section mSection;
+    Type mType;
 };
 
 } /* namespace yaml */

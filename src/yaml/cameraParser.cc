@@ -3,7 +3,11 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include "cameraParser.hh"
+#include <cassert>
+
+#include "camera.h"
+#include "yaml/cameraParser.hh"
+#include "yaml/vectorParser.hh"
 
 
 namespace yaml {
@@ -11,7 +15,9 @@ namespace yaml {
 CameraParser::CameraParser(Scene& scene,
                            ParserStack& parsers)
     : ScalarMappingParser(scene, parsers),
-      mCamera(new PerspectiveCamera())
+      mCamera(new PerspectiveCamera()),
+      mSection(NoSection),
+      mType(TypePerspective)
 {
     GetScene().SetCamera(mCamera);
 }
@@ -25,11 +31,11 @@ void
 CameraParser::HandleKeyEvent(const std::string& key)
 {
     static const std::map<std::string, Section> sSections = {
-        {"direction": DirectionSection},
-        {"origin": OriginSection},
-        {"right": RightSection},
-        {"type": TypeSection},
-        {"up": UpSection},
+        {"direction", DirectionSection},
+        {"origin", OriginSection},
+        {"right", RightSection},
+        {"type", TypeSection},
+        {"up", UpSection},
     };
 
     if (sSections.count(key) > 0) {
@@ -42,7 +48,7 @@ CameraParser::HandleKeyEvent(const std::string& key)
 
 
 void
-ObjectParser::HandleValueEvent(yaml_event_t& event)
+CameraParser::HandleValueEvent(yaml_event_t& event)
 {
     switch (mSection) {
         case DirectionSection:
@@ -114,13 +120,45 @@ CameraParser::HandleRightEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 origin) {
-        mCamera->SetRight(origin);
+    auto onDone = [this](Vector3 right) {
+        mCamera->SetRight(right);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
     GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+}
+
+
+void
+CameraParser::HandleTypeEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_SCALAR_EVENT) {
+        assert(event.type != YAML_SCALAR_EVENT);
+        return;
+    }
+
+    std::string value = std::string((char*)event.data.scalar.value,
+                                    event.data.scalar.length);
+    if (value == "perspective") {
+        if (mType == TypeOrthographic) {
+            Camera *newCamera = new PerspectiveCamera(*mCamera);
+            delete mCamera;
+            mCamera = newCamera;
+            GetScene().SetCamera(newCamera);
+        }
+    }
+    else if (value == "orthographic") {
+        if (mType == TypePerspective) {
+            Camera *newCamera = new OrthographicCamera(*mCamera);
+            delete mCamera;
+            mCamera = newCamera;
+            GetScene().SetCamera(newCamera);
+        }
+    }
+    else {
+        assert(false);
+    }
 }
 
 
