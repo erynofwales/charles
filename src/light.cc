@@ -93,5 +93,20 @@ PointLight::PointLight(const Vector3 &o,
                        const Color &c,
                        const float &i)
     : AmbientLight(c, i),
-      Object(o)
+      mOrigin(o)
 { }
+
+
+const Vector3&
+PointLight::GetOrigin()
+    const
+{
+    return mOrigin;
+}
+
+
+void
+PointLight::SetOrigin(const Vector3& origin)
+{
+    mOrigin = origin;
+}

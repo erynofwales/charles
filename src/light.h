@@ -9,7 +9,6 @@
 #define __LIGHT_H__
 
 #include "basics.h"
-#include "object.h"
 
 
 class AmbientLight
@@ -35,14 +34,20 @@ private:
 
 
 class PointLight
-    : public AmbientLight,
-      public Object
+    : public AmbientLight
 {
 public:
     PointLight();
+
     PointLight(const Vector3 &o);
     PointLight(const Vector3 &o, const Color &c);
     PointLight(const Vector3 &o, const Color &c, const float &i);
+
+    const Vector3& GetOrigin() const;
+    void SetOrigin(const Vector3& origin);
+
+private:
+    Vector3 mOrigin;
 };
 
 #endif
