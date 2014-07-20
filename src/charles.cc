@@ -12,7 +12,7 @@
 #include "light.h"
 #include "material.h"
 #include "object_sphere.h"
-#include "object_plane.h"
+//#include "object_plane.h"
 #include "reader_yaml.hh"
 #include "scene.h"
 #include "writer_png.h"

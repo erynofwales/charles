@@ -23,7 +23,7 @@ files = [
     'material.cc',
     'object.cc',
     'object_sphere.cc',
-    'object_plane.cc',
+    #'object_plane.cc',
     'reader_yaml.cc',
     'scene.cc',
     'writer_png.cc',
