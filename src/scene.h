@@ -38,7 +38,6 @@ public:
 
     Camera::Ptr GetCamera() const;
     void SetCamera(Camera* camera);
-    void SetCamera(Camera::Ptr camera);
 
     AmbientLight &get_ambient() const;
     const Color *get_pixels() const;
@@ -71,7 +70,21 @@ private:
     std::list<PointLight *> lights;
 
     // Rendering stats
-    unsigned int nrays;
+    struct Stats
+    {
+        unsigned long TotalRays() const;
+
+        void PrintRayTable() const;
+
+        unsigned long primaryRays;
+        unsigned long shadowRays;
+        unsigned long reflectionRays;
+        unsigned long transmissionRays;
+
+    private:
+        void PrintRayRow(const std::string& title,
+                         const unsigned long& value) const;
+    } mStats;
 
     // Rendering output.
     bool _is_rendered;

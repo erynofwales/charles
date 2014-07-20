@@ -24,7 +24,7 @@ Scene::Scene()
       ambient(new AmbientLight()),
       shapes(),
       lights(),
-      nrays(0),
+      mStats(),
       pixels(NULL)
 { }
 
@@ -155,6 +155,7 @@ Scene::render()
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             primary_ray = mCamera->compute_primary_ray(x, width, y, height);
+            mStats.primaryRays++;
             Color c = trace_ray(primary_ray);
             pixels[y * width + x] = c;
         }
@@ -164,7 +165,9 @@ Scene::render()
     std::chrono::duration<float> seconds = end - start;
 
     _is_rendered = true;
-    printf("Scene rendered. %d rays traced in %f seconds.\n", nrays, seconds.count());
+
+    printf("Rendering completed in %f seconds.\n\n", seconds.count());
+    mStats.PrintRayTable();
 }
 
 
@@ -211,9 +214,6 @@ Scene::trace_ray(const Ray &ray,
     float *t = NULL;
     float nearest_t = INFINITY;
     int nints;
-
-    // Keep stats.
-    nrays++;
 
     // Find intersections of this ray with objects in the scene.
     for (Shape *s : shapes) {
@@ -269,6 +269,8 @@ Scene::trace_ray(const Ray &ray,
                 continue;
             }
 
+            mStats.shadowRays++;
+
             // Figure out if we're in shadow.
             if (s->does_intersect(shadow_ray, NULL) > 0) {
                 diffuse_level = 0.0;
@@ -291,20 +293,61 @@ Scene::trace_ray(const Ray &ray,
     const Color &specular_color = shape_material->get_specular_color();
 
     /*
-     * Compute the reflection ray. Computing the direction of the reflection ray is done by the following formula:
+     * Compute the reflection ray. Computing the direction of the reflection ray
+     * is done by the following formula:
      *
      *     d = dr - 2n(dr . n)
      *
-     * where d is the direction, dr is the direction of the incoming ray, and n is the normal vector. Period (.)
-     * indicates the dot product.
+     * where d is the direction, dr is the direction of the incoming ray, and n
+     * is the normal vector. Period (.) indicates the dot product.
      *
-     * The origin of the reflection ray is the point on the surface where the incoming ray intersected with it.
+     * The origin of the reflection ray is the point on the surface where the
+     * incoming ray intersected with it.
      */
-    Ray reflection_ray = Ray(intersection, ray.direction - 2.0 * normal * ray.direction.dot(normal));
-    Color reflection_color = trace_ray(reflection_ray, depth + 1, weight * specular_level);
+    Ray reflection_ray = Ray(intersection,
+                             ray.direction - 2.0 * normal * ray.direction.dot(normal));
+    mStats.reflectionRays++;
+    Color reflection_color = trace_ray(reflection_ray,
+                                       depth + 1,
+                                       weight * specular_level);
 
     // TODO: Mix in specular_color of material.
     out_color += specular_level * specular_color * reflection_color;
 
     return out_color;
+}
+
+
+unsigned long
+Scene::Stats::TotalRays()
+    const
+{
+    return primaryRays + shadowRays + reflectionRays + transmissionRays;
+}
+
+
+void
+Scene::Stats::PrintRayTable()
+    const
+{
+    printf("RAY TYPE              NUM      %%\n");
+    printf("-------------- ---------- ------\n");
+    PrintRayRow("primary", primaryRays);
+    PrintRayRow("shadow", shadowRays);
+    PrintRayRow("reflection", reflectionRays);
+    PrintRayRow("transmission", transmissionRays);
+    PrintRayRow("total", TotalRays());
+}
+
+
+void
+Scene::Stats::PrintRayRow(const std::string& title,
+                          const unsigned long& value)
+    const
+{
+    double totalRays = TotalRays();
+    printf("%-14s %10ld %#5.1lf%%\n",
+           title.c_str(),
+           value,
+           double(value) / totalRays * 100.0);
 }
