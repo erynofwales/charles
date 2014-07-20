@@ -149,7 +149,8 @@ def do_sconscript(env, build_env, src_dir, out_dir):
     # build_env is the Environment we're using to put everything together.
     env.SConscript(sconscript,
                    {'env': build_env, 'build_env': env},
-                   variant_dir=out_dir)
+                   variant_dir=out_dir,
+                   duplicate=0)
 
 
 debug_env = create_env('debug', {
