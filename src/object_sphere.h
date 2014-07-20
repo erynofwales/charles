@@ -17,6 +17,8 @@ class Sphere
     : public Object
 {
 public:
+    typedef std::shared_ptr<Sphere> Ptr;
+
     Sphere();
     Sphere(float r);
     Sphere(Vector3 o, float r);
