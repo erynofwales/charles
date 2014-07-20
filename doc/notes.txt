@@ -1,0 +1,16 @@
+http://www.cs.cmu.edu/afs/cs/academic/class/15462-s09/www/lec/13/lec13.pdf
+
+Eye/Primary rays: from camera into scene
+Shadow rays: rays from surface intersection point toward light source
+Reflection rays: from surface intersection point in mirror direction
+Transmission rays: from surface intersection point in refracted direction
+
+Algorithm:
+    - Send ray from camera through each pixel into scene
+    - Compute point of closest intersection with scene object
+    - Shade that point by computing shadow rays
+    - Spawn reflection and refraction/transmission rays and recurse
+
+When do we stop tracing?
+    - When the ray leaves the scene
+    - When the ray's contribution becomes too small
