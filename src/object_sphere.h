@@ -11,9 +11,10 @@
 #include "basics.h"
 #include "object.h"
 
+namespace charles {
 
 class Sphere
-    : public Shape
+    : public Object
 {
 public:
     Sphere();
@@ -23,11 +24,13 @@ public:
     float get_radius();
     void set_radius(float r);
 
-    int does_intersect(const Ray &ray, float **t) const;
+    bool DoesIntersect(const Ray& ray, TVector& t) const;
     bool point_is_on_surface(const Vector3 &p) const;
     Vector3 compute_normal(const Vector3 &p) const;
 private:
     float radius;
 };
+
+} /* namespace charles */
 
 #endif
