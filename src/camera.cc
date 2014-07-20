@@ -74,6 +74,16 @@ Camera::SetUp(const Vector3& up)
 
 #pragma mark - Perspective Camera
 
+PerspectiveCamera::PerspectiveCamera()
+    : Camera()
+{ }
+
+
+PerspectiveCamera::PerspectiveCamera(const Camera& other)
+    : Camera(other)
+{ }
+
+
 Ray
 PerspectiveCamera::compute_primary_ray(const int x,
                                        const int width,
@@ -95,6 +105,16 @@ PerspectiveCamera::compute_primary_ray(const int x,
 }
 
 #pragma mark - Orthographic Camera
+
+OrthographicCamera::OrthographicCamera()
+    : Camera()
+{ }
+
+
+OrthographicCamera::OrthographicCamera(const Camera& other)
+    : Camera(other)
+{ }
+
 
 /*
  * OrthographicCamera::compute_primary_ray --

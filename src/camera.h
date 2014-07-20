@@ -55,6 +55,10 @@ private:
 class PerspectiveCamera
     : public Camera
 {
+public:
+    PerspectiveCamera();
+    PerspectiveCamera(const Camera& other);
+
     Ray compute_primary_ray(const int x, const int width,
                             const int y, const int height) const;
 };
@@ -64,6 +68,9 @@ class OrthographicCamera
     : public Camera
 {
 public:
+    OrthographicCamera();
+    OrthographicCamera(const Camera& other);
+
     Ray compute_primary_ray(const int x, const int width,
                             const int y, const int height) const;
 };
