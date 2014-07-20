@@ -10,11 +10,15 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
+#include <memory>
+
 #include "basics.h"
 
 
 struct Camera
 {
+    typedef std::shared_ptr<Camera> Ptr;
+
     Camera();
     Camera(const Camera& other);
     virtual ~Camera();

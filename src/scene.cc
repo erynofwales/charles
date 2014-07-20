@@ -31,10 +31,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-    if (mCamera) {
-        delete mCamera;
-        mCamera = NULL;
-    }
+    mCamera.reset();
 
     if (ambient != NULL) {
         delete ambient;
@@ -81,7 +78,10 @@ Scene::get_height()
 }
 
 
-Camera*
+/*
+ * Scene::GetCamera --
+ */
+Camera::Ptr
 Scene::GetCamera()
     const
 {
@@ -89,10 +89,13 @@ Scene::GetCamera()
 }
 
 
+/*
+ * Scene::SetCamera --
+ */
 void
 Scene::SetCamera(Camera* camera)
 {
-    mCamera = camera;
+    mCamera.reset(camera);
 }
 
 
