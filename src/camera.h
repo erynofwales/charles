@@ -46,7 +46,7 @@ private:
 
     /**
      * A vector defining the height of the camera's image plane. The ratio of
-     * this and mUp determine the aspect ratio of the image.
+     * this and mRight determine the aspect ratio of the image.
      */
     Vector3 mUp;
 };
