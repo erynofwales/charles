@@ -1,14 +1,17 @@
 --- !Scene
 dimensions: [1920, 1080]
-camera:
+camera: !Camera.Perspective
     right: [1.77, 0, 0]
 objects:
-    - origin: [0, 0.5, 2]
+    - !Object.Sphere
+      origin: [0, 0.5, 2]
       radius: 0.33
       color: [1, 0, 0]
-    - origin: [-0.33, 0, 2]
+    - !Object.Sphere
+      origin: [-0.33, 0, 2]
       radius: 0.33
       color: [0, 1, 0]
-    - origin: [0.33, 0, 2]
+    - !Object.Sphere
+      origin: [0.33, 0, 2]
       radius: 0.33
       color: [0, 0, 1]
