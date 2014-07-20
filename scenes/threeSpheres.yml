@@ -1,5 +1,7 @@
 --- !Scene
 dimensions: [1920, 1080]
+camera:
+    right: [1.77, 0, 0]
 objects:
     - origin: [0, 0.5, 2]
       radius: 0.33
