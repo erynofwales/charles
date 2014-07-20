@@ -35,8 +35,8 @@ protected:
     bool GetShouldExpectKey() const;
 
 private:
-	/** Subclasses set this to `true` when they're finished parsing the value. */
-	bool mShouldExpectKey;
+    /** Subclasses set this to `true` when they're finished parsing the value. */
+    bool mShouldExpectKey;
 };
 
 } /* namespace yaml */
