@@ -35,6 +35,7 @@ private:
         ObjectsSection,
     };
 
+    void HandleCameraEvent(yaml_event_t& event);
     void HandleDimensionsEvent(yaml_event_t& event);
     void HandleObjectsEvent(yaml_event_t& event);
 

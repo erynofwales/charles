@@ -9,6 +9,7 @@
 #include <cassert>
 #include <string>
 
+#include "cameraParser.hh"
 #include "objectParser.hh"
 #include "sceneParser.hh"
 #include "vectorParser.hh"
@@ -31,6 +32,7 @@ void
 SceneParser::HandleKeyEvent(const std::string& key)
 {
     static const std::map<std::string, Section> sSections = {
+        {"camera", CameraSection},
         {"dimensions", DimensionsSection},
         {"objects", ObjectsSection}
     };
@@ -49,6 +51,7 @@ SceneParser::HandleValueEvent(yaml_event_t& event)
 {
     switch (mSection) {
         case CameraSection:
+            HandleCameraEvent(event);
             break;
         case DimensionsSection:
             HandleDimensionsEvent(event);
@@ -61,6 +64,18 @@ SceneParser::HandleValueEvent(yaml_event_t& event)
             assert(false);
             break;
     }
+}
+
+
+void
+SceneParser::HandleCameraEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_MAPPING_START_EVENT) {
+        assert(event.type != YAML_MAPPING_START_EVENT);
+        return;
+    }
+
+    GetParsers().push(new CameraParser(GetScene(), GetParsers()));
 }
 
 
