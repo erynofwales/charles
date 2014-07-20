@@ -81,6 +81,12 @@ struct UtilityParser
     typedef std::function<void (T)> CallbackFunction;
 
     UtilityParser(Scene& scene,
+                  ParserStack& parsers)
+        : Parser(scene, parsers),
+          mCallback()
+    { }
+
+    UtilityParser(Scene& scene,
                   ParserStack& parsers,
                   CallbackFunction callback)
         : Parser(scene, parsers),
@@ -94,7 +100,15 @@ struct UtilityParser
     void
     Notify(T value)
     {
-        mCallback(value);
+        if (mCallback) {
+            mCallback(value);
+        }
+    }
+
+    void
+    SetCallback(CallbackFunction callback)
+    {
+        mCallback = callback;
     }
 
 private:

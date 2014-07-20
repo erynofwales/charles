@@ -11,7 +11,7 @@
 
 #include "objectParser.hh"
 #include "sceneParser.hh"
-#include "vector_parser.hh"
+#include "vectorParser.hh"
 
 
 namespace yaml {
@@ -82,7 +82,8 @@ SceneParser::HandleDimensionsEvent(yaml_event_t& event)
 
     switch (event.type) {
         case YAML_SEQUENCE_START_EVENT:
-            GetParsers().push(new VectorParser<int>(GetScene(), GetParsers(), onDone));
+            GetParsers().push(new ScalarSequenceParser<int>(GetScene(), GetParsers(),
+                                                            onDone));
             break;
         default:
             /* TODO: Fail gracefully. */

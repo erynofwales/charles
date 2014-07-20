@@ -13,7 +13,7 @@
 #include "material.h"
 #include "object_sphere.h"
 #include "yaml/objectParser.hh"
-#include "yaml/vector_parser.hh"
+#include "yaml/vectorParser.hh"
 
 
 namespace yaml {
@@ -79,20 +79,16 @@ ObjectParser::HandleColorEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](std::vector<double> color) {
-        if (color.size() < 3) {
-            assert(color.size() < 3);
-        }
+    auto onDone = [this](Color color) {
         if (!mObject->get_material()) {
             mObject->set_material(new Material());
         }
-        mObject->get_material()->set_diffuse_color(Color(color[0], color[1], color[2]));
-
+        mObject->get_material()->set_diffuse_color(color);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new VectorParser<double>(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new ColorParser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -105,17 +101,13 @@ ObjectParser::HandleOriginEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](std::vector<double> origin) {
-        if (origin.size() < 3) {
-            assert(origin.size() < 3);
-        }
-        mObject->set_origin(Vector3(origin[0], origin[1], origin[2]));
-
+    auto onDone = [this](Vector3 origin) {
+        mObject->set_origin(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new VectorParser<double>(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
 }
 
 
