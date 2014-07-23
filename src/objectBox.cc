@@ -23,6 +23,34 @@ Box::Box(const Vector3& near, const Vector3& far)
 { }
 
 
+Vector3&
+Box::GetNear()
+{
+    return mNear;
+}
+
+
+void
+Box::SetNear(const Vector3& near)
+{
+    mNear = near;
+}
+
+
+Vector3&
+Box::GetFar()
+{
+    return mFar;
+}
+
+
+void
+Box::SetFar(const Vector3& far)
+{
+    mFar = far;
+}
+
+
 bool
 Box::DoesIntersect(const Ray& ray,
                    TVector& t)
@@ -51,7 +79,10 @@ Box::DoesIntersect(const Ray& ray,
      * planes (X, Y, and Z planes).
      */
 
-    /* Unrolling the loop, so we start with the X planes... */
+    /*
+     * Unrolling the loop means lots of duplicated code. So we start with the X
+     * planes...
+     */
 
     if (ray.direction.x == 0.0) {
         /* The ray is parallel to the X axis. */
@@ -146,6 +177,48 @@ Box::DoesIntersect(const Ray& ray,
     t.push_back(t0);
     t.push_back(t1);
     return true;
+}
+
+
+bool
+Box::point_is_on_surface(const Vector3& p)
+    const
+{
+    if (p.x == mNear.x || p.x == mFar.x) {
+        return    (p.y > mNear.y && p.y < mFar.y)
+               && (p.z > mNear.z && p.z < mFar.z);
+    } else if (p.y == mNear.y || p.y == mFar.y) {
+        return    (p.x > mNear.x && p.x < mFar.x)
+               && (p.z > mNear.z && p.z < mFar.z);
+    } else if (p.z == mNear.z || p.z == mFar.z) {
+        return    (p.x > mNear.x && p.x < mFar.x)
+               && (p.y > mNear.y && p.y < mFar.y);
+    }
+    return false;
+}
+
+
+Vector3
+Box::compute_normal(const Vector3& p)
+    const
+{
+    const Double EPS = 0.01;
+
+    if (abs(p.x - mNear.x) < EPS) {
+        return Vector3(-1, 0, 0);
+    } else if (abs(p.x - mFar.x) < EPS) {
+        return Vector3(1, 0, 0);
+    } else if (abs(p.y - mNear.y) < EPS) {
+        return Vector3(0, -1, 0);
+    } else if (abs(p.y - mFar.y) < EPS) {
+        return Vector3(0, 1, 0);
+    } else if (abs(p.z - mNear.z) < EPS) {
+        return Vector3(0, 0, -1);
+    } else if (abs(p.z - mFar.y) < EPS) {
+        return Vector3(0, 0, 1);
+    }
+
+    return Vector3();
 }
 
 } /* namespace charles */
