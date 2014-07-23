@@ -1,0 +1,8 @@
+--- !Scene
+dimensions: [800, 600]
+camera: !Camera.Perspective
+    right: [1.77, 0, 0]
+objects:
+    - !Object.Box
+      near: [-0.5, -0.5, -0.5]
+      far: [0.5, 0.5, 0.5]
