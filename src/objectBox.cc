@@ -174,8 +174,8 @@ Box::DoesIntersect(const Ray& ray,
     }
 
     /* We have an intersection! */
-    t.push_back(t0);
-    t.push_back(t1);
+    t.push_back(tNear);
+    t.push_back(tFar);
     return true;
 }
 
