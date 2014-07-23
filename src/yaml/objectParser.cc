@@ -12,6 +12,7 @@
 
 #include "material.h"
 #include "object.h"
+#include "objectBox.hh"
 #include "object_sphere.h"
 #include "yaml/objectParser.hh"
 #include "yaml/vectorParser.hh"
@@ -23,33 +24,67 @@ using namespace charles;
 namespace yaml {
 
 ObjectParser::ObjectParser(Scene& scene,
-                            ParserStack& parsers)
+                           ParserStack& parsers,
+                           const std::string& tag)
     : ScalarMappingParser(scene, parsers),
-      mObject(new Sphere()),
+      mObject(nullptr),
       mSection(NoSection)
 {
+    if (tag == "!Object.Box") {
+        mType = Type::Box;
+        mObject.reset(new Box());
+    } else if (tag == "!Object.Sphere") {
+        mType = Type::Sphere;
+        mObject.reset(new Sphere());
+    } else {
+        assert(false);
+    }
     GetScene().add_shape(mObject);
 }
 
 
 ObjectParser::~ObjectParser()
-{ }
+{
+    mObject.reset();
+}
 
 
 void
 ObjectParser::HandleKeyEvent(const std::string& key)
 {
-    static const std::map<std::string, Section> sSections = {
-        {"color", ColorSection},
+    static const std::map<std::string, Section> sCommonSections = {
+        {"color", ColorSection}
+    };
+
+    static const std::map<std::string, Section> sSphereSections = {
         {"origin", OriginSection},
         {"radius", RadiusSection}
     };
 
-    if (sSections.count(key) > 0) {
-        mSection = sSections.at(key);
+    static const std::map<std::string, Section> sBoxSections = {
+        {"near", NearSection},
+        {"far", FarSection}
+    };
+
+    if (sCommonSections.count(key) > 0) {
+        mSection = sCommonSections.at(key);
+        return;
     }
-    else {
-        mSection = NoSection;
+
+    if (mType == Type::Box) {
+        if (sBoxSections.count(key) > 0) {
+            mSection = sBoxSections.at(key);
+        } else {
+            mSection = NoSection;
+        }
+    } else if (mType == Type::Sphere) {
+        if (sSphereSections.count(key) > 0) {
+            mSection = sSphereSections.at(key);
+        } else {
+            mSection = NoSection;
+        }
+    } else {
+        assert(false);
     }
 }
 
@@ -66,6 +101,12 @@ ObjectParser::HandleValueEvent(yaml_event_t& event)
             break;
         case RadiusSection:
             HandleRadiusEvent(event);
+            break;
+        case NearSection:
+            HandleNearEvent(event);
+            break;
+        case FarSection:
+            HandleFarEvent(event);
             break;
         default:
             assert(false);
@@ -127,9 +168,47 @@ ObjectParser::HandleRadiusEvent(yaml_event_t& event)
         /* TODO: Clean this up. */
         assert(false);
     }
-    mObject->set_radius(radius);
+    std::dynamic_pointer_cast<Sphere>(mObject)->set_radius(radius);
     mSection = NoSection;
     SetShouldExpectKey(true);
+}
+
+
+void
+ObjectParser::HandleNearEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_SEQUENCE_START_EVENT) {
+        /* TODO: Clean this up. */
+        assert(event.type != YAML_SEQUENCE_START_EVENT);
+        return;
+    }
+
+    auto onDone = [this](Vector3 near) {
+        std::dynamic_pointer_cast<Box>(mObject)->SetNear(near);
+        mSection = NoSection;
+        SetShouldExpectKey(true);
+    };
+
+    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+}
+
+
+void
+ObjectParser::HandleFarEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_SEQUENCE_START_EVENT) {
+        /* TODO: Clean this up. */
+        assert(event.type != YAML_SEQUENCE_START_EVENT);
+        return;
+    }
+
+    auto onDone = [this](Vector3 far) {
+        std::dynamic_pointer_cast<Box>(mObject)->SetFar(far);
+        mSection = NoSection;
+        SetShouldExpectKey(true);
+    };
+
+    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
 }
 
 } /* namespace yaml */

@@ -19,7 +19,7 @@ namespace yaml {
 struct ObjectParser
     : public ScalarMappingParser
 {
-    ObjectParser(Scene& scene, ParserStack& parsers);
+    ObjectParser(Scene& scene, ParserStack& parsers, const std::string& tag);
     ~ObjectParser();
 
 protected:
@@ -27,18 +27,34 @@ protected:
     void HandleValueEvent(yaml_event_t& event);
 
 private:
+    enum class Type {
+        Box,
+        Sphere
+    };
+
     enum Section {
         NoSection,
         ColorSection,
+
+        /* Sphere sections */
         OriginSection,
-        RadiusSection
+        RadiusSection,
+
+        /* Box sections */
+        NearSection,
+        FarSection
     };
 
     void HandleColorEvent(yaml_event_t& event);
+
     void HandleOriginEvent(yaml_event_t& event);
     void HandleRadiusEvent(yaml_event_t& event);
 
-    charles::Sphere::Ptr mObject;
+    void HandleNearEvent(yaml_event_t& event);
+    void HandleFarEvent(yaml_event_t& event);
+
+    charles::Object::Ptr mObject;
+    Type mType;
     Section mSection;
 };
 

@@ -132,7 +132,8 @@ SceneParser::HandleObjectsEvent(yaml_event_t& event)
         return;
     }
 
-    GetParsers().push(new ObjectParser(GetScene(), GetParsers()));
+    GetParsers().push(new ObjectParser(GetScene(), GetParsers(),
+                                       (char*)event.data.mapping_start.tag));
 }
 
 } /* namespace yaml */
