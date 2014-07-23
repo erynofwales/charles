@@ -144,6 +144,7 @@ Scene::write(Writer &writer, const std::string &filename)
 void
 Scene::render()
 {
+    printf("Rendering scene with %lu objects.\n", shapes.size());
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
