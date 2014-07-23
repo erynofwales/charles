@@ -35,7 +35,7 @@ Vector3::Vector3()
  *
  * Constructor. Create a vector consisting of the given coordinates.
  */
-Vector3::Vector3(float _x, float _y, float _z)
+Vector3::Vector3(Double _x, Double _y, Double _z)
     : x(_x), y(_y), z(_z)
 { }
 
@@ -65,7 +65,7 @@ Vector3::operator=(const Vector3 &v)
  * a reference to this vector is returned.
  */
 Vector3 &
-Vector3::operator*=(const float &rhs)
+Vector3::operator*=(const Double &rhs)
 {
     x *= rhs;
     y *= rhs;
@@ -74,7 +74,7 @@ Vector3::operator*=(const float &rhs)
 }
 
 Vector3 &
-Vector3::operator/=(const float &rhs)
+Vector3::operator/=(const Double &rhs)
 {
     return *this *= (1.0f / rhs);
 }
@@ -104,14 +104,14 @@ Vector3::operator-=(const Vector3 &rhs)
  * Perform the corresponding operation on a copy of this vector. Return a new vector.
  */
 Vector3
-Vector3::operator*(const float &rhs)
+Vector3::operator*(const Double &rhs)
     const
 {
     return Vector3(*this) *= rhs;
 }
 
 Vector3
-Vector3::operator/(const float &rhs)
+Vector3::operator/(const Double &rhs)
     const
 {
     return Vector3(*this) /= rhs;
@@ -171,7 +171,7 @@ Vector3::operator!=(const Vector3 &rhs)
  *
  * Compute and return the length-squared of this vector.
  */
-float
+Double
 Vector3::length2()
     const
 {
@@ -184,11 +184,11 @@ Vector3::length2()
  *
  * Compute and return the length of this vector.
  */
-float
+Double
 Vector3::length()
     const
 {
-    return sqrtf(length2());
+    return sqrt(length2());
 }
 
 
@@ -197,7 +197,7 @@ Vector3::length()
  *
  * Compute and return the dot product of this and the given vectors.
  */
-float
+Double
 Vector3::dot(const Vector3 &v)
     const
 {
@@ -237,7 +237,7 @@ Vector3::normalize()
  * Multiply the given float by the given vector. Return a new vector.
  */
 const Vector3
-operator*(const float &lhs, const Vector3 &rhs)
+operator*(const Double &lhs, const Vector3 &rhs)
 {
     return rhs * lhs;
 }
@@ -253,9 +253,9 @@ operator<<(std::ostream &os, const Vector3 &v)
 
 
 Vector3
-LinearCombination(const double k1, const Vector3& v1,
-                  const double k2, const Vector3& v2,
-                  const double k3, const Vector3& v3)
+LinearCombination(const Double k1, const Vector3& v1,
+                  const Double k2, const Vector3& v2,
+                  const Double k3, const Vector3& v3)
 {
     return Vector3(k1 * v1.x + k2 * v2.x + k3 * v3.x,
                    k1 * v1.y + k2 * v2.y + k3 * v3.y,

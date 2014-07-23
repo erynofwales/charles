@@ -14,19 +14,27 @@
 
 #include <iostream>
 
+#include "types.hh"
+
+/*
+ * XXX: THIS SHOULD NOT BE HERE. REMOVE IT WHEN MOVING TO CHARLES NAMESPACE IS
+ * DONE.
+ */
+using charles::Double;
+
 
 struct Vector3
 {
     Vector3();
-    Vector3(float x, float y, float z);
+    Vector3(Double x, Double y, Double z);
 
     Vector3 &operator=(const Vector3 &v);
-    Vector3 &operator*=(const float &rhs);
-    Vector3 &operator/=(const float &rhs);
+    Vector3 &operator*=(const Double &rhs);
+    Vector3 &operator/=(const Double &rhs);
     Vector3 &operator+=(const Vector3 &rhs);
     Vector3 &operator-=(const Vector3 &rhs);
-    Vector3 operator*(const float &rhs) const;
-    Vector3 operator/(const float &rhs) const;
+    Vector3 operator*(const Double &rhs) const;
+    Vector3 operator/(const Double &rhs) const;
     Vector3 operator+(const Vector3 &rhs) const;
     Vector3 operator-(const Vector3 &rhs) const;
     Vector3 operator-() const;
@@ -34,9 +42,9 @@ struct Vector3
     bool operator==(const Vector3 &rhs) const;
     bool operator!=(const Vector3 &rhs) const;
 
-    float length2() const;
-    float length() const;
-    float dot(const Vector3 &v) const;
+    Double length2() const;
+    Double length() const;
+    Double dot(const Vector3 &v) const;
     Vector3 cross(const Vector3 &v) const;
 
     Vector3 &normalize();
@@ -45,16 +53,16 @@ struct Vector3
     // Unit vectors in each of the three cartesian directions.
     static const Vector3 X, Y, Z;
 
-    float x, y, z;
+    Double x, y, z;
 };
 
-const Vector3 operator*(const float &lhs, const Vector3 &rhs);
+const Vector3 operator*(const Double &lhs, const Vector3 &rhs);
 std::ostream &operator<<(std::ostream &os, const Vector3 &v);
 
 
-Vector3 LinearCombination(const double k1, const Vector3& v1,
-                          const double k2, const Vector3& v2,
-                          const double k3, const Vector3& v3);
+Vector3 LinearCombination(const Double k1, const Vector3& v1,
+                          const Double k2, const Vector3& v2,
+                          const Double k3, const Vector3& v3);
 
 
 struct Ray
