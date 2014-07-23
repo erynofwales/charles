@@ -22,6 +22,7 @@ files = [
     'light.cc',
     'material.cc',
     'object.cc',
+    'objectBox.cc',
     'object_sphere.cc',
     #'object_plane.cc',
     'reader_yaml.cc',
