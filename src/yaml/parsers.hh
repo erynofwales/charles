@@ -18,10 +18,9 @@
 #include "scene.h"
 
 
+namespace charles {
 namespace yaml {
 
-struct Parser;
-typedef std::stack<Parser*> ParserStack;
 
 
 /**
@@ -30,6 +29,32 @@ typedef std::stack<Parser*> ParserStack;
  */
 struct Parser
 {
+    typedef std::shared_ptr<Parser> Ptr;
+    typedef std::stack<Ptr> Stack;
+
+    typedef yaml_mark_t Mark;
+
+    enum class ScalarStyle {
+        Any          = YAML_ANY_SCALAR_STYLE,
+        Plain        = YAML_PLAIN_SCALAR_STYLE,
+        SingleQuoted = YAML_SINGLE_QUOTED_SCALAR_STYLE,
+        DoubleQuoted = YAML_DOUBLE_QUOTED_SCALAR_STYLE,
+        Literal      = YAML_LITERAL_SCALAR_STYLE,
+        Folded       = YAML_FOLDED_SCALAR_STYLE
+    }
+
+    enum class SequenceStyle {
+        Any   = YAML_ANY_SEQUENCE_STYLE,
+        Block = YAML_BLOCK_SEQUENCE_STYLE,
+        Flow  = YAML_FLOW_SEQUENCE_STYLE
+    };
+
+    enum class SequenceStyle {
+        Any   = YAML_ANY_MAPPING_STYLE,
+        Block = YAML_BLOCK_MAPPING_STYLE,
+        Flow  = YAML_FLOW_MAPPING_STYLE
+    };
+
     /** Constructor */
     Parser(Scene& scene, ParserStack& parsers);
 
@@ -43,6 +68,50 @@ struct Parser
      */
     virtual void HandleEvent(yaml_event_t& event);
 
+    virtual void HandleStreamStart(const std::string& encoding,
+                                   const Mark& startMark,
+                                   const Mark& endMark);
+    virtual void HandleStreamEnd(const Mark& startMark,
+                                 const Mark& endMark);
+
+    virtual void HandleDocumentStart(/* TODO: Version directive ,*/
+                                     /* TODO: Tag directive list ,*/
+                                     bool implicit,
+                                     const Mark& startMark,
+                                     const Mark& endMark);
+    virtual void HandleDocumentEnd(bool implicit,
+                                   const Mark& startMark,
+                                   const Mark& endMark);
+
+    virtual void HandleMappingStart(const std::string& anchor,
+                                    const std::string& tag,
+                                    bool implicit,
+                                    MappingStyle style,
+                                    const Mark& startMark,
+                                    const Mark& endMark);
+    virtual void HandleMappingEnd(const Mark& startMark,
+                                  const Mark& endMark);
+
+    virtual void HandleSequenceStart(const std::string& anchor,
+                                     const std::string& tag,
+                                     bool implicit,
+                                     SequenceStyle style,
+                                     const Mark& startMark,
+                                     const Mark& endMark);
+    virtual void HandleSequenceEnd(const Mark& startMark,
+                                   const Mark& endMark);
+
+    virtual void HandleAlias(const std::string& anchor,
+                             const Mark& startMark,
+                             const Mark& endMark);
+    virtual void HandleScalar(const std::string& anchor,
+                              const std::string& tag,
+                              const std::string& value,
+                              bool plainImplicit,
+                              bool quotedImplicit,
+                              ScalarStyle style,
+                              const Mark& startMark,
+                              const Mark& endMark);
 
     /** Set the done flag. */
     void SetDone(bool done);
@@ -144,5 +213,6 @@ ParseScalar(const std::string& scalar,
 }
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_PARSERS_HH__ */
