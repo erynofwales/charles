@@ -21,8 +21,6 @@
 namespace charles {
 namespace yaml {
 
-
-
 /**
  * A Parser handles parsing a chunk of YAML, updating its mScene member as
  * necessary.
@@ -56,7 +54,7 @@ struct Parser
     };
 
     /** Constructor */
-    Parser(Scene& scene, ParserStack& parsers);
+    Parser(Scene& scene, Stack& parsers);
 
     /** Destructor */
     virtual ~Parser();
@@ -125,14 +123,14 @@ struct Parser
 
 protected:
     Scene& GetScene() const;
-    ParserStack& GetParsers() const;
+    Stack& GetParsers() const;
 
 private:
     /** The Scene being described by the YAML this parser is parsing. */
     Scene& mScene;
 
     /** The stack of parsers. */
-    ParserStack& mParsers;
+    Stack& mParsers;
 
     /** `true` if the parser is done parsing */
     bool mDone;
