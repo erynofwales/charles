@@ -1,0 +1,34 @@
+--- !Scene
+dimensions: [800, 600]
+camera: !Camera.Perspective
+    origin: [1.0, 1.5, -5]
+    direction: [-0.188, -0.282, 0.941]
+objects:
+    - !Object.Sphere
+      origin: [-1, 0, 0]
+      radius: 0.2
+      color: [1, 0, 0]
+    - !Object.Sphere
+      origin: [0, 0, 0]
+      radius: 0.2
+      color: [0, 1, 0]
+    - !Object.Sphere
+      origin: [1, 0, 0]
+      radius: 0.2
+      color: [0, 0, 1]
+    - !Object.Sphere
+      origin: [0, 1, 0]
+      radius: 0.2
+      color: [1, 1, 0]
+    - !Object.Sphere
+      origin: [0, -1, 0]
+      radius: 0.2
+      color: [1, 0, 1]
+    - !Object.Sphere
+      origin: [0, 0, 1]
+      radius: 0.2
+      color: [0, 1, 1]
+    - !Object.Sphere
+      origin: [0, 0, -1]
+      radius: 0.2
+      color: [1, 1, 1]

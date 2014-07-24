@@ -1,0 +1,17 @@
+--- !Scene
+dimensions: [800, 600]
+camera:
+    origin: [0, 0, -5]
+objects:
+  - !Object.Sphere
+    radius: 0.2
+    origin: [0, 0, 0]
+    color: [1, 1, 1]
+  - !Object.Sphere
+    radius: 0.2
+    origin: [-0.5, -0.5, -0.5]
+    color: [1, 0, 0]
+  - !Object.Sphere
+    radius: 0.2
+    origin: [0.5, 0.5, 0.5]
+    color: [0, 1, 1]
