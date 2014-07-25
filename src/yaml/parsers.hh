@@ -62,23 +62,64 @@ struct Parser
 
     /**
      * Called by the parser event loop to handle a libyaml parser event.
+     * Breaks out the event's data and calls the appropriate handler method.
      *
-     * @param [in] event A libyaml parser event object
+     * @param [in] event        A libyaml parser event object
      */
     virtual void HandleEvent(yaml_event_t& event);
 
-    virtual void HandleStreamStart(const std::string& encoding,
+    /**
+     * Handle a STREAM-START event.
+     *
+     * @param [in] encoding     The character encoding of the stream
+     * @param [in] startMark    The start of the event
+     * @param [in] endMark      The end of the event
+     * @return `true` or `false` indicating whether the event was successfully
+     *         handled
+     */
+    virtual bool HandleStreamStart(const std::string& encoding,
                                    const Mark& startMark,
                                    const Mark& endMark);
-    virtual void HandleStreamEnd(const Mark& startMark,
+
+    /**
+     * Handle a STREAM-END event.
+     *
+     * @param [in] startMark    The start of the event
+     * @param [in] endMark      The end of the event
+     * @returns `true` or `false` indicating whether the event was successfully
+     *          handled
+     */
+    virtual bool HandleStreamEnd(const Mark& startMark,
                                  const Mark& endMark);
 
-    virtual void HandleDocumentStart(/* TODO: Version directive ,*/
+    /**
+     * Handle a DOCUMENT-START event.
+     *
+     * @param [in] versionDirective     TODO
+     * @param [in] tagDirectives        TODO
+     * @param [in] implicit     Is the start of the document implicitly
+     *                          specified?
+     * @param [in] startMark    The start of the event
+     * @param [in] endMark      The end of the event
+     * @returns `true` or `false` indicating whether the event was successfully
+     *          handled
+     */
+    virtual bool HandleDocumentStart(/* TODO: Version directive ,*/
                                      /* TODO: Tag directive list ,*/
                                      bool implicit,
                                      const Mark& startMark,
                                      const Mark& endMark);
-    virtual void HandleDocumentEnd(bool implicit,
+
+    /**
+     * Handle a DOCUMENT-END event.
+     *
+     * @param [in] implicit     Is the end of the document implicitly specified?
+     * @param [in] startMark    The start of the event
+     * @param [in] endMark      The end of the event
+     * @returns `true` or `false` indicating whether the event was successfully
+     *          handled
+     */
+    virtual bool HandleDocumentEnd(bool implicit,
                                    const Mark& startMark,
                                    const Mark& endMark);
 
@@ -112,14 +153,7 @@ struct Parser
                               const Mark& startMark,
                               const Mark& endMark);
 
-    /** Set the done flag. */
     void SetDone(bool done);
-
-    /**
-     * Returns true if the parser is done parsing.
-     *
-     * @returns `true` if done, `false` if not
-     */
     bool GetDone() const;
 
 protected:
