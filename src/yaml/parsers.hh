@@ -48,7 +48,7 @@ struct Parser
         Flow  = YAML_FLOW_SEQUENCE_STYLE
     };
 
-    enum class SequenceStyle {
+    enum class MappingStyle {
         Any   = YAML_ANY_MAPPING_STYLE,
         Block = YAML_BLOCK_MAPPING_STYLE,
         Flow  = YAML_FLOW_MAPPING_STYLE
