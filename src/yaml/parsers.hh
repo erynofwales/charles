@@ -242,7 +242,7 @@ ParseScalar(const std::string& scalar,
             T& value)
 {
     std::stringstream s(scalar);
-    return (bool)(s >> value);
+    return bool(s >> value);
 }
 
 } /* namespace yaml */
