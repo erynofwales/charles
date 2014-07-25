@@ -36,5 +36,6 @@ for f in files:
 lib = env.Library('charles', objs)
 prog = env.Program('charles', ['charles.cc'], LIBS=[lib, 'png', 'yaml'])
 env.Alias('charles', prog)
+env.Default('charles')
 
 env.Default('charles')
