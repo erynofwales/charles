@@ -10,6 +10,7 @@
 #define __YAML_PARSERS_HH__
 
 #include <functional>
+#include <memory>
 #include <stack>
 #include <sstream>
 
