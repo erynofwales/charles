@@ -10,6 +10,7 @@
 #define __OBJECT_H__
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "basics.h"
