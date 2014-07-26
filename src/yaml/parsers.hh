@@ -10,6 +10,7 @@
 #define __YAML_PARSERS_HH__
 
 #include <functional>
+#include <list>
 #include <memory>
 #include <stack>
 #include <sstream>
@@ -32,6 +33,11 @@ struct Parser
     typedef std::stack<Ptr> Stack;
 
     typedef yaml_mark_t Mark;
+
+    struct TagDirective {
+        std::string handle;
+        std::string prefix;
+    };
 
     enum class Encoding {
         Any     = YAML_ANY_ENCODING,
