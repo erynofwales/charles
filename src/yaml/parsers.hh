@@ -33,6 +33,13 @@ struct Parser
 
     typedef yaml_mark_t Mark;
 
+    enum class Encoding {
+        Any     = YAML_ANY_ENCODING,
+        UTF8    = YAML_UTF8_ENCODING,
+        UTF16LE = YAML_UTF16LE_ENCODING,
+        UTF16BE = YAML_UTF16BE_ENCODING
+    };
+
     enum class ScalarStyle {
         Any          = YAML_ANY_SCALAR_STYLE,
         Plain        = YAML_PLAIN_SCALAR_STYLE,
@@ -40,7 +47,7 @@ struct Parser
         DoubleQuoted = YAML_DOUBLE_QUOTED_SCALAR_STYLE,
         Literal      = YAML_LITERAL_SCALAR_STYLE,
         Folded       = YAML_FOLDED_SCALAR_STYLE
-    }
+    };
 
     enum class SequenceStyle {
         Any   = YAML_ANY_SEQUENCE_STYLE,
@@ -77,7 +84,7 @@ struct Parser
      * @return `true` or `false` indicating whether the event was successfully
      *         handled
      */
-    virtual bool HandleStreamStart(const std::string& encoding,
+    virtual bool HandleStreamStart(Encoding encoding,
                                    const Mark& startMark,
                                    const Mark& endMark);
 
@@ -172,6 +179,7 @@ private:
 };
 
 
+#if 0
 /**
  * UtilityParsers handle small reusable bits of YAML. Their constructors take a
  * C++11 lambda, which will be called back with the result of the parsed data.
@@ -244,6 +252,7 @@ ParseScalar(const std::string& scalar,
     std::stringstream s(scalar);
     return bool(s >> value);
 }
+#endif
 
 } /* namespace yaml */
 } /* namespace charles */
