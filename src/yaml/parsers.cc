@@ -13,12 +13,13 @@
 #include "parsers.hh"
 
 
+namespace charles {
 namespace yaml {
 
 #pragma mark Parser
 
 Parser::Parser(Scene& scene,
-               ParserStack& parsers)
+               Stack& parsers)
     : mScene(scene),
       mParsers(parsers),
       mDone(false)
@@ -29,17 +30,94 @@ Parser::~Parser()
 { }
 
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
-
 void
 Parser::HandleEvent(yaml_event_t& event)
 {
-    /* Shouldn't ever get here. */
-    assert(false);
-}
+#define YAML_BOOL(x) ((x) != 0)
+#define YAML_STRING(x) ((char *)(x))
 
-#pragma clang diagnostic pop
+    bool success = true;
+
+    switch (event.type) {
+        case YAML_STREAM_START_EVENT:
+            success = HandleStreamStart(Encoding(event.data.stream_start.encoding),
+                                        event.start_mark,
+                                        event.end_mark);
+            break;
+
+        case YAML_STREAM_END_EVENT:
+            success = HandleStreamEnd(event.start_mark, event.end_mark);
+            break;
+
+        case YAML_DOCUMENT_START_EVENT:
+            success = HandleDocumentStart(/* TODO: Version directive ,*/
+                                          /* TODO: Tag directive list ,*/
+                                          YAML_BOOL(event.data.document_start.implicit),
+                                          event.start_mark,
+                                          event.end_mark);
+            break;
+
+        case YAML_DOCUMENT_END_EVENT:
+            success = HandleDocumentEnd(YAML_BOOL(event.data.document_end.implicit),
+                                        event.start_mark,
+                                        event.end_mark);
+            break;
+
+        case YAML_MAPPING_START_EVENT:
+            success = HandleMappingStart(YAML_STRING(event.data.mapping_start.anchor),
+                                         YAML_STRING(event.data.mapping_start.tag),
+                                         YAML_BOOL(event.data.mapping_start.implicit),
+                                         MappingStyle(event.data.mapping_start.style),
+                                         event.start_mark,
+                                         event.end_mark);
+            break;
+
+        case YAML_MAPPING_END_EVENT:
+            success = HandleMappingEnd(event.start_mark, event.end_mark);
+            break;
+
+        case YAML_SEQUENCE_START_EVENT:
+            success = HandleSequenceStart(YAML_STRING(event.data.sequence_start.anchor),
+                                          YAML_STRING(event.data.sequence_start.tag),
+                                          YAML_BOOL(event.data.sequence_start.implicit),
+                                          SequenceStyle(event.data.sequence_start.style),
+                                          event.start_mark,
+                                          event.end_mark);
+            break;
+
+        case YAML_SEQUENCE_END_EVENT:
+            success = HandleSequenceEnd(event.start_mark, event.end_mark);
+            break;
+
+        case YAML_ALIAS_EVENT:
+            success = HandleAlias(YAML_STRING(event.data.alias.anchor),
+                                  event.start_mark,
+                                  event.end_mark);
+            break;
+
+        case YAML_SCALAR_EVENT:
+            success = HandleScalar(YAML_STRING(event.data.scalar.anchor),
+                                   YAML_STRING(event.data.scalar.tag),
+                                   std::string(YAML_STRING(event.data.scalar.value),
+                                               event.data.scalar.length),
+                                   YAML_BOOL(event.data.scalar.plain_implicit),
+                                   YAML_BOOL(event.data.scalar.quoted_implicit),
+                                   ScalarStyle(event.data.scalar.style),
+                                   event.start_mark,
+                                   event.end_mark);
+            break;
+
+        default:
+            assert(false);
+            success = false;
+            break;
+    }
+
+    return success;
+
+#undef YAML_STR
+#undef YAML_BOOL
+}
 
 
 void
@@ -65,19 +143,12 @@ Parser::GetScene()
 }
 
 
-ParserStack&
+Parser::Stack&
 Parser::GetParsers()
     const
 {
     return mParsers;
 }
 
-#pragma mark ParseScalar
-
-template<>
-const char* ScalarParserTraits<int>::fmt = "%d";
-
-template<>
-const char* ScalarParserTraits<double>::fmt = "%lf";
-
 } /* namespace yaml */
+} /* namespace charles */
