@@ -82,8 +82,10 @@ struct Parser
      * Breaks out the event's data and calls the appropriate handler method.
      *
      * @param [in] event        A libyaml parser event object
+     * @return `true` or `false` indicating whether the event was successfully
+     *         handled
      */
-    virtual void HandleEvent(yaml_event_t& event);
+    virtual bool HandleEvent(const yaml_event_t& event);
 
     /**
      * Handle a STREAM-START event.
@@ -142,28 +144,28 @@ struct Parser
                                    const Mark& startMark,
                                    const Mark& endMark);
 
-    virtual void HandleMappingStart(const std::string& anchor,
+    virtual bool HandleMappingStart(const std::string& anchor,
                                     const std::string& tag,
                                     bool implicit,
                                     MappingStyle style,
                                     const Mark& startMark,
                                     const Mark& endMark);
-    virtual void HandleMappingEnd(const Mark& startMark,
+    virtual bool HandleMappingEnd(const Mark& startMark,
                                   const Mark& endMark);
 
-    virtual void HandleSequenceStart(const std::string& anchor,
+    virtual bool HandleSequenceStart(const std::string& anchor,
                                      const std::string& tag,
                                      bool implicit,
                                      SequenceStyle style,
                                      const Mark& startMark,
                                      const Mark& endMark);
-    virtual void HandleSequenceEnd(const Mark& startMark,
+    virtual bool HandleSequenceEnd(const Mark& startMark,
                                    const Mark& endMark);
 
-    virtual void HandleAlias(const std::string& anchor,
+    virtual bool HandleAlias(const std::string& anchor,
                              const Mark& startMark,
                              const Mark& endMark);
-    virtual void HandleScalar(const std::string& anchor,
+    virtual bool HandleScalar(const std::string& anchor,
                               const std::string& tag,
                               const std::string& value,
                               bool plainImplicit,

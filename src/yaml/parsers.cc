@@ -30,8 +30,8 @@ Parser::~Parser()
 { }
 
 
-void
-Parser::HandleEvent(yaml_event_t& event)
+bool
+Parser::HandleEvent(const yaml_event_t& event)
 {
 #define YAML_BOOL(x) ((x) != 0)
 #define YAML_STRING(x) ((char *)(x))
@@ -50,8 +50,8 @@ Parser::HandleEvent(yaml_event_t& event)
             break;
 
         case YAML_DOCUMENT_START_EVENT:
-            success = HandleDocumentStart(/* TODO: Version directive ,*/
-                                          /* TODO: Tag directive list ,*/
+            success = HandleDocumentStart(*event.data.document_start.version_directive,
+                                          TagDirectiveList(),
                                           YAML_BOOL(event.data.document_start.implicit),
                                           event.start_mark,
                                           event.end_mark);
