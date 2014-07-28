@@ -120,16 +120,137 @@ Parser::HandleEvent(const yaml_event_t& event)
 #undef YAML_BOOL
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 
 bool
-Parser::HandleStreamStart(Parser::Encoding encoding,
-                          const Parser::Mark& startMark,
-                          const Parser::Mark& endMark)
+Parser::HandleStreamStart(Encoding encoding,
+                          const Mark& startMark,
+                          const Mark& endMark)
 {
-    std::cerr << startMark.line << ":" << startMark.column
-              << ": Unexpected STREAM-START event.\n";
+    PrintUnexpectedEventError("STREAM-START", startMark);
     assert(false);
     return false;
+}
+
+
+bool
+Parser::HandleStreamEnd(const Mark& startMark,
+                        const Mark& endMark)
+{
+    PrintUnexpectedEventError("STREAM-END", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleDocumentStart(const VersionDirective versionDirective,
+                            const TagDirectiveList& tagDirectives,
+                            bool implicit,
+                            const Mark& startMark,
+                            const Mark& endMark)
+{
+    PrintUnexpectedEventError("DOCUMENT-START", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleDocumentEnd(bool implicit,
+                          const Mark& startMark,
+                          const Mark& endMark)
+{
+    PrintUnexpectedEventError("DOCUMENT-END", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleMappingStart(const std::string& anchor,
+                           const std::string& tag,
+                           bool implicit,
+                           MappingStyle style,
+                           const Mark& startMark,
+                           const Mark& endMark)
+{
+    PrintUnexpectedEventError("MAPPING-START", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleMappingEnd(const Mark& startMark,
+                         const Mark& endMark)
+{
+    PrintUnexpectedEventError("MAPPING-END", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleSequenceStart(const std::string& anchor,
+                            const std::string& tag,
+                            bool implicit,
+                            SequenceStyle style,
+                            const Mark& startMark,
+                            const Mark& endMark)
+{
+    PrintUnexpectedEventError("SEQUENCE-START", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleSequenceEnd(const Mark& startMark,
+                          const Mark& endMark)
+{
+    PrintUnexpectedEventError("SEQUENCE-END", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleAlias(const std::string& anchor,
+                    const Mark& startMark,
+                    const Mark& endMark)
+{
+    PrintUnexpectedEventError("ALIAS", startMark);
+    assert(false);
+    return false;
+}
+
+
+bool
+Parser::HandleScalar(const std::string& anchor,
+                     const std::string& tag,
+                     const std::string& value,
+                     bool plainImplicit,
+                     bool quotedImplicit,
+                     ScalarStyle style,
+                     const Mark& startMark,
+                     const Mark& endMark)
+{
+    PrintUnexpectedEventError("SCALAR", startMark);
+    assert(false);
+    return false;
+}
+
+#pragma clang diagnostic pop
+
+void
+Parser::PrintUnexpectedEventError(const std::string& eventName,
+                                  const Parser::Mark& mark)
+    const
+{
+    std::cerr << mark.line << ":" << mark.column
+              << ": Unexpected " << eventName << " event.\n";
 }
 
 } /* namespace yaml */

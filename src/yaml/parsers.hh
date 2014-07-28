@@ -182,6 +182,9 @@ protected:
     Stack& GetParsers() const { return mParsers; }
 
 private:
+    void PrintUnexpectedEventError(const std::string& eventName,
+                                   const Mark& mark) const;
+
     /** The Scene being described by the YAML this parser is parsing. */
     Scene& mScene;
 
