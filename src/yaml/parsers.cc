@@ -7,6 +7,7 @@
  */
 
 #include <cassert>
+#include <ostream>
 
 #include "yaml.h"
 
@@ -120,34 +121,15 @@ Parser::HandleEvent(const yaml_event_t& event)
 }
 
 
-void
-Parser::SetDone(bool done)
-{
-    mDone = done;
-}
-
-
 bool
-Parser::GetDone()
-    const
+Parser::HandleStreamStart(Parser::Encoding encoding,
+                          const Parser::Mark& startMark,
+                          const Parser::Mark& endMark)
 {
-    return mDone;
-}
-
-
-Scene&
-Parser::GetScene()
-    const
-{
-    return mScene;
-}
-
-
-Parser::Stack&
-Parser::GetParsers()
-    const
-{
-    return mParsers;
+    std::cerr << startMark.line << ":" << startMark.column
+              << ": Unexpected STREAM-START event.\n";
+    assert(false);
+    return false;
 }
 
 } /* namespace yaml */

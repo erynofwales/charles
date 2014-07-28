@@ -174,12 +174,12 @@ struct Parser
                               const Mark& startMark,
                               const Mark& endMark);
 
-    void SetDone(bool done);
-    bool GetDone() const;
+    void SetDone(bool done) { mDone = done; }
+    bool GetDone() const { return mDone; }
 
 protected:
-    Scene& GetScene() const;
-    Stack& GetParsers() const;
+    Scene& GetScene() const { return mScene; }
+    Stack& GetParsers() const { return mParsers; }
 
 private:
     /** The Scene being described by the YAML this parser is parsing. */
