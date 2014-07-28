@@ -32,7 +32,11 @@ struct Parser
     typedef std::shared_ptr<Parser> Ptr;
     typedef std::stack<Ptr> Stack;
 
+    typedef yaml_version_directive_t VersionDirective;
     typedef yaml_mark_t Mark;
+
+    struct TagDirective;
+    typedef std::list<TagDirective> TagDirectiveList;
 
     struct TagDirective {
         std::string handle;
@@ -108,8 +112,10 @@ struct Parser
     /**
      * Handle a DOCUMENT-START event.
      *
-     * @param [in] versionDirective     TODO
-     * @param [in] tagDirectives        TODO
+     * @param [in] versionDirective     The YAML version of this document
+     * @param [in] tagDirectives        A list of tag directives defined for
+     *                                  this document. Currently unimplemented;
+     *                                  this should be an empty list.
      * @param [in] implicit     Is the start of the document implicitly
      *                          specified?
      * @param [in] startMark    The start of the event
@@ -117,8 +123,8 @@ struct Parser
      * @returns `true` or `false` indicating whether the event was successfully
      *          handled
      */
-    virtual bool HandleDocumentStart(/* TODO: Version directive ,*/
-                                     /* TODO: Tag directive list ,*/
+    virtual bool HandleDocumentStart(const VersionDirective versionDirective,
+                                     const TagDirectiveList& tagDirectives,
                                      bool implicit,
                                      const Mark& startMark,
                                      const Mark& endMark);
