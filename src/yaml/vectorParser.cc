@@ -11,6 +11,9 @@
 namespace charles {
 namespace yaml {
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+
 template<typename T>
 bool
 ScalarSequenceParser<T>::HandleScalar(const std::string& anchor,
@@ -48,6 +51,9 @@ ScalarSequenceParser<T>::HandleSequenceEnd(const Parser::Mark& startMark,
 
     return true;
 }
+
+#pragma clang diagnostic pop
+
 
 Vector3Parser::Vector3Parser(Scene& scene,
                              Parser::Stack& parsers,

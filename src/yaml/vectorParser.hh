@@ -54,21 +54,8 @@ struct ScalarSequenceParser
                       const Parser::Mark& startMark,
                       const Parser::Mark& endMark);
 
-    bool
-    HandleSequenceEnd(const Parser::Mark& startMark,
-                      const Parser::Mark& endMark)
-    {
-        /*
-         * XXX: Need to prefix with this-> for some reason. Maybe the
-         * compiler can't figure out the type properly?
-         */
-        this->SetDone(true);
-
-        /* We have a completed vector. Notify the caller. */
-        this->Notify(mVector);
-
-        return true;
-    }
+    bool HandleSequenceEnd(const Parser::Mark& startMark,
+                           const Parser::Mark& endMark);
 
 private:
     VectorType mVector;
