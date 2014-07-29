@@ -37,7 +37,6 @@ struct ScalarSequenceParser
           mVector()
     { }
 
-    /** Constructor */
     ScalarSequenceParser(Scene& scene,
                          Parser::Stack& parsers,
                          CallbackFunction callback)
