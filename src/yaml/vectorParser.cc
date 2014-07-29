@@ -8,10 +8,49 @@
 #include "yaml/vectorParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
+template<typename T>
+bool
+ScalarSequenceParser<T>::HandleScalar(const std::string& anchor,
+                                      const std::string& tag,
+                                      const std::string& value,
+                                      bool plainImplicit,
+                                      bool quotedImplicit,
+                                      Parser::ScalarStyle style,
+                                      const Parser::Mark& startMark,
+                                      const Parser::Mark& endMark)
+{
+    Type scalarValue;
+    if (!ParseScalar<Type>(value, scalarValue)) {
+        assert(false);
+        return false;
+    }
+    mVector.push_back(scalarValue);
+    return true;
+}
+
+
+template<typename T>
+bool
+ScalarSequenceParser<T>::HandleSequenceEnd(const Parser::Mark& startMark,
+                                           const Parser::Mark& endMark)
+{
+    /*
+     * XXX: Need to prefix with this-> for some reason. Maybe the compiler can't
+     * figure out the type properly?
+     */
+    this->SetDone(true);
+
+    /* We have a completed vector. Notify the caller. */
+    this->Notify(mVector);
+
+    return true;
+}
+
 Vector3Parser::Vector3Parser(Scene& scene,
-                             ParserStack& parsers,
+                             Parser::Stack& parsers,
                              CallbackFunction onDone)
     : ScalarSequenceParser(scene, parsers)
 {
@@ -26,12 +65,8 @@ Vector3Parser::Vector3Parser(Scene& scene,
 }
 
 
-Vector3Parser::~Vector3Parser()
-{ }
-
-
 ColorParser::ColorParser(Scene& scene,
-                         ParserStack& parsers,
+                         Parser::Stack& parsers,
                          CallbackFunction onDone)
     : ScalarSequenceParser(scene, parsers)
 {
@@ -50,8 +85,5 @@ ColorParser::ColorParser(Scene& scene,
     SetCallback(onSeqDone);
 }
 
-
-ColorParser::~ColorParser()
-{ }
-
 } /* namespace yaml */
+} /* namespace charles */

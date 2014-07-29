@@ -196,7 +196,6 @@ private:
 };
 
 
-#if 0
 /**
  * UtilityParsers handle small reusable bits of YAML. Their constructors take a
  * C++11 lambda, which will be called back with the result of the parsed data.
@@ -205,16 +204,16 @@ template<typename T>
 struct UtilityParser
     : public Parser
 {
-    typedef std::function<void (T)> CallbackFunction;
+    typedef std::function<void(T)> CallbackFunction;
 
     UtilityParser(Scene& scene,
-                  ParserStack& parsers)
+                  Parser::Stack& parsers)
         : Parser(scene, parsers),
           mCallback()
     { }
 
     UtilityParser(Scene& scene,
-                  ParserStack& parsers,
+                  Parser::Stack& parsers,
                   CallbackFunction callback)
         : Parser(scene, parsers),
           mCallback(callback)
@@ -244,17 +243,6 @@ private:
 
 
 /**
- * Defines traits for the ParseScalar function. In particular, defines the
- * format strings for supported scalar types.
- */
-template<typename T>
-struct ScalarParserTraits
-{
-    static const char* fmt;
-};
-
-
-/**
  * Parse a YAML scalar value into a native datatype.
  *
  * @param [in]  scalar The YAML scalar value
@@ -269,7 +257,6 @@ ParseScalar(const std::string& scalar,
     std::stringstream s(scalar);
     return bool(s >> value);
 }
-#endif
 
 } /* namespace yaml */
 } /* namespace charles */
