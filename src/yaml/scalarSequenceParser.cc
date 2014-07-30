@@ -5,7 +5,7 @@
 
 #include <cassert>
 
-#include "yaml/vectorParser.hh"
+#include "yaml/scalarSequenceParser.hh"
 
 
 namespace charles {

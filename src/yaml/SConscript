@@ -10,8 +10,8 @@ files = [
     'objectParser.cc',
     'parsers.cc',
     'scalarMappingParser.cc',
+    'scalarSequenceParser.cc',
     'sceneParser.cc',
-    'vectorParser.cc'
 ]
 
 objs = []
