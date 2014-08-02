@@ -76,6 +76,7 @@ private:
 
         void PrintRayTable() const;
 
+        /* Ray counts */
         unsigned long primaryRays;
         unsigned long shadowRays;
         unsigned long reflectionRays;

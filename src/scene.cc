@@ -268,18 +268,18 @@ Scene::trace_ray(const Ray &ray,
         diffuse_level = shape_material.GetDiffuseIntensity();
         ambient_level = 1.0 - diffuse_level;
 
-        shadow_ray = Ray(intersection, light_direction);
+        shadowRay = Ray(intersection, light_direction);
         for (Object::Ptr s : shapes) {
-            // Skip the intersected shape.
             if (s == intersected_shape) {
+                /* Skip the intersected shape. */
                 continue;
             }
 
             mStats.shadowRays++;
 
-            // Figure out if we're in shadow.
+            /* Figure out if we're in shadow. */
             ts.clear();
-            if (s->DoesIntersect(shadow_ray, ts)) {
+            if (s->DoesIntersect(shadowRay, ts)) {
                 diffuse_level = 0.0;
                 break;
             }
