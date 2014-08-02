@@ -138,6 +138,9 @@ Plane::point_is_on_surface(const Vector3 &p)
 }
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+
 /*
  * charles::Plane::compute_normal --
  */
@@ -145,10 +148,9 @@ Vector3
 Plane::compute_normal(const Vector3 &p)
     const
 {
-    if (!point_is_on_surface(p)) {
-        return Vector3::Zero;
-    }
     return mNormal;
 }
+
+#pragma clang diagnostic pop
 
 } /* namespace charles */
