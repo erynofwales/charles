@@ -47,7 +47,11 @@ struct Vector3
     Double dot(const Vector3 &v) const;
     Vector3 cross(const Vector3 &v) const;
 
+    /** Normalize and return a reference to this vector. */
     Vector3 &normalize();
+
+    /** Return a copy of this vector, normalized. Does not modify this vector. */
+    Vector3 normalized() const;
 
     static const Vector3 Zero;
     // Unit vectors in each of the three cartesian directions.

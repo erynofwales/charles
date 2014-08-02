@@ -220,14 +220,23 @@ Vector3::cross(const Vector3 &v)
 
 /*
  * Vector3::normalize --
- *
- * Normalize this vector in place. That is, make this vector's magnitude (length) 1.0.
  */
 Vector3 &
 Vector3::normalize()
 {
     // Use the overloaded /= compound operator to do this.
     return *this /= length();
+}
+
+
+/*
+ * Vector3::normalized --
+ */
+Vector3
+Vector3::normalized()
+    const
+{
+    return *this / length();
 }
 
 
