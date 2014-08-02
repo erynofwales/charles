@@ -148,4 +148,12 @@ Log::Logger::Logger(unsigned int l)
 } /* namespace log */
 } /* namespace charles */
 
+
+#define LOG(name, level) charles::log::Log((name), (level))
+#define LOG_ERROR(name) LOG(name, charles::log::level::Error)
+#define LOG_WARN(name) LOG(name, charles::log::level::Warning)
+#define LOG_INFO(name) LOG(name, charles::log::level::Info)
+#define LOG_DEBUG(name) LOG(name, charles::log::level::Debug)
+#define LOG_TRACE(name) LOG(name, charles::log::level::Trace)
+
 #endif /* __LOG_HH__ */
