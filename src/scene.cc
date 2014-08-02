@@ -155,16 +155,25 @@ Scene::render()
 
     pixels = new Color[width * height];
 
+    unsigned long numPrimaryRays = width * height;
+
     Ray primary_ray;
     Vector3 o, d;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            primary_ray = mCamera->compute_primary_ray(x, width, y, height);
             mStats.primaryRays++;
+
+            printf("\rRendering pixels... (%ld/%ld) %3.0f%%",
+                   mStats.primaryRays, numPrimaryRays,
+                   ((float)mStats.primaryRays / (float)numPrimaryRays) * 100);
+
+            primary_ray = mCamera->compute_primary_ray(x, width, y, height);
             Color c = trace_ray(primary_ray);
             pixels[y * width + x] = c;
         }
     }
+
+    printf("\n");
 
     end = std::chrono::system_clock::now();
     std::chrono::duration<float> seconds = end - start;
