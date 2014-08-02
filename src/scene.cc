@@ -298,6 +298,7 @@ Scene::trace_ray(const Ray &ray,
      * Specular lighting. (Reflections, etc.)
      */
 
+#if 0
     Double specular_level = shape_material.GetSpecularIntensity();
     const Color& specular_color = shape_material.GetSpecularColor();
 
@@ -322,6 +323,7 @@ Scene::trace_ray(const Ray &ray,
 
     // TODO: Mix in specular_color of material.
     out_color += specular_level * specular_color * reflection_color;
+#endif
 
     return out_color;
 }
