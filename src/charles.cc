@@ -41,7 +41,7 @@ main(int argc,
 
     Scene scene;
 
-    Log::Init("charles.log");
+    Log::Init("charles.log", 50);
 
     scene.get_ambient().set_intensity(1.0);
 
