@@ -91,16 +91,16 @@ Plane::DoesIntersect(const Ray &ray,
      */
 
     /* The denominator for the t equation above. */
-    Double ndotd = mNormal.dot(ray.direction);
-    if (ndotd == 0.0) {
+    Double vd = mNormal.dot(ray.direction);
+    if (vd == 0.0) {
         /* The ray is parallel to the plane. */
         return false;
     }
 
     /* The numerator of the equation for t above. */
-    Double ndoto = -(mNormal.dot(ray.origin) + mDistance);
+    Double vo = -(mNormal.dot(ray.origin) + mDistance);
 
-    Double t0 = ndoto / ndotd;
+    Double t0 = vo / vd;
     if (t0 < 0.0) {
         /* The plane is behind the ray's origin. */
         return false;
