@@ -11,9 +11,13 @@
 
 #include "basics.h"
 #include "light.h"
+#include "log.hh"
 #include "object.h"
 #include "scene.h"
 #include "writer.h"
+
+#define LOG_NAME "scene"
+#include "logModule.hh"
 
 using namespace charles;
 
@@ -144,6 +148,7 @@ Scene::write(Writer &writer, const std::string &filename)
 void
 Scene::render()
 {
+    LOG_INFO << "Rendering scene with " << shapes.size() << " objects.";
     printf("Rendering scene with %lu objects.\n", shapes.size());
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
@@ -167,6 +172,7 @@ Scene::render()
     _is_rendered = true;
 
     printf("Rendering completed in %f seconds.\n\n", seconds.count());
+    LOG_INFO << "Rendering completed in " << seconds.count() << " seconds.";
     mStats.PrintRayTable();
 }
 

@@ -9,6 +9,7 @@
 #include <unistd.h>
 
 #include "basics.h"
+#include "log.hh"
 #include "light.h"
 #include "material.h"
 #include "object_sphere.h"
@@ -17,6 +18,9 @@
 #include "scene.h"
 #include "writer_png.h"
 
+#define LOG_NAME "ROOT"
+#include "logModule.hh"
+
 
 int verbosity = 0;
 
@@ -24,7 +28,8 @@ int verbosity = 0;
 static void
 usage(const char *progname)
 {
-    fprintf(stderr, "Usage: %s [-hv] [-o <outfile>] <infile ...>\n", progname);
+    fprintf(stderr, "Usage: %s [-hv] [-l <logfile>] [-L <log level>] [-o <outfile>] <infile ...>\n",
+            progname);
 }
 
 
@@ -32,6 +37,8 @@ int
 main(int argc,
      const char *argv[])
 {
+    using namespace charles::log;
+
     Scene scene;
 
     scene.get_ambient().set_intensity(1.0);
@@ -66,24 +73,42 @@ main(int argc,
     PointLight *l1 = new PointLight(Vector3(6.0, -4.0, 2), Color::White, 1.0);
     scene.add_light(l1);
 
+    std::string logFilename;
+    unsigned int logLevel = 0;
+
     std::string outfile, infile;
 
     int opt;
-    while ((opt = getopt(argc, (char *const *)argv, "ho:v")) != -1) {
+    while ((opt = getopt(argc, (char *const *)argv, "hl:L:o:v:")) != -1) {
         switch (opt) {
             case 'h':
                 usage(argv[0]);
+                exit(0);
+                break;
+            case 'l':
+                logFilename = optarg;
+                break;
+            case 'L':
+                logLevel = std::stoul(optarg);
                 break;
             case 'o':
                 outfile = optarg;
                 break;
             case 'v':
-                ++verbosity;
                 break;
         }
     }
 
+    /* Set up logging */
+    if (logLevel > 0) {
+        if (logFilename.empty()) {
+            logFilename = "charles.log";
+        }
+        Log::Init(logFilename, logLevel);
+    }
+
     if (optind >= argc) {
+        LOG_ERROR << "Input file required.";
         fprintf(stderr, "Input file required.\n");
         usage(argv[0]);
         return -1;
@@ -102,11 +127,16 @@ main(int argc,
     }
 
     /* Call tracer. */
+    LOG_INFO << "Beginning render";
     scene.render();
 
     /* Write rendered scene to PNG file. */
     PNGWriter writer;
     scene.write(writer, outfile);
+
+    if (logLevel > 0) {
+        Log::Close();
+    }
 
     return 0;
 }

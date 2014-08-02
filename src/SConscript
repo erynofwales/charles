@@ -20,6 +20,7 @@ files = [
     'basics.cc',
     'camera.cc',
     'light.cc',
+    'log.cc',
     'material.cc',
     'object.cc',
     'objectBox.cc',
