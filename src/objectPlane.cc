@@ -148,9 +148,11 @@ Plane::compute_normal(const Vector3 &p)
     if (!point_is_on_surface(p)) {
         return Vector3::Zero;
     }
-
-    // This one's easy since planes are defined by their normals. :)
-    return mNormal;
+    if (mNormal.dot(p) < 0.0) {
+        return mNormal;
+    } else {
+        return -mNormal;
+    }
 }
 
 } /* namespace charles */
