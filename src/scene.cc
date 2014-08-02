@@ -255,7 +255,7 @@ Scene::trace_ray(const Ray &ray,
 
     Vector3 light_direction;
     Double ldotn, diffuse_level, ambient_level;
-    Ray shadow_ray;
+    Ray shadowRay;
 
     for (PointLight *l : lights) {
         light_direction = (intersection - l->GetOrigin()).normalize();
