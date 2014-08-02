@@ -263,6 +263,10 @@ Scene::trace_ray(const Ray &ray,
         light_direction = (intersection - l->GetOrigin()).normalize();
         ldotn = light_direction.dot(normal);
 
+        /*
+         * TODO: What is this even for? Removing it makes the darker showers
+         * really bright.
+         */
         if (ldotn < 0) {
             ldotn = 0.0;
         }
