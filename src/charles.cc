@@ -18,6 +18,9 @@
 #include "scene.h"
 #include "writer_png.h"
 
+#define LOG_NAME "ROOT"
+#include "logModule.hh"
+
 
 int verbosity = 0;
 
@@ -90,7 +93,7 @@ main(int argc,
     }
 
     if (optind >= argc) {
-        LOG_ERROR("root") << "Input file required.";
+        LOG_ERROR << "Input file required.";
         fprintf(stderr, "Input file required.\n");
         usage(argv[0]);
         return -1;
@@ -109,7 +112,7 @@ main(int argc,
     }
 
     /* Call tracer. */
-    LOG_INFO("root") << "Beginning render";
+    LOG_INFO << "Beginning render";
     scene.render();
 
     /* Write rendered scene to PNG file. */

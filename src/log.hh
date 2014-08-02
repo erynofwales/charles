@@ -183,13 +183,14 @@ Tracer::~Tracer()
 } /* namespace charles */
 
 
-#define LOG(name, level) charles::log::Log((name), (level))
-#define LOG_ERROR(name) LOG(name, charles::log::level::Error)
-#define LOG_WARN(name) LOG(name, charles::log::level::Warning)
-#define LOG_INFO(name) LOG(name, charles::log::level::Info)
-#define LOG_DEBUG(name) LOG(name, charles::log::level::Debug)
-#define LOG_TRACE(name) LOG(name, charles::log::level::Trace)
+#define LOG_NAME_LEVEL(name, level) charles::log::Log((name), (level))
+#define LOG_ERROR_NAME(name) LOG_NAME_LEVEL(name, charles::log::level::Error)
+#define LOG_WARN_NAME(name) LOG_NAME_LEVEL(name, charles::log::level::Warning)
+#define LOG_INFO_NAME(name) LOG_NAME_LEVEL(name, charles::log::level::Info)
+#define LOG_DEBUG_NAME(name) LOG_NAME_LEVEL(name, charles::log::level::Debug)
+#define LOG_TRACE_NAME(name) LOG_NAME_LEVEL(name, charles::log::level::Trace)
 
-#define TRACE_FUNC(name) auto __tracer = charles::log::Tracer((name), __PRETTY_FUNCTION__)
+#define TRACE_FUNC_NAME(name) \
+    auto __tracer = charles::log::Tracer((name), __PRETTY_FUNCTION__)
 
 #endif /* __LOG_HH__ */
