@@ -92,7 +92,7 @@ Plane::DoesIntersect(const Ray &ray,
 
     /* The denominator for the t equation above. */
     Double vd = mNormal.dot(ray.direction);
-    if (vd == 0.0) {
+    if (NearZero(vd)) {
         /* The ray is parallel to the plane. */
         return false;
     }
@@ -103,6 +103,10 @@ Plane::DoesIntersect(const Ray &ray,
     Double t0 = vo / vd;
     if (t0 < 0.0) {
         /* The plane is behind the ray's origin. */
+        return false;
+    }
+
+    if (TooFar(t0)) {
         return false;
     }
 
@@ -126,10 +130,7 @@ Plane::point_is_on_surface(const Vector3 &p)
      * where (A, B, C) are the coordinates of the normal vector, and D is the
      * distance along that vector from the origin.
      */
-    Double x = mNormal.x * p.x;
-    Double y = mNormal.y * p.y;
-    Double z = mNormal.z * p.z;
-    return (x + y + z + mDistance) == 0.0;
+    return NearZero(mNormal.dot(p) + mDistance);
 }
 
 
@@ -143,11 +144,7 @@ Plane::compute_normal(const Vector3 &p)
     if (!point_is_on_surface(p)) {
         return Vector3::Zero;
     }
-    if (mNormal.dot(p) < 0.0) {
-        return mNormal;
-    } else {
-        return -mNormal;
-    }
+    return mNormal;
 }
 
 } /* namespace charles */
