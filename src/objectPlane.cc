@@ -60,7 +60,8 @@ Plane::SetDistance(Double distance)
  */
 bool
 Plane::DoesIntersect(const Ray &ray,
-                     TVector& t)
+                     TVector& t,
+                     Stats& stats)
     const
 {
     /*
@@ -70,7 +71,7 @@ Plane::DoesIntersect(const Ray &ray,
      *
      *     A * x + B * y + C * z + D = 0, where
      *     A^2 + B^2 + C^2 = 1.
-     * 
+     *
      * The sign of D determines which side of the origin the plane is on.
      *
      * We can figure out the distance from the ray's origin to the intersection
@@ -80,7 +81,7 @@ Plane::DoesIntersect(const Ray &ray,
      * indicated with lowercase letters (ROx is the x component of RO).
      *
      *     A(ROx + RDx * t) + B(ROy + RDy * t) + C(ROz + RDz * t) + D = 0
-     * 
+     *
      * We then solve for t.
      *
      *     t = -(A * ROx + B * ROy + C * ROz + D) / (A * RDx + B * RDy + C * RDz)
@@ -89,6 +90,8 @@ Plane::DoesIntersect(const Ray &ray,
      *
      *     t = -(n . RO + D) / (n . RD)
      */
+
+    stats.planeIntersectionTests++;
 
     /* The denominator for the t equation above. */
     Double vd = mNormal.dot(ray.direction);
@@ -110,6 +113,7 @@ Plane::DoesIntersect(const Ray &ray,
         return false;
     }
 
+    stats.planeIntersections++;
     t.push_back(t0);
     return true;
 }

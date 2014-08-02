@@ -30,7 +30,7 @@ public:
     /**
      * @see charles::Object::DoesIntersect
      */
-    bool DoesIntersect(const Ray &ray, TVector& t) const;
+    bool DoesIntersect(const Ray &ray, TVector& t, Stats& stats) const;
     bool point_is_on_surface(const Vector3 &p) const;
     Vector3 compute_normal(const Vector3 &p) const;
 

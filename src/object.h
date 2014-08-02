@@ -15,6 +15,7 @@
 
 #include "basics.h"
 #include "material.h"
+#include "stats.hh"
 #include "texture.h"
 #include "types.hh"
 
@@ -42,7 +43,7 @@ struct Object
      * @param [out] t       A vector of all intersection t values
      * @return `true` if the ray intersects with this object
      */
-    virtual bool DoesIntersect(const Ray& ray, TVector& t) const = 0;
+    virtual bool DoesIntersect(const Ray& ray, TVector& t, Stats& stats) const = 0;
     virtual bool point_is_on_surface(const Vector3 &p) const = 0;
     virtual Vector3 compute_normal(const Vector3 &p) const = 0;
 

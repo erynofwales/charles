@@ -174,6 +174,8 @@ Scene::render()
     printf("Rendering completed in %f seconds.\n\n", seconds.count());
     LOG_INFO << "Rendering completed in " << seconds.count() << " seconds.";
     mStats.PrintRayTable();
+    printf("\n");
+    mStats.PrintIntersectionsTable();
 }
 
 
@@ -225,7 +227,7 @@ Scene::trace_ray(const Ray &ray,
     // Find intersections of this ray with objects in the scene.
     for (Object::Ptr s : shapes) {
         ts.clear();
-        if (s->DoesIntersect(ray, ts)) {
+        if (s->DoesIntersect(ray, ts, mStats)) {
             for (Double t : ts) {
                 if (t < 1e-2) {
                     break;
@@ -279,7 +281,7 @@ Scene::trace_ray(const Ray &ray,
 
             /* Figure out if we're in shadow. */
             ts.clear();
-            if (s->DoesIntersect(shadowRay, ts)) {
+            if (s->DoesIntersect(shadowRay, ts, mStats)) {
                 diffuse_level = 0.0;
                 break;
             }
@@ -322,39 +324,4 @@ Scene::trace_ray(const Ray &ray,
     out_color += specular_level * specular_color * reflection_color;
 
     return out_color;
-}
-
-
-unsigned long
-Scene::Stats::TotalRays()
-    const
-{
-    return primaryRays + shadowRays + reflectionRays + transmissionRays;
-}
-
-
-void
-Scene::Stats::PrintRayTable()
-    const
-{
-    printf("RAY TYPE              NUM      %%\n");
-    printf("-------------- ---------- ------\n");
-    PrintRayRow("primary", primaryRays);
-    PrintRayRow("shadow", shadowRays);
-    PrintRayRow("reflection", reflectionRays);
-    PrintRayRow("transmission", transmissionRays);
-    PrintRayRow("total", TotalRays());
-}
-
-
-void
-Scene::Stats::PrintRayRow(const std::string& title,
-                          const unsigned long& value)
-    const
-{
-    double totalRays = TotalRays();
-    printf("%-14s %10ld %#5.1lf%%\n",
-           title.c_str(),
-           value,
-           double(value) / totalRays * 100.0);
 }

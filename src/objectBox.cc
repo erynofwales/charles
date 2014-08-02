@@ -53,9 +53,12 @@ Box::SetFar(const Vector3& far)
 
 bool
 Box::DoesIntersect(const Ray& ray,
-                   TVector& t)
+                   TVector& t,
+                   Stats& stats)
     const
 {
+    stats.boxIntersectionTests++;
+
     /*
      * XXX: For now, I'm assuming that all boxes are parallel to the coordinate
      * axes. This is the Kay-Kajiya box intersection algorithm.
@@ -174,8 +177,10 @@ Box::DoesIntersect(const Ray& ray,
     }
 
     /* We have an intersection! */
+    stats.boxIntersections++;
     t.push_back(tNear);
     t.push_back(tFar);
+
     return true;
 }
 

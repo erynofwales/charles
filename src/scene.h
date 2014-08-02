@@ -16,6 +16,7 @@
 #include "basics.h"
 #include "camera.h"
 #include "object.h"
+#include "stats.hh"
 
 
 class AmbientLight;
@@ -70,22 +71,7 @@ private:
     std::list<PointLight *> lights;
 
     // Rendering stats
-    struct Stats
-    {
-        unsigned long TotalRays() const;
-
-        void PrintRayTable() const;
-
-        /* Ray counts */
-        unsigned long primaryRays;
-        unsigned long shadowRays;
-        unsigned long reflectionRays;
-        unsigned long transmissionRays;
-
-    private:
-        void PrintRayRow(const std::string& title,
-                         const unsigned long& value) const;
-    } mStats;
+    charles::Stats mStats;
 
     // Rendering output.
     bool _is_rendered;

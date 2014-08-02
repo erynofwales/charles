@@ -28,6 +28,7 @@ files = [
     'objectPlane.cc',
     'reader_yaml.cc',
     'scene.cc',
+    'stats.cc',
     'writer_png.cc',
 ]
 

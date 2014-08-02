@@ -66,9 +66,12 @@ Sphere::set_radius(float r)
  */
 bool
 Sphere::DoesIntersect(const Ray& ray,
-                      TVector& t)
+                      TVector& t,
+                      Stats& stats)
     const
 {
+    stats.sphereIntersectionTests++;
+
     /* Origin of the vector in object space. */
     Vector3 rayOriginObj = ray.origin - GetOrigin();
 
@@ -119,6 +122,7 @@ Sphere::DoesIntersect(const Ray& ray,
         }
     }
 
+    stats.sphereIntersections++;
     return true;
 }
 
