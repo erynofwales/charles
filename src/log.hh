@@ -99,9 +99,13 @@ Log::Log(const std::string& name,
 {
     using namespace std::chrono;
 
-    /* Write a log message leader: "<time> - <name>:<level>: ". */
-    auto now = system_clock::to_time_t(system_clock::now());
-    *this << std::put_time(std::localtime(&now), "%F %T")
+    /* Write a log message leader: "<time with millis> - <name>:<level> - ". */
+    auto now = system_clock::now();
+    auto nowMillis =
+        duration_cast<milliseconds>(now.time_since_epoch() % seconds(1));
+    auto cNow = system_clock::to_time_t(now);
+    *this << std::put_time(std::localtime(&cNow), "%F %T") << "."
+          << nowMillis.count()
           << " - " << mName << ":" << mLevel << " - ";
 }
 
