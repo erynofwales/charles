@@ -31,7 +31,8 @@ namespace level {
 
 struct Log
 {
-    static void Init(const std::string& filename);
+    static void Init(const std::string& filename,
+                     unsigned int level = level::Info);
     static void Close();
 
     Log(const std::string& name = "root", unsigned int level = level::Info);
@@ -49,6 +50,7 @@ private:
 
     typedef std::map<std::string, Logger> LoggerMap;
 
+    static unsigned int sLevel;
     static std::ostream* sOutput;
     static LoggerMap sLoggers;
 
@@ -72,17 +74,21 @@ private:
 };
 
 
+unsigned int Log::sLevel = 0;
 std::ostream* Log::sOutput = nullptr;
 Log::LoggerMap Log::sLoggers;
 
 
 /* static */ void
-Log::Init(const std::string& filename)
+Log::Init(const std::string& filename,
+          unsigned int level)
 {
     assert(sOutput == nullptr);
     sOutput = new std::ofstream(filename);
+    sLevel = level;
 
-    Log("root", level::Error) << "Opening log file: " << filename;
+    Log("ROOT", 1) << "Opening log file: " << filename;
+    Log("ROOT", 1) << "Level set to " << sLevel;
 }
 
 
@@ -148,7 +154,7 @@ Log::GetLogger(const std::string& name)
      * TODO: For now, output is always the same: sOutput. In the future, figure
      * out a way to set different outputs for different streams.
      */
-    auto pair = sLoggers.emplace(name, level::Info);
+    auto pair = sLoggers.emplace(name, sLevel);
     return pair.first->second;
 }
 
