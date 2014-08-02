@@ -12,103 +12,102 @@
 
 #include "basics.h"
 #include "object.h"
-#include "object_plane.h"
+#include "objectPlane.hh"
 
+namespace charles {
 
 /*
- * Plane::Plane --
- *
- * Default constructor. Create a Plane with a point at the origin and normal vector in the Y direction.
+ * charles::Plane::Plane --
  */
 Plane::Plane()
-    : Plane(Vector3::Y)
+    : mNormal(Vector3::Y),
+      mDistance(0.0)
 { }
 
 
-/*
- * Plane::Plane --
- *
- * Constructor. Create a Plane with a point at the origin, and a given normal.
- */
-Plane::Plane(Vector3 n)
-    : Plane(Vector3::Zero, n)
-{ }
+const Vector3&
+Plane::GetNormal()
+    const
+{
+    return mNormal;
+}
+
+
+void
+Plane::SetNormal(const Vector3& normal)
+{
+    mNormal = normal.normalized();
+}
+
+
+Double
+Plane::GetDistance()
+    const
+{
+    return mDistance;
+}
+
+
+void
+Plane::SetDistance(Double distance)
+{
+    mDistance = distance;
+}
 
 
 /*
- * Plane::Plane --
- *
- * Constructor. Create a Plane with the given origin and normal vectors.
+ * charles::Plane::DoesIntersect --
  */
-Plane::Plane(Vector3 o, Vector3 n)
-    : Shape(o),
-      normal(n.normalize())
-{ }
-
-
-/*
- * Plane::does_intersect --
- *
- * Compute the intersection of a ray with this Plane. All intersection t values are returned in the **t argument. The
- * number of values returned therein is indicated by the return value. Memory is allocated at *t. It is the caller's
- * responsibility to free it when it is no longer needed. If 0 is returned, no memory needs to be freed.
- */
-int
-Plane::does_intersect(const Ray &ray, float **t)
+bool
+Plane::DoesIntersect(const Ray &ray,
+                     TVector& t)
     const
 {
     /*
-     * The algebraic form of a plane is the following:
+     * Planes are defined in terms of [A B C D], where [A B C] make up the unit
+     * normal vector, and D is the distance from the origin. We can write the
+     * equation for a plane like this:
      *
-     *     (p - p0) . n = 0
+     *     A * x + B * y + C * z + D = 0, where
+     *     A^2 + B^2 + C^2 = 1.
+     * 
+     * The sign of D determines which side of the origin the plane is on.
      *
-     * where p is a point in the plane, p0 is another point in the plane (the origin point in our case), and n is the
-     * normal vector. (Periods [.] indicate dot products.) We can plug in the parametric equation for a Ray and solve
-     * for t to get the intersection point.
+     * We can figure out the distance from the ray's origin to the intersection
+     * point (there will be only one for planes) by substituting the ray's
+     * parameters into the above equation. In the equations below, RO is the
+     * ray's origin, RD is the ray's direction, and components thereof are
+     * indicated with lowercase letters (ROx is the x component of RO).
      *
-     *     ((ro + t*rd) - p0) . n = 0
+     *     A(ROx + RDx * t) + B(ROy + RDy * t) + C(ROz + RDz * t) + D = 0
+     * 
+     * We then solve for t.
      *
-     * Simplifying, distributing, and solving for t:
+     *     t = -(A * ROx + B * ROy + C * ROz + D) / (A * RDx + B * RDy + C * RDz)
      *
-     *     t = ((p0 - ro) . n) / (ld . n)
+     * In vector notation, this works out more cleanly.
      *
-     * Note that if the denominator is 0, the ray runs parallel to the plane and there are no intersections. If both the
-     * numerator and denominator are 0, the ray is in the plane and intersects everywhere.
-     *
-     * See: http://en.wikipedia.org/wiki/Line-plane_intersection
+     *     t = -(n . RO + D) / (n . RD)
      */
-    Vector3 o = get_origin();
-    int nints = 1;
-    float numer = (o - ray.origin).dot(normal);
-    float denom = ray.direction.dot(normal);
 
-    if (denom == 0.0) {
-        nints = 0;
-        if (numer == 0.0) {
-            // Ray is in plane.
-            nints = 1;
-        }
+    /* The denominator for the t equation above. */
+    Double ndotd = mNormal.dot(ray.direction);
+    if (ndotd == 0.0) {
+        /* The ray is parallel to the plane. */
+        return false;
     }
 
-    // No intersections.
-    if (nints == 0) {
-        return nints;
-    }
+    /* The numerator of the equation for t above. */
+    Double ndoto = -(mNormal.dot(ray.origin) + mDistance);
 
-    // TODO: denom could still be 0 here!
-    float t0 = numer / denom;
-
-    // If the t value is negative, it's "behind" the origin of the ray, which we don't care about.
+    Double t0 = ndoto / ndotd;
     if (t0 < 0.0) {
-        return 0;
+        /* The plane is behind the ray's origin. */
+        return false;
     }
 
-    // Allocate memory, at most one float.
-    if (t != NULL) {
-        *t = new float(t0);
-    }
-
-    return nints;
+    t.push_back(t0);
+    return true;
 }
 
 
@@ -124,19 +123,15 @@ Plane::point_is_on_surface(const Vector3 &p)
     /*
      * Plug point p into the equation for a plane:
      *
-     *     a(x - ox) + b(y - oy) + c(z - oz) = 0
+     *     A * x + B * y + C * z + D = 0
      *
-     * where (a, b, c) are the coordinates of the normal vector, and (ox, oy, oz) are the coordinates of the origin
-     * vector.
-     *
-     * I found this page most helpful:
-     * http://www.math.oregonstate.edu/home/programs/undergrad/CalculusQuestStudyGuides/vcalc/lineplane/lineplane.html
+     * where (A, B, C) are the coordinates of the normal vector, and D is the
+     * distance along that vector from the origin.
      */
-    Vector3 o = get_origin();
-    float x = normal.x * (p.x - o.x);
-    float y = normal.y * (p.y - o.y);
-    float z = normal.z * (p.z - o.z);
-    return (x + y + z) == 0.0;
+    Double x = mNormal.x * p.x;
+    Double y = mNormal.y * p.y;
+    Double z = mNormal.z * p.z;
+    return (x + y + z + mDistance) == 0.0;
 }
 
 
@@ -155,5 +150,7 @@ Plane::compute_normal(const Vector3 &p)
     }
 
     // This one's easy since planes are defined by their normals. :)
-    return normal;
+    return mNormal;
 }
+
+} /* namespace charles */
