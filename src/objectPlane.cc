@@ -112,9 +112,7 @@ Plane::DoesIntersect(const Ray &ray,
 
 
 /*
- * Plane::point_is_on_surface --
- *
- * Determine if a point lies on the surface of this Sphere.
+ * charles::Plane::point_is_on_surface --
  */
 bool
 Plane::point_is_on_surface(const Vector3 &p)
@@ -136,10 +134,7 @@ Plane::point_is_on_surface(const Vector3 &p)
 
 
 /*
- * Plane::compute_normal --
- *
- * Compute the normal for this Plane at the given point. If the point does not lie on the surface of the plane, a zero
- * vector is returned.
+ * charles::Plane::compute_normal --
  */
 Vector3
 Plane::compute_normal(const Vector3 &p)
