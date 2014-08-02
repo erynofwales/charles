@@ -9,13 +9,13 @@
 
 
 namespace charles {
-    
+
 Material::Material()
     : mDiffuseModel(DiffuseShaderModel::Lambert),
       mDiffuseIntensity(0.8),
       mDiffuseColor(Color::White),
       mSpecularModel(SpecularShaderModel::Phong),
-      mSpecularIntensity(0.5),
+      mSpecularIntensity(0.0),
       mSpecularColor(Color::White)
 { }
 
