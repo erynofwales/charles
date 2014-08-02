@@ -122,7 +122,7 @@ PerspectiveCamera::compute_primary_ray(const int x,
     Vector3 direction = LinearCombination(1.0, get_direction(),
                                           x0, GetRight(),
                                           y0, GetUp());
-    return Ray(GetOrigin(), direction);
+    return Ray(GetOrigin(), direction.normalize());
 }
 
 #pragma mark - Orthographic Camera
