@@ -52,6 +52,18 @@ NearZero(Double& value)
 }
 
 
+/**
+ * Same as NearZero, but for temporary values.
+ *
+ * @see NearZero
+ */
+inline bool
+NearZero(Double&& value)
+{
+    return std::fabs(value) < EPSILON;
+}
+
+
 inline bool
 TooFar(Double& value)
 {
