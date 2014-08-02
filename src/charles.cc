@@ -33,9 +33,12 @@ int
 main(int argc,
      const char *argv[])
 {
+    using namespace charles::log;
+    using charles::log::Log;
+
     Scene scene;
 
-    charles::log::Log::Init("charles.log");
+    Log::Init("charles.log");
 
     scene.get_ambient().set_intensity(1.0);
 
@@ -87,6 +90,7 @@ main(int argc,
     }
 
     if (optind >= argc) {
+        LOG_ERROR("root") << "Input file required.";
         fprintf(stderr, "Input file required.\n");
         usage(argv[0]);
         return -1;
@@ -105,13 +109,14 @@ main(int argc,
     }
 
     /* Call tracer. */
+    LOG_INFO("root") << "Beginning render";
     scene.render();
 
     /* Write rendered scene to PNG file. */
     PNGWriter writer;
     scene.write(writer, outfile);
 
-    charles::log::Log::Close();
+    Log::Close();
 
     return 0;
 }
