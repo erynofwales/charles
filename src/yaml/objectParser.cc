@@ -13,6 +13,7 @@
 #include "material.h"
 #include "object.h"
 #include "objectBox.hh"
+#include "objectPlane.hh"
 #include "object_sphere.h"
 #include "yaml/objectParser.hh"
 #include "yaml/vectorParser.hh"
@@ -33,6 +34,9 @@ ObjectParser::ObjectParser(Scene& scene,
     if (tag == "!Object.Box") {
         mType = Type::Box;
         mObject.reset(new Box());
+    } else if (tag == "!Object.Plane") {
+        mType = Type::Plane;
+        mObject.reset(new Plane());
     } else if (tag == "!Object.Sphere") {
         mType = Type::Sphere;
         mObject.reset(new Sphere());
@@ -66,6 +70,11 @@ ObjectParser::HandleKeyEvent(const std::string& key)
         {"far", FarSection}
     };
 
+    static const std::map<std::string, Section> sPlaneSections = {
+        {"normal", NormalSection},
+        {"distance", DistanceSection}
+    };
+
     if (sCommonSections.count(key) > 0) {
         mSection = sCommonSections.at(key);
         return;
@@ -74,6 +83,12 @@ ObjectParser::HandleKeyEvent(const std::string& key)
     if (mType == Type::Box) {
         if (sBoxSections.count(key) > 0) {
             mSection = sBoxSections.at(key);
+        } else {
+            mSection = NoSection;
+        }
+    } else if (mType == Type::Plane) {
+        if (sPlaneSections.count(key) > 0) {
+            mSection = sPlaneSections.at(key);
         } else {
             mSection = NoSection;
         }
@@ -96,18 +111,31 @@ ObjectParser::HandleValueEvent(yaml_event_t& event)
         case ColorSection:
             HandleColorEvent(event);
             break;
+
+        /* Spheres */
         case OriginSection:
             HandleOriginEvent(event);
             break;
         case RadiusSection:
             HandleRadiusEvent(event);
             break;
+
+        /* Boxes */
         case NearSection:
             HandleNearEvent(event);
             break;
         case FarSection:
             HandleFarEvent(event);
             break;
+
+        /* Planes */
+        case NormalSection:
+            HandleNormalEvent(event);
+            break;
+        case DistanceSection:
+            HandleDistanceEvent(event);
+            break;
+
         default:
             assert(false);
             break;
@@ -209,6 +237,46 @@ ObjectParser::HandleFarEvent(yaml_event_t& event)
     };
 
     GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+}
+
+
+void
+ObjectParser::HandleNormalEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_SEQUENCE_START_EVENT) {
+        /* TODO: Clean this up. */
+        assert(event.type != YAML_SEQUENCE_START_EVENT);
+        return;
+    }
+
+    auto onDone = [this](Vector3 normal) {
+        std::dynamic_pointer_cast<Plane>(mObject)->SetNormal(normal);
+        mSection = NoSection;
+        SetShouldExpectKey(true);
+    };
+
+    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+}
+
+
+void
+ObjectParser::HandleDistanceEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_SCALAR_EVENT) {
+        /* TODO: Clean this up. */
+        assert(false);
+    }
+
+    Double distance;
+    std::string scalar((char *)event.data.scalar.value,
+                       event.data.scalar.length);
+    if (!ParseScalar<Double>(scalar, distance)) {
+        /* TODO: Clean this up. */
+        assert(false);
+    }
+    std::dynamic_pointer_cast<Plane>(mObject)->SetDistance(distance);
+    mSection = NoSection;
+    SetShouldExpectKey(true);
 }
 
 } /* namespace yaml */

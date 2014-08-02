@@ -29,7 +29,8 @@ protected:
 private:
     enum class Type {
         Box,
-        Sphere
+        Plane,
+        Sphere,
     };
 
     enum Section {
@@ -42,7 +43,11 @@ private:
 
         /* Box sections */
         NearSection,
-        FarSection
+        FarSection,
+
+        /* Plane sections */
+        NormalSection,
+        DistanceSection,
     };
 
     void HandleColorEvent(yaml_event_t& event);
@@ -52,6 +57,9 @@ private:
 
     void HandleNearEvent(yaml_event_t& event);
     void HandleFarEvent(yaml_event_t& event);
+
+    void HandleNormalEvent(yaml_event_t& event);
+    void HandleDistanceEvent(yaml_event_t& event);
 
     charles::Object::Ptr mObject;
     Type mType;
