@@ -60,6 +60,18 @@ private:
 };
 
 
+struct Tracer
+{
+    Tracer(const std::string& name,
+           const std::string& function);
+    ~Tracer();
+
+private:
+    const std::string& mName;
+    const std::string& mFunction;
+};
+
+
 std::ostream* Log::sOutput = nullptr;
 Log::LoggerMap Log::sLoggers;
 
@@ -145,6 +157,22 @@ Log::Logger::Logger(unsigned int l)
     : level(l)
 { }
 
+#pragma mark Tracer
+
+Tracer::Tracer(const std::string& name,
+               const std::string& function)
+    : mName(name),
+      mFunction(function)
+{
+    Log(mName, level::Trace) << "--> " << mFunction;
+}
+
+
+Tracer::~Tracer()
+{
+    Log(mName, level::Trace) << "<-- " << mFunction;
+}
+
 } /* namespace log */
 } /* namespace charles */
 
@@ -155,5 +183,7 @@ Log::Logger::Logger(unsigned int l)
 #define LOG_INFO(name) LOG(name, charles::log::level::Info)
 #define LOG_DEBUG(name) LOG(name, charles::log::level::Debug)
 #define LOG_TRACE(name) LOG(name, charles::log::level::Trace)
+
+#define TRACE_FUNC(name) auto __tracer = charles::log::Tracer((name), __PRETTY_FUNCTION__)
 
 #endif /* __LOG_HH__ */
