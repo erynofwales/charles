@@ -9,6 +9,7 @@
 #include <unistd.h>
 
 #include "basics.h"
+#include "log.hh"
 #include "light.h"
 #include "material.h"
 #include "object_sphere.h"
@@ -33,6 +34,8 @@ main(int argc,
      const char *argv[])
 {
     Scene scene;
+
+    charles::log::Log::Init("charles.log");
 
     scene.get_ambient().set_intensity(1.0);
 
@@ -107,6 +110,8 @@ main(int argc,
     /* Write rendered scene to PNG file. */
     PNGWriter writer;
     scene.write(writer, outfile);
+
+    charles::log::Log::Close();
 
     return 0;
 }
