@@ -12,6 +12,7 @@
 #ifndef __BASICS_H__
 #define __BASICS_H__
 
+#include <cmath>
 #include <iostream>
 
 #include "types.hh"
@@ -21,6 +22,41 @@
  * DONE.
  */
 using charles::Double;
+
+
+/**
+ * A very small constant. If a value is between EPSILON and 0.0, it is
+ * considered to be zero.
+ */
+const Double EPSILON = 1.0e-10;
+
+/**
+ * The maximum distance a ray can travel. This is the maximum value t can be.
+ */
+const Double MAX_DISTANCE = 1.0e7;
+
+
+/**
+ * Determine if the value is "close enough" to zero. Takes the absolute value
+ * and compares it to `EPSILON`.
+ *
+ * @see EPSILON
+ *
+ * @param [in] value    The value to check
+ * @returns `true` if the value is close enough to zero
+ */
+inline bool
+NearZero(Double& value)
+{
+    return std::fabs(value) < EPSILON;
+}
+
+
+inline bool
+TooFar(Double& value)
+{
+    return value > MAX_DISTANCE;
+}
 
 
 struct Vector3
