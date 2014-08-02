@@ -28,7 +28,8 @@ int verbosity = 0;
 static void
 usage(const char *progname)
 {
-    fprintf(stderr, "Usage: %s [-hv] [-o <outfile>] <infile ...>\n", progname);
+    fprintf(stderr, "Usage: %s [-hv] [-l <logfile>] [-L <log level>] [-o <outfile>] <infile ...>\n",
+            progname);
 }
 
 
@@ -37,11 +38,8 @@ main(int argc,
      const char *argv[])
 {
     using namespace charles::log;
-    using charles::log::Log;
 
     Scene scene;
-
-    Log::Init("charles.log", 50);
 
     scene.get_ambient().set_intensity(1.0);
 
@@ -75,21 +73,38 @@ main(int argc,
     PointLight *l1 = new PointLight(Vector3(6.0, -4.0, 2), Color::White, 1.0);
     scene.add_light(l1);
 
+    std::string logFilename;
+    unsigned int logLevel = 0;
+
     std::string outfile, infile;
 
     int opt;
-    while ((opt = getopt(argc, (char *const *)argv, "ho:v")) != -1) {
+    while ((opt = getopt(argc, (char *const *)argv, "hl:L:o:v:")) != -1) {
         switch (opt) {
             case 'h':
                 usage(argv[0]);
+                exit(0);
+                break;
+            case 'l':
+                logFilename = optarg;
+                break;
+            case 'L':
+                logLevel = std::stoul(optarg);
                 break;
             case 'o':
                 outfile = optarg;
                 break;
             case 'v':
-                ++verbosity;
                 break;
         }
+    }
+
+    /* Set up logging */
+    if (logLevel > 0) {
+        if (logFilename.empty()) {
+            logFilename = "charles.log";
+        }
+        Log::Init(logFilename, logLevel);
     }
 
     if (optind >= argc) {
@@ -119,7 +134,9 @@ main(int argc,
     PNGWriter writer;
     scene.write(writer, outfile);
 
-    Log::Close();
+    if (logLevel > 0) {
+        Log::Close();
+    }
 
     return 0;
 }
