@@ -1,0 +1,446 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AmbientLight	src/light.cc	/^AmbientLight::AmbientLight()$/;"	f	class:AmbientLight
+AmbientLight	src/light.cc	/^AmbientLight::AmbientLight(const Color &c)$/;"	f	class:AmbientLight
+AmbientLight	src/light.cc	/^AmbientLight::AmbientLight(const Color &c, const float &i)$/;"	f	class:AmbientLight
+AmbientLight	src/light.h	/^class AmbientLight$/;"	c
+Any	src/yaml/parsers.hh	/^        Any          = YAML_ANY_SCALAR_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle
+Any	src/yaml/parsers.hh	/^        Any     = YAML_ANY_ENCODING,$/;"	m	class:charles::yaml::Parser::Encoding
+Any	src/yaml/parsers.hh	/^        Any   = YAML_ANY_MAPPING_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+Any	src/yaml/parsers.hh	/^        Any   = YAML_ANY_SEQUENCE_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle
+Black	src/basics.cc	/^const Color Color::Black  = Color();$/;"	m	class:Color	file:
+Black	src/basics.h	/^    static const Color Black;$/;"	m	struct:Color
+Blinn	src/material.h	/^        Blinn,$/;"	m	class:charles::Material::SpecularShaderModel
+Block	src/yaml/parsers.hh	/^        Block = YAML_BLOCK_MAPPING_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+Block	src/yaml/parsers.hh	/^        Block = YAML_BLOCK_SEQUENCE_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle
+Blue	src/basics.cc	/^const Color Color::Blue   = Color(0.0, 0.0, 1.0, 1.0);$/;"	m	class:Color	file:
+Blue	src/basics.h	/^    static const Color Blue;$/;"	m	struct:Color
+Box	src/objectBox.cc	/^Box::Box()$/;"	f	class:charles::Box
+Box	src/objectBox.cc	/^Box::Box(const Vector3& near, const Vector3& far)$/;"	f	class:charles::Box
+Box	src/objectBox.hh	/^struct Box$/;"	s	namespace:charles
+Box	src/yaml/objectParser.hh	/^        Box,$/;"	m	class:yaml::ObjectParser::Type
+CallbackFunction	src/yaml/parsers.hh	/^    typedef std::function<void(T)> CallbackFunction;$/;"	t	struct:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::UtilityParser
+CallbackFunction	src/yaml/scalarSequenceParser.hh	/^    typedef std::function<void(Color)> CallbackFunction;$/;"	t	struct:charles::yaml::ColorParser
+CallbackFunction	src/yaml/scalarSequenceParser.hh	/^    typedef std::function<void(Vector3)> CallbackFunction;$/;"	t	struct:charles::yaml::Vector3Parser
+CallbackFunction	src/yaml/scalarSequenceParser.hh	/^    typedef typename UtilityParser<VectorType>::CallbackFunction CallbackFunction;$/;"	t	struct:charles::yaml::ScalarSequenceParser
+Camera	src/camera.cc	/^Camera::Camera()$/;"	f	class:Camera
+Camera	src/camera.cc	/^Camera::Camera(const Camera& other)$/;"	f	class:Camera
+Camera	src/camera.h	/^struct Camera$/;"	s
+CameraParser	src/yaml/cameraParser.cc	/^CameraParser::CameraParser(Scene& scene,$/;"	f	class:yaml::CameraParser
+CameraParser	src/yaml/cameraParser.hh	/^struct CameraParser$/;"	s	namespace:yaml
+CameraSection	src/yaml/sceneParser.hh	/^        CameraSection,$/;"	e	enum:yaml::SceneParser::Section
+ClampParameter	src/material.cc	/^Material::ClampParameter(Double& param)$/;"	f	class:charles::Material
+Color	src/basics.cc	/^Color::Color()$/;"	f	class:Color
+Color	src/basics.cc	/^Color::Color(const float &r, const float &g, const float &b)$/;"	f	class:Color
+Color	src/basics.cc	/^Color::Color(const float &r, const float &g, const float &b, const float &a)$/;"	f	class:Color
+Color	src/basics.h	/^struct Color$/;"	s
+ColorParser	src/yaml/scalarSequenceParser.cc	/^ColorParser::ColorParser(Scene& scene,$/;"	f	class:charles::yaml::ColorParser
+ColorParser	src/yaml/scalarSequenceParser.hh	/^struct ColorParser$/;"	s	namespace:charles::yaml
+ColorSection	src/yaml/objectParser.hh	/^        ColorSection,$/;"	e	enum:yaml::ObjectParser::Section
+DiffuseShaderModel	src/material.h	/^    enum class DiffuseShaderModel {$/;"	c	struct:charles::Material
+DimensionsSection	src/yaml/sceneParser.hh	/^        DimensionsSection,$/;"	e	enum:yaml::SceneParser::Section
+DirectionSection	src/yaml/cameraParser.hh	/^        DirectionSection,$/;"	e	enum:yaml::CameraParser::Section
+DoesIntersect	src/objectBox.cc	/^Box::DoesIntersect(const Ray& ray,$/;"	f	class:charles::Box
+DoesIntersect	src/object_sphere.cc	/^Sphere::DoesIntersect(const Ray& ray,$/;"	f	class:charles::Sphere
+Double	src/types.hh	/^typedef double Double;$/;"	t	namespace:charles
+DoubleQuoted	src/yaml/parsers.hh	/^        DoubleQuoted = YAML_DOUBLE_QUOTED_SCALAR_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle
+DoubleVector	src/types.hh	/^typedef std::vector<Double> DoubleVector;$/;"	t	namespace:charles
+Encoding	src/yaml/parsers.hh	/^    enum class Encoding {$/;"	c	struct:charles::yaml::Parser
+FarSection	src/yaml/objectParser.hh	/^        FarSection$/;"	e	enum:yaml::ObjectParser::Section
+Flow	src/yaml/parsers.hh	/^        Flow  = YAML_FLOW_MAPPING_STYLE$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+Flow	src/yaml/parsers.hh	/^        Flow  = YAML_FLOW_SEQUENCE_STYLE$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle
+Folded	src/yaml/parsers.hh	/^        Folded       = YAML_FOLDED_SCALAR_STYLE$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle
+GetCamera	src/scene.cc	/^Scene::GetCamera()$/;"	f	class:Scene
+GetDiffuseColor	src/material.cc	/^Material::GetDiffuseColor()$/;"	f	class:charles::Material
+GetDiffuseIntensity	src/material.cc	/^Material::GetDiffuseIntensity()$/;"	f	class:charles::Material
+GetDone	src/yaml/parsers.hh	/^    bool GetDone() const { return mDone; }$/;"	f	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+GetFar	src/objectBox.cc	/^Box::GetFar()$/;"	f	class:charles::Box
+GetMaterial	src/object.cc	/^Object::GetMaterial()$/;"	f	class:charles::Object
+GetNear	src/objectBox.cc	/^Box::GetNear()$/;"	f	class:charles::Box
+GetOrigin	src/camera.cc	/^Camera::GetOrigin()$/;"	f	class:Camera
+GetOrigin	src/light.cc	/^PointLight::GetOrigin()$/;"	f	class:PointLight
+GetOrigin	src/object.cc	/^Object::GetOrigin()$/;"	f	class:charles::Object
+GetParsers	src/yaml/parsers.hh	/^    Stack& GetParsers() const { return mParsers; }$/;"	f	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+GetRight	src/camera.cc	/^Camera::GetRight()$/;"	f	class:Camera
+GetScene	src/yaml/parsers.hh	/^    Scene& GetScene() const { return mScene; }$/;"	f	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+GetShouldExpectKey	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::GetShouldExpectKey()$/;"	f	class:yaml::ScalarMappingParser
+GetSpecularColor	src/material.cc	/^Material::GetSpecularColor()$/;"	f	class:charles::Material
+GetSpecularIntensity	src/material.cc	/^Material::GetSpecularIntensity()$/;"	f	class:charles::Material
+GetUp	src/camera.cc	/^Camera::GetUp()$/;"	f	class:Camera
+Green	src/basics.cc	/^const Color Color::Green  = Color(0.0, 1.0, 0.0, 1.0);$/;"	m	class:Color	file:
+Green	src/basics.h	/^    static const Color Green;$/;"	m	struct:Color
+HandleAlias	src/yaml/parsers.cc	/^Parser::HandleAlias(const std::string& anchor,$/;"	f	class:charles::yaml::Parser
+HandleCameraEvent	src/yaml/sceneParser.cc	/^SceneParser::HandleCameraEvent(yaml_event_t& event)$/;"	f	class:yaml::SceneParser
+HandleColorEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleColorEvent(yaml_event_t& event)$/;"	f	class:yaml::ObjectParser
+HandleDimensionsEvent	src/yaml/sceneParser.cc	/^SceneParser::HandleDimensionsEvent(yaml_event_t& event)$/;"	f	class:yaml::SceneParser
+HandleDirectionEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleDirectionEvent(yaml_event_t& event)$/;"	f	class:yaml::CameraParser
+HandleDocumentEnd	src/yaml/parsers.cc	/^Parser::HandleDocumentEnd(bool implicit,$/;"	f	class:charles::yaml::Parser
+HandleDocumentStart	src/yaml/parsers.cc	/^Parser::HandleDocumentStart(const VersionDirective versionDirective,$/;"	f	class:charles::yaml::Parser
+HandleEvent	src/yaml/parsers.cc	/^Parser::HandleEvent(const yaml_event_t& event)$/;"	f	class:charles::yaml::Parser
+HandleEvent	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::HandleEvent(yaml_event_t& event)$/;"	f	class:yaml::ScalarMappingParser
+HandleFarEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleFarEvent(yaml_event_t& event)$/;"	f	class:yaml::ObjectParser
+HandleKeyEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleKeyEvent(const std::string& key)$/;"	f	class:yaml::CameraParser
+HandleKeyEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleKeyEvent(const std::string& key)$/;"	f	class:yaml::ObjectParser
+HandleKeyEvent	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::HandleKeyEvent(const std::string& key)$/;"	f	class:yaml::ScalarMappingParser
+HandleKeyEvent	src/yaml/sceneParser.cc	/^SceneParser::HandleKeyEvent(const std::string& key)$/;"	f	class:yaml::SceneParser
+HandleMappingEnd	src/yaml/parsers.cc	/^Parser::HandleMappingEnd(const Mark& startMark,$/;"	f	class:charles::yaml::Parser
+HandleMappingStart	src/yaml/parsers.cc	/^Parser::HandleMappingStart(const std::string& anchor,$/;"	f	class:charles::yaml::Parser
+HandleNearEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleNearEvent(yaml_event_t& event)$/;"	f	class:yaml::ObjectParser
+HandleObjectsEvent	src/yaml/sceneParser.cc	/^SceneParser::HandleObjectsEvent(yaml_event_t& event)$/;"	f	class:yaml::SceneParser
+HandleOriginEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleOriginEvent(yaml_event_t& event)$/;"	f	class:yaml::CameraParser
+HandleOriginEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleOriginEvent(yaml_event_t& event)$/;"	f	class:yaml::ObjectParser
+HandleRadiusEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleRadiusEvent(yaml_event_t& event)$/;"	f	class:yaml::ObjectParser
+HandleRightEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleRightEvent(yaml_event_t& event)$/;"	f	class:yaml::CameraParser
+HandleScalar	src/yaml/parsers.cc	/^Parser::HandleScalar(const std::string& anchor,$/;"	f	class:charles::yaml::Parser
+HandleScalar	src/yaml/scalarSequenceParser.cc	/^ScalarSequenceParser<T>::HandleScalar(const std::string& anchor,$/;"	f	class:charles::yaml::ScalarSequenceParser
+HandleSequenceEnd	src/yaml/parsers.cc	/^Parser::HandleSequenceEnd(const Mark& startMark,$/;"	f	class:charles::yaml::Parser
+HandleSequenceEnd	src/yaml/scalarSequenceParser.cc	/^ScalarSequenceParser<T>::HandleSequenceEnd(const Parser::Mark& startMark,$/;"	f	class:charles::yaml::ScalarSequenceParser
+HandleSequenceStart	src/yaml/parsers.cc	/^Parser::HandleSequenceStart(const std::string& anchor,$/;"	f	class:charles::yaml::Parser
+HandleStreamEnd	src/yaml/parsers.cc	/^Parser::HandleStreamEnd(const Mark& startMark,$/;"	f	class:charles::yaml::Parser
+HandleStreamStart	src/yaml/parsers.cc	/^Parser::HandleStreamStart(Encoding encoding,$/;"	f	class:charles::yaml::Parser
+HandleTypeEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleTypeEvent(yaml_event_t& event)$/;"	f	class:yaml::CameraParser
+HandleUpEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleUpEvent(yaml_event_t& event)$/;"	f	class:yaml::CameraParser
+HandleValueEvent	src/yaml/cameraParser.cc	/^CameraParser::HandleValueEvent(yaml_event_t& event)$/;"	f	class:yaml::CameraParser
+HandleValueEvent	src/yaml/objectParser.cc	/^ObjectParser::HandleValueEvent(yaml_event_t& event)$/;"	f	class:yaml::ObjectParser
+HandleValueEvent	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::HandleValueEvent(yaml_event_t& event)$/;"	f	class:yaml::ScalarMappingParser
+HandleValueEvent	src/yaml/sceneParser.cc	/^SceneParser::HandleValueEvent(yaml_event_t& event)$/;"	f	class:yaml::SceneParser
+Lambert	src/material.h	/^        Lambert,$/;"	m	class:charles::Material::DiffuseShaderModel
+LinearCombination	src/basics.cc	/^LinearCombination(const Double k1, const Vector3& v1,$/;"	f
+Literal	src/yaml/parsers.hh	/^        Literal      = YAML_LITERAL_SCALAR_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle
+MappingStyle	src/yaml/parsers.hh	/^    enum class MappingStyle {$/;"	c	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle
+Mark	src/yaml/parsers.hh	/^    typedef yaml_mark_t Mark;$/;"	t	struct:charles::yaml::Parser
+Material	src/material.cc	/^Material::Material()$/;"	f	class:charles::Material
+Material	src/material.h	/^struct Material$/;"	s	namespace:charles
+NearSection	src/yaml/objectParser.hh	/^        NearSection,$/;"	e	enum:yaml::ObjectParser::Section
+NoSection	src/yaml/cameraParser.hh	/^        NoSection,$/;"	e	enum:yaml::CameraParser::Section
+NoSection	src/yaml/objectParser.hh	/^        NoSection,$/;"	e	enum:yaml::ObjectParser::Section
+NoSection	src/yaml/sceneParser.hh	/^        NoSection,$/;"	e	enum:yaml::SceneParser::Section
+Notify	src/yaml/parsers.hh	/^    Notify(T value)$/;"	f	struct:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::UtilityParser
+Object	src/object.cc	/^Object::Object()$/;"	f	class:charles::Object
+Object	src/object.cc	/^Object::Object(Vector3 origin)$/;"	f	class:charles::Object
+Object	src/object.h	/^struct Object$/;"	s	namespace:charles
+ObjectParser	src/yaml/objectParser.cc	/^ObjectParser::ObjectParser(Scene& scene,$/;"	f	class:yaml::ObjectParser
+ObjectParser	src/yaml/objectParser.hh	/^struct ObjectParser$/;"	s	namespace:yaml
+ObjectsSection	src/yaml/sceneParser.hh	/^        ObjectsSection,$/;"	e	enum:yaml::SceneParser::Section
+OriginSection	src/yaml/cameraParser.hh	/^        OriginSection,$/;"	e	enum:yaml::CameraParser::Section
+OriginSection	src/yaml/objectParser.hh	/^        OriginSection,$/;"	e	enum:yaml::ObjectParser::Section
+OrthographicCamera	src/camera.cc	/^OrthographicCamera::OrthographicCamera()$/;"	f	class:OrthographicCamera
+OrthographicCamera	src/camera.cc	/^OrthographicCamera::OrthographicCamera(const Camera& other)$/;"	f	class:OrthographicCamera
+OrthographicCamera	src/camera.h	/^class OrthographicCamera$/;"	c
+PNGWriter	src/writer_png.h	/^class PNGWriter$/;"	c
+ParseScalar	src/yaml/parsers.hh	/^ParseScalar(const std::string& scalar,$/;"	f	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle
+Parser	src/yaml/parsers.cc	/^Parser::Parser(Scene& scene,$/;"	f	class:charles::yaml::Parser
+Parser	src/yaml/parsers.hh	/^struct Parser$/;"	s	namespace:charles::yaml
+PerspectiveCamera	src/camera.cc	/^PerspectiveCamera::PerspectiveCamera()$/;"	f	class:PerspectiveCamera
+PerspectiveCamera	src/camera.cc	/^PerspectiveCamera::PerspectiveCamera(const Camera& other)$/;"	f	class:PerspectiveCamera
+PerspectiveCamera	src/camera.h	/^class PerspectiveCamera$/;"	c
+Plain	src/yaml/parsers.hh	/^        Plain        = YAML_PLAIN_SCALAR_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle
+Plane	src/object_plane.cc	/^Plane::Plane()$/;"	f	class:Plane
+Plane	src/object_plane.cc	/^Plane::Plane(Vector3 n)$/;"	f	class:Plane
+Plane	src/object_plane.cc	/^Plane::Plane(Vector3 o, Vector3 n)$/;"	f	class:Plane
+Plane	src/object_plane.h	/^class Plane$/;"	c
+PointLight	src/light.cc	/^PointLight::PointLight()$/;"	f	class:PointLight
+PointLight	src/light.cc	/^PointLight::PointLight(const Vector3 &o)$/;"	f	class:PointLight
+PointLight	src/light.cc	/^PointLight::PointLight(const Vector3 &o,$/;"	f	class:PointLight
+PointLight	src/light.h	/^class PointLight$/;"	c
+PrintRayRow	src/scene.cc	/^Scene::Stats::PrintRayRow(const std::string& title,$/;"	f	class:Scene::Stats
+PrintRayTable	src/scene.cc	/^Scene::Stats::PrintRayTable()$/;"	f	class:Scene::Stats
+PrintUnexpectedEventError	src/yaml/parsers.cc	/^Parser::PrintUnexpectedEventError(const std::string& eventName,$/;"	f	class:charles::yaml::Parser
+Ptr	src/camera.h	/^    typedef std::shared_ptr<Camera> Ptr;$/;"	t	struct:Camera
+Ptr	src/object.h	/^    typedef std::shared_ptr<Object> Ptr;$/;"	t	struct:charles::Object
+Ptr	src/object_sphere.h	/^    typedef std::shared_ptr<Sphere> Ptr;$/;"	t	class:charles::Sphere
+Ptr	src/yaml/parsers.hh	/^    typedef std::shared_ptr<Parser> Ptr;$/;"	t	struct:charles::yaml::Parser
+RadiusSection	src/yaml/objectParser.hh	/^        RadiusSection,$/;"	e	enum:yaml::ObjectParser::Section
+Ray	src/basics.cc	/^Ray::Ray()$/;"	f	class:Ray
+Ray	src/basics.cc	/^Ray::Ray(Vector3 o, Vector3 d)$/;"	f	class:Ray
+Ray	src/basics.h	/^struct Ray$/;"	s
+Reader	src/reader.hh	/^    Reader(Scene& scene)$/;"	f	struct:Reader
+Reader	src/reader.hh	/^struct Reader$/;"	s
+Red	src/basics.cc	/^const Color Color::Red    = Color(1.0, 0.0, 0.0, 1.0);$/;"	m	class:Color	file:
+Red	src/basics.h	/^    static const Color Red;$/;"	m	struct:Color
+RightSection	src/yaml/cameraParser.hh	/^        RightSection,$/;"	e	enum:yaml::CameraParser::Section
+SIMPLE_GETTER	src/classUtil.hh	/^#define SIMPLE_GETTER(/;"	d
+ScalarMappingParser	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::ScalarMappingParser(Scene& scene,$/;"	f	class:yaml::ScalarMappingParser
+ScalarMappingParser	src/yaml/scalarMappingParser.hh	/^struct ScalarMappingParser$/;"	s	namespace:yaml
+ScalarSequenceParser	src/yaml/scalarSequenceParser.hh	/^    ScalarSequenceParser(Scene& scene,$/;"	f	struct:charles::yaml::ScalarSequenceParser
+ScalarSequenceParser	src/yaml/scalarSequenceParser.hh	/^struct ScalarSequenceParser$/;"	s	namespace:charles::yaml
+ScalarStyle	src/yaml/parsers.hh	/^    enum class ScalarStyle {$/;"	c	class:charles::yaml::Parser::Encoding
+Scene	src/scene.cc	/^Scene::Scene()$/;"	f	class:Scene
+Scene	src/scene.h	/^class Scene$/;"	c
+SceneParser	src/yaml/sceneParser.cc	/^SceneParser::SceneParser(Scene& scene,$/;"	f	class:yaml::SceneParser
+SceneParser	src/yaml/sceneParser.hh	/^struct SceneParser$/;"	s	namespace:yaml
+Section	src/yaml/cameraParser.hh	/^    enum Section {$/;"	g	struct:yaml::CameraParser
+Section	src/yaml/objectParser.hh	/^    enum Section {$/;"	g	struct:yaml::ObjectParser
+Section	src/yaml/sceneParser.hh	/^    enum Section {$/;"	g	struct:yaml::SceneParser
+SequenceStyle	src/yaml/parsers.hh	/^    enum class SequenceStyle {$/;"	c	class:charles::yaml::Parser::Encoding::ScalarStyle
+SetCallback	src/yaml/parsers.hh	/^    SetCallback(CallbackFunction callback)$/;"	f	struct:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::UtilityParser
+SetCamera	src/scene.cc	/^Scene::SetCamera(Camera* camera)$/;"	f	class:Scene
+SetDiffuseColor	src/material.cc	/^Material::SetDiffuseColor(const Color& color)$/;"	f	class:charles::Material
+SetDiffuseIntensity	src/material.cc	/^Material::SetDiffuseIntensity(const Double& kd)$/;"	f	class:charles::Material
+SetDone	src/yaml/parsers.hh	/^    void SetDone(bool done) { mDone = done; }$/;"	f	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+SetFar	src/objectBox.cc	/^Box::SetFar(const Vector3& far)$/;"	f	class:charles::Box
+SetMaterial	src/object.cc	/^Object::SetMaterial(const Material& material)$/;"	f	class:charles::Object
+SetNear	src/objectBox.cc	/^Box::SetNear(const Vector3& near)$/;"	f	class:charles::Box
+SetOrigin	src/camera.cc	/^Camera::SetOrigin(const Vector3 &origin)$/;"	f	class:Camera
+SetOrigin	src/light.cc	/^PointLight::SetOrigin(const Vector3& origin)$/;"	f	class:PointLight
+SetOrigin	src/object.cc	/^Object::SetOrigin(const Vector3& origin)$/;"	f	class:charles::Object
+SetRight	src/camera.cc	/^Camera::SetRight(const Vector3& right)$/;"	f	class:Camera
+SetShouldExpectKey	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::SetShouldExpectKey(bool shouldExpectKey)$/;"	f	class:yaml::ScalarMappingParser
+SetSpecularColor	src/material.cc	/^Material::SetSpecularColor(const Color& color)$/;"	f	class:charles::Material
+SetSpecularIntensity	src/material.cc	/^Material::SetSpecularIntensity(const Double& ks)$/;"	f	class:charles::Material
+SetUp	src/camera.cc	/^Camera::SetUp(const Vector3& up)$/;"	f	class:Camera
+SingleQuoted	src/yaml/parsers.hh	/^        SingleQuoted = YAML_SINGLE_QUOTED_SCALAR_STYLE,$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle
+SpecularShaderModel	src/material.h	/^    enum class SpecularShaderModel {$/;"	c	struct:charles::Material
+Sphere	src/object_sphere.cc	/^Sphere::Sphere()$/;"	f	class:charles::Sphere
+Sphere	src/object_sphere.cc	/^Sphere::Sphere(Vector3 o, float r)$/;"	f	class:charles::Sphere
+Sphere	src/object_sphere.cc	/^Sphere::Sphere(float r)$/;"	f	class:charles::Sphere
+Sphere	src/object_sphere.h	/^class Sphere$/;"	c	namespace:charles
+Stack	src/yaml/parsers.hh	/^    typedef std::stack<Ptr> Stack;$/;"	t	struct:charles::yaml::Parser
+Stats	src/scene.h	/^    struct Stats$/;"	s	class:Scene
+TVector	src/types.hh	/^typedef DoubleVector TVector;$/;"	t	namespace:charles
+TagDirective	src/yaml/parsers.hh	/^    struct TagDirective {$/;"	s	struct:charles::yaml::Parser
+TagDirectiveList	src/yaml/parsers.hh	/^    typedef std::list<TagDirective> TagDirectiveList;$/;"	t	struct:charles::yaml::Parser
+Texture	src/texture.h	/^typedef struct _Texture Texture;$/;"	t	typeref:struct:_Texture
+TotalRays	src/scene.cc	/^Scene::Stats::TotalRays()$/;"	f	class:Scene::Stats
+Type	src/yaml/cameraParser.hh	/^    enum Type {$/;"	g	struct:yaml::CameraParser
+Type	src/yaml/objectParser.hh	/^    enum class Type {$/;"	c	struct:yaml::ObjectParser
+Type	src/yaml/scalarSequenceParser.hh	/^    typedef T Type;$/;"	t	struct:charles::yaml::ScalarSequenceParser
+TypeOrthographic	src/yaml/cameraParser.hh	/^        TypeOrthographic$/;"	e	enum:yaml::CameraParser::Type
+TypePerspective	src/yaml/cameraParser.hh	/^        TypePerspective,$/;"	e	enum:yaml::CameraParser::Type
+TypeSection	src/yaml/cameraParser.hh	/^        TypeSection,$/;"	e	enum:yaml::CameraParser::Section
+UTF16BE	src/yaml/parsers.hh	/^        UTF16BE = YAML_UTF16BE_ENCODING$/;"	m	class:charles::yaml::Parser::Encoding
+UTF16LE	src/yaml/parsers.hh	/^        UTF16LE = YAML_UTF16LE_ENCODING,$/;"	m	class:charles::yaml::Parser::Encoding
+UTF8	src/yaml/parsers.hh	/^        UTF8    = YAML_UTF8_ENCODING,$/;"	m	class:charles::yaml::Parser::Encoding
+UpSection	src/yaml/cameraParser.hh	/^        UpSection$/;"	e	enum:yaml::CameraParser::Section
+UtilityParser	src/yaml/parsers.hh	/^    UtilityParser(Scene& scene,$/;"	f	struct:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::UtilityParser
+UtilityParser	src/yaml/parsers.hh	/^struct UtilityParser$/;"	s	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle
+Vector3	src/basics.cc	/^Vector3::Vector3()$/;"	f	class:Vector3
+Vector3	src/basics.cc	/^Vector3::Vector3(Double _x, Double _y, Double _z)$/;"	f	class:Vector3
+Vector3	src/basics.h	/^struct Vector3$/;"	s
+Vector3Parser	src/yaml/scalarSequenceParser.cc	/^Vector3Parser::Vector3Parser(Scene& scene,$/;"	f	class:charles::yaml::Vector3Parser
+Vector3Parser	src/yaml/scalarSequenceParser.hh	/^struct Vector3Parser$/;"	s	namespace:charles::yaml
+VectorType	src/yaml/scalarSequenceParser.hh	/^    typedef std::vector<T> VectorType;$/;"	t	struct:charles::yaml::ScalarSequenceParser
+VersionDirective	src/yaml/parsers.hh	/^    typedef yaml_version_directive_t VersionDirective;$/;"	t	struct:charles::yaml::Parser
+White	src/basics.cc	/^const Color Color::White  = Color(1.0, 1.0, 1.0, 1.0);$/;"	m	class:Color	file:
+White	src/basics.h	/^    static const Color White;$/;"	m	struct:Color
+Writer	src/writer.h	/^class Writer$/;"	c
+X	src/basics.cc	/^const Vector3 Vector3::X = Vector3(1, 0, 0);$/;"	m	class:Vector3	file:
+X	src/basics.h	/^    static const Vector3 X, Y, Z;$/;"	m	struct:Vector3
+Y	src/basics.cc	/^const Vector3 Vector3::Y = Vector3(0, 1, 0);$/;"	m	class:Vector3	file:
+Y	src/basics.h	/^    static const Vector3 X, Y, Z;$/;"	m	struct:Vector3
+YAMLReader	src/reader_yaml.hh	/^    YAMLReader(Scene& scene)$/;"	f	struct:YAMLReader
+YAMLReader	src/reader_yaml.hh	/^struct YAMLReader$/;"	s
+YAML_BOOL	src/yaml/parsers.cc	/^#define YAML_BOOL(/;"	d	file:
+YAML_BOOL	src/yaml/parsers.cc	/^#undef YAML_BOOL$/;"	d	file:
+YAML_STR	src/yaml/parsers.cc	/^#undef YAML_STR$/;"	d	file:
+YAML_STRING	src/yaml/parsers.cc	/^#define YAML_STRING(/;"	d	file:
+Z	src/basics.cc	/^const Vector3 Vector3::Z = Vector3(0, 0, 1);$/;"	m	class:Vector3	file:
+Z	src/basics.h	/^    static const Vector3 X, Y, Z;$/;"	m	struct:Vector3
+Zero	src/basics.cc	/^const Vector3 Vector3::Zero = Vector3();$/;"	m	class:Vector3	file:
+Zero	src/basics.h	/^    static const Vector3 Zero;$/;"	m	struct:Vector3
+_Texture	src/texture.c	/^struct _Texture {$/;"	s	file:
+__BASICS_H__	src/basics.h	/^#define __BASICS_H__$/;"	d
+__CAMERA_H__	src/camera.h	/^#define __CAMERA_H__$/;"	d
+__CHARLES_HH__	src/charles.hh	/^#define __CHARLES_HH__$/;"	d
+__CHARLES_TYPES_HH__	src/types.hh	/^#define __CHARLES_TYPES_HH__$/;"	d
+__CLASSUTIL_HH__	src/classUtil.hh	/^#define __CLASSUTIL_HH__$/;"	d
+__LIGHT_H__	src/light.h	/^#define __LIGHT_H__$/;"	d
+__MATERIAL_H__	src/material.h	/^#define __MATERIAL_H__$/;"	d
+__OBJECT_H__	src/object.h	/^#define __OBJECT_H__$/;"	d
+__OBJECT_PLANE_H__	src/object_plane.h	/^#define __OBJECT_PLANE_H__$/;"	d
+__OBJECT_SPHERE_H__	src/object_sphere.h	/^#define __OBJECT_SPHERE_H__$/;"	d
+__READER_HH__	src/reader.hh	/^#define __READER_HH__$/;"	d
+__READER_YAML_HH__	src/reader_yaml.hh	/^#define __READER_YAML_HH__$/;"	d
+__SCENE_H__	src/scene.h	/^#define __SCENE_H__$/;"	d
+__TEXTURE_H__	src/texture.h	/^#define __TEXTURE_H__$/;"	d
+__WRITER_H__	src/writer.h	/^#define __WRITER_H__$/;"	d
+__WRITER_PNG_H__	src/writer_png.h	/^#define __WRITER_PNG_H__$/;"	d
+__YAML_CAMERAPARSER_HH__	src/yaml/cameraParser.hh	/^#define __YAML_CAMERAPARSER_HH__$/;"	d
+__YAML_OBJECTPARSER_HH__	src/yaml/objectParser.hh	/^#define __YAML_OBJECTPARSER_HH__$/;"	d
+__YAML_PARSERS_HH__	src/yaml/parsers.hh	/^#define __YAML_PARSERS_HH__$/;"	d
+__YAML_SCALARMAPPINGPARSER_HH__	src/yaml/scalarMappingParser.hh	/^#define __YAML_SCALARMAPPINGPARSER_HH__$/;"	d
+__YAML_SCENE_PARSER_HH__	src/yaml/sceneParser.hh	/^#define __YAML_SCENE_PARSER_HH__$/;"	d
+__YAML_VECTOR_PARSER_HH__	src/yaml/scalarSequenceParser.hh	/^#define __YAML_VECTOR_PARSER_HH__$/;"	d
+_clamp_intensity	src/light.cc	/^AmbientLight::_clamp_intensity()$/;"	f	class:AmbientLight
+_is_rendered	src/scene.h	/^    bool _is_rendered;$/;"	m	class:Scene
+add_light	src/scene.cc	/^Scene::add_light(PointLight *light)$/;"	f	class:Scene
+add_shape	src/scene.cc	/^Scene::add_shape(Object::Ptr shape)$/;"	f	class:Scene
+alpha	src/basics.h	/^    float red, green, blue, alpha;$/;"	m	struct:Color
+ambient	src/scene.h	/^    AmbientLight *ambient;$/;"	m	class:Scene
+blue	src/basics.h	/^    float red, green, blue, alpha;$/;"	m	struct:Color
+charles	src/material.cc	/^namespace charles {$/;"	n	file:
+charles	src/material.h	/^namespace charles {$/;"	n
+charles	src/object.cc	/^namespace charles {$/;"	n	file:
+charles	src/object.h	/^namespace charles {$/;"	n
+charles	src/objectBox.cc	/^namespace charles {$/;"	n	file:
+charles	src/objectBox.hh	/^namespace charles {$/;"	n
+charles	src/object_sphere.cc	/^namespace charles {$/;"	n	file:
+charles	src/object_sphere.h	/^namespace charles {$/;"	n
+charles	src/types.hh	/^namespace charles {$/;"	n
+charles	src/yaml/parsers.cc	/^namespace charles {$/;"	n	file:
+charles	src/yaml/parsers.hh	/^namespace charles {$/;"	n
+charles	src/yaml/scalarSequenceParser.cc	/^namespace charles {$/;"	n	file:
+charles	src/yaml/scalarSequenceParser.hh	/^namespace charles {$/;"	n
+color	src/light.h	/^    Color color;$/;"	m	class:AmbientLight
+color	src/texture.c	/^    Color color;$/;"	m	struct:_Texture	file:
+compute_color_contribution	src/light.cc	/^AmbientLight::compute_color_contribution()$/;"	f	class:AmbientLight
+compute_normal	src/objectBox.cc	/^Box::compute_normal(const Vector3& p)$/;"	f	class:charles::Box
+compute_normal	src/object_plane.cc	/^Plane::compute_normal(const Vector3 &p)$/;"	f	class:Plane
+compute_normal	src/object_sphere.cc	/^Sphere::compute_normal(const Vector3 &p)$/;"	f	class:charles::Sphere
+compute_primary_ray	src/camera.cc	/^OrthographicCamera::compute_primary_ray(const int x,$/;"	f	class:OrthographicCamera
+compute_primary_ray	src/camera.cc	/^PerspectiveCamera::compute_primary_ray(const int x,$/;"	f	class:PerspectiveCamera
+cross	src/basics.cc	/^Vector3::cross(const Vector3 &v)$/;"	f	class:Vector3
+direction	src/basics.h	/^    Vector3 origin, direction;$/;"	m	struct:Ray
+does_intersect	src/object_plane.cc	/^Plane::does_intersect(const Ray &ray, float **t)$/;"	f	class:Plane
+dot	src/basics.cc	/^Vector3::dot(const Vector3 &v)$/;"	f	class:Vector3
+get_ambient	src/scene.cc	/^Scene::get_ambient()$/;"	f	class:Scene
+get_color	src/light.cc	/^AmbientLight::get_color()$/;"	f	class:AmbientLight
+get_direction	src/camera.cc	/^Camera::get_direction()$/;"	f	class:Camera
+get_height	src/scene.cc	/^Scene::get_height()$/;"	f	class:Scene
+get_intensity	src/light.cc	/^AmbientLight::get_intensity()$/;"	f	class:AmbientLight
+get_pixels	src/scene.cc	/^Scene::get_pixels()$/;"	f	class:Scene
+get_radius	src/object_sphere.cc	/^Sphere::get_radius()$/;"	f	class:charles::Sphere
+get_width	src/scene.cc	/^Scene::get_width()$/;"	f	class:Scene
+green	src/basics.h	/^    float red, green, blue, alpha;$/;"	m	struct:Color
+handle	src/yaml/parsers.hh	/^        std::string handle;$/;"	m	struct:charles::yaml::Parser::TagDirective
+height	src/scene.h	/^    int width, height;$/;"	m	class:Scene
+intensity	src/light.h	/^    float intensity;$/;"	m	class:AmbientLight
+is_rendered	src/scene.cc	/^Scene::is_rendered()$/;"	f	class:Scene
+length	src/basics.cc	/^Vector3::length()$/;"	f	class:Vector3
+length2	src/basics.cc	/^Vector3::length2()$/;"	f	class:Vector3
+lights	src/scene.h	/^    std::list<PointLight *> lights;$/;"	m	class:Scene
+mCallback	src/yaml/parsers.hh	/^    CallbackFunction mCallback;$/;"	m	struct:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::UtilityParser
+mCamera	src/scene.h	/^    Camera::Ptr mCamera;$/;"	m	class:Scene
+mCamera	src/yaml/cameraParser.hh	/^    Camera *mCamera;$/;"	m	struct:yaml::CameraParser
+mDiffuseColor	src/material.h	/^    Color mDiffuseColor;$/;"	m	struct:charles::Material
+mDiffuseIntensity	src/material.h	/^    Double mDiffuseIntensity;$/;"	m	struct:charles::Material
+mDiffuseModel	src/material.h	/^    DiffuseShaderModel mDiffuseModel;$/;"	m	struct:charles::Material
+mDirection	src/camera.h	/^    Vector3 mDirection;$/;"	m	struct:Camera
+mDone	src/yaml/parsers.hh	/^    bool mDone;$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+mFar	src/objectBox.hh	/^    Vector3 mFar;$/;"	m	struct:charles::Box
+mMaterial	src/object.h	/^    Material mMaterial;$/;"	m	struct:charles::Object
+mNear	src/objectBox.hh	/^    Vector3 mNear;$/;"	m	struct:charles::Box
+mObject	src/yaml/objectParser.hh	/^    charles::Object::Ptr mObject;$/;"	m	struct:yaml::ObjectParser
+mOrigin	src/camera.h	/^    Vector3 mOrigin;$/;"	m	struct:Camera
+mOrigin	src/light.h	/^    Vector3 mOrigin;$/;"	m	class:PointLight
+mOrigin	src/object.h	/^    Vector3 mOrigin;$/;"	m	struct:charles::Object
+mParsers	src/yaml/parsers.hh	/^    Stack& mParsers;$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+mRight	src/camera.h	/^    Vector3 mRight;$/;"	m	struct:Camera
+mScene	src/reader.hh	/^    Scene& mScene;$/;"	m	struct:Reader
+mScene	src/yaml/parsers.hh	/^    Scene& mScene;$/;"	m	class:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::MappingStyle
+mSection	src/yaml/cameraParser.hh	/^    Section mSection;$/;"	m	struct:yaml::CameraParser
+mSection	src/yaml/objectParser.hh	/^    Section mSection;$/;"	m	struct:yaml::ObjectParser
+mSection	src/yaml/sceneParser.hh	/^    Section mSection;$/;"	m	struct:yaml::SceneParser
+mShouldExpectKey	src/yaml/scalarMappingParser.hh	/^    bool mShouldExpectKey;$/;"	m	struct:yaml::ScalarMappingParser
+mSpecularColor	src/material.h	/^    Color mSpecularColor;$/;"	m	struct:charles::Material
+mSpecularIntensity	src/material.h	/^    Double mSpecularIntensity;$/;"	m	struct:charles::Material
+mSpecularModel	src/material.h	/^    SpecularShaderModel mSpecularModel;$/;"	m	struct:charles::Material
+mStats	src/scene.h	/^    } mStats;$/;"	m	class:Scene	typeref:struct:Scene::Stats
+mType	src/yaml/cameraParser.hh	/^    Type mType;$/;"	m	struct:yaml::CameraParser
+mType	src/yaml/objectParser.hh	/^    Type mType;$/;"	m	struct:yaml::ObjectParser
+mUp	src/camera.h	/^    Vector3 mUp;$/;"	m	struct:Camera
+mVector	src/yaml/scalarSequenceParser.hh	/^    VectorType mVector;$/;"	m	struct:charles::yaml::ScalarSequenceParser
+main	src/charles.cc	/^main(int argc,$/;"	f
+max_depth	src/scene.h	/^    int max_depth;$/;"	m	class:Scene
+min_weight	src/scene.h	/^    float min_weight;$/;"	m	class:Scene
+normal	src/object_plane.h	/^    Vector3 normal;$/;"	m	class:Plane
+normalize	src/basics.cc	/^Vector3::normalize()$/;"	f	class:Vector3
+operator !=	src/basics.cc	/^Vector3::operator!=(const Vector3 &rhs)$/;"	f	class:Vector3
+operator *	src/basics.cc	/^Color::operator*(const Color &rhs)$/;"	f	class:Color
+operator *	src/basics.cc	/^Color::operator*(const float &rhs)$/;"	f	class:Color
+operator *	src/basics.cc	/^Vector3::operator*(const Double &rhs)$/;"	f	class:Vector3
+operator *	src/basics.cc	/^operator*(const Double &lhs, const Vector3 &rhs)$/;"	f
+operator *	src/basics.cc	/^operator*(const float &lhs, const Color &rhs)$/;"	f
+operator *=	src/basics.cc	/^Color::operator*=(const Color &rhs)$/;"	f	class:Color
+operator *=	src/basics.cc	/^Color::operator*=(const float &rhs)$/;"	f	class:Color
+operator *=	src/basics.cc	/^Vector3::operator*=(const Double &rhs)$/;"	f	class:Vector3
+operator +	src/basics.cc	/^Color::operator+(const Color &rhs)$/;"	f	class:Color
+operator +	src/basics.cc	/^Color::operator+(const float &rhs)$/;"	f	class:Color
+operator +	src/basics.cc	/^Vector3::operator+(const Vector3 &rhs)$/;"	f	class:Vector3
+operator +=	src/basics.cc	/^Color::operator+=(const Color &rhs)$/;"	f	class:Color
+operator +=	src/basics.cc	/^Color::operator+=(const float &rhs)$/;"	f	class:Color
+operator +=	src/basics.cc	/^Vector3::operator+=(const Vector3 &rhs)$/;"	f	class:Vector3
+operator -	src/basics.cc	/^Color::operator-(const Color &rhs)$/;"	f	class:Color
+operator -	src/basics.cc	/^Color::operator-(const float &rhs)$/;"	f	class:Color
+operator -	src/basics.cc	/^Vector3::operator-()$/;"	f	class:Vector3
+operator -	src/basics.cc	/^Vector3::operator-(const Vector3 &rhs)$/;"	f	class:Vector3
+operator -=	src/basics.cc	/^Color::operator-=(const Color &rhs)$/;"	f	class:Color
+operator -=	src/basics.cc	/^Color::operator-=(const float &rhs)$/;"	f	class:Color
+operator -=	src/basics.cc	/^Vector3::operator-=(const Vector3 &rhs)$/;"	f	class:Vector3
+operator /	src/basics.cc	/^Color::operator\/(const Color &rhs)$/;"	f	class:Color
+operator /	src/basics.cc	/^Color::operator\/(const float &rhs)$/;"	f	class:Color
+operator /	src/basics.cc	/^Vector3::operator\/(const Double &rhs)$/;"	f	class:Vector3
+operator /=	src/basics.cc	/^Color::operator\/=(const Color &rhs)$/;"	f	class:Color
+operator /=	src/basics.cc	/^Color::operator\/=(const float &rhs)$/;"	f	class:Color
+operator /=	src/basics.cc	/^Vector3::operator\/=(const Double &rhs)$/;"	f	class:Vector3
+operator <<	src/basics.cc	/^operator<<(std::ostream &os, const Color &c)$/;"	f
+operator <<	src/basics.cc	/^operator<<(std::ostream &os, const Ray &r)$/;"	f
+operator <<	src/basics.cc	/^operator<<(std::ostream &os, const Vector3 &v)$/;"	f
+operator =	src/basics.cc	/^Color::operator=(const Color &rhs)$/;"	f	class:Color
+operator =	src/basics.cc	/^Vector3::operator=(const Vector3 &v)$/;"	f	class:Vector3
+operator ==	src/basics.cc	/^Vector3::operator==(const Vector3 &rhs)$/;"	f	class:Vector3
+origin	src/basics.h	/^    Vector3 origin, direction;$/;"	m	struct:Ray
+parameterize	src/basics.cc	/^Ray::parameterize(const float t)$/;"	f	class:Ray
+pixels	src/scene.h	/^    Color *pixels;$/;"	m	class:Scene
+png_user_error	src/writer_png.cc	/^png_user_error(png_structp png,$/;"	f
+png_user_warning	src/writer_png.cc	/^png_user_warning(png_structp png,$/;"	f
+point_is_on_surface	src/objectBox.cc	/^Box::point_is_on_surface(const Vector3& p)$/;"	f	class:charles::Box
+point_is_on_surface	src/object_plane.cc	/^Plane::point_is_on_surface(const Vector3 &p)$/;"	f	class:Plane
+point_is_on_surface	src/object_sphere.cc	/^Sphere::point_is_on_surface(const Vector3 &p)$/;"	f	class:charles::Sphere
+prefix	src/yaml/parsers.hh	/^        std::string prefix;$/;"	m	struct:charles::yaml::Parser::TagDirective
+primaryRays	src/scene.h	/^        unsigned long primaryRays;$/;"	m	struct:Scene::Stats
+radius	src/object_sphere.h	/^    float radius;$/;"	m	class:charles::Sphere
+read	src/scene.cc	/^Scene::read(const std::string &filename)$/;"	f	class:Scene
+read_file	src/reader_yaml.cc	/^YAMLReader::read_file(const std::string& filename)$/;"	f	class:YAMLReader
+red	src/basics.h	/^    float red, green, blue, alpha;$/;"	m	struct:Color
+reflectionRays	src/scene.h	/^        unsigned long reflectionRays;$/;"	m	struct:Scene::Stats
+render	src/scene.cc	/^Scene::render()$/;"	f	class:Scene
+set_direction	src/camera.cc	/^Camera::set_direction(const Vector3 &direction)$/;"	f	class:Camera
+set_height	src/scene.h	/^    void set_height(int h) { height = h; }$/;"	f	class:Scene
+set_intensity	src/light.cc	/^AmbientLight::set_intensity(const float &i)$/;"	f	class:AmbientLight
+set_radius	src/object_sphere.cc	/^Sphere::set_radius(float r)$/;"	f	class:charles::Sphere
+set_width	src/scene.h	/^    void set_width(int w) { width = w; }$/;"	f	class:Scene
+shadowRays	src/scene.h	/^        unsigned long shadowRays;$/;"	m	struct:Scene::Stats
+shapes	src/scene.h	/^    std::list<charles::Object::Ptr> shapes;$/;"	m	class:Scene
+texture_destroy	src/texture.c	/^texture_destroy(Texture *tex)$/;"	f
+texture_get_color	src/texture.c	/^texture_get_color(Texture *tex)$/;"	f
+texture_init	src/texture.c	/^texture_init()$/;"	f
+texture_set_color	src/texture.c	/^texture_set_color(Texture *tex, Color color)$/;"	f
+trace_ray	src/scene.cc	/^Scene::trace_ray(const Ray &ray,$/;"	f	class:Scene
+transmissionRays	src/scene.h	/^        unsigned long transmissionRays;$/;"	m	struct:Scene::Stats
+usage	src/charles.cc	/^usage(const char *progname)$/;"	f	file:
+verbosity	src/charles.cc	/^int verbosity = 0;$/;"	v
+width	src/scene.h	/^    int width, height;$/;"	m	class:Scene
+write	src/scene.cc	/^Scene::write(Writer &writer, const std::string &filename)$/;"	f	class:Scene
+write_scene	src/writer_png.cc	/^PNGWriter::write_scene(const Scene &scene, const std::string &filename)$/;"	f	class:PNGWriter
+x	src/basics.h	/^    Double x, y, z;$/;"	m	struct:Vector3
+y	src/basics.h	/^    Double x, y, z;$/;"	m	struct:Vector3
+yaml	src/yaml/cameraParser.cc	/^namespace yaml {$/;"	n	file:
+yaml	src/yaml/cameraParser.hh	/^namespace yaml {$/;"	n
+yaml	src/yaml/objectParser.cc	/^namespace yaml {$/;"	n	file:
+yaml	src/yaml/objectParser.hh	/^namespace yaml {$/;"	n
+yaml	src/yaml/parsers.cc	/^namespace yaml {$/;"	n	namespace:charles	file:
+yaml	src/yaml/parsers.hh	/^namespace yaml {$/;"	n	namespace:charles
+yaml	src/yaml/scalarMappingParser.cc	/^namespace yaml {$/;"	n	file:
+yaml	src/yaml/scalarMappingParser.hh	/^namespace yaml {$/;"	n
+yaml	src/yaml/scalarSequenceParser.cc	/^namespace yaml {$/;"	n	namespace:charles	file:
+yaml	src/yaml/scalarSequenceParser.hh	/^namespace yaml {$/;"	n	namespace:charles
+yaml	src/yaml/sceneParser.cc	/^namespace yaml {$/;"	n	file:
+yaml	src/yaml/sceneParser.hh	/^namespace yaml {$/;"	n
+z	src/basics.h	/^    Double x, y, z;$/;"	m	struct:Vector3
+~Camera	src/camera.cc	/^Camera::~Camera()$/;"	f	class:Camera
+~CameraParser	src/yaml/cameraParser.cc	/^CameraParser::~CameraParser()$/;"	f	class:yaml::CameraParser
+~Object	src/object.cc	/^Object::~Object()$/;"	f	class:charles::Object
+~ObjectParser	src/yaml/objectParser.cc	/^ObjectParser::~ObjectParser()$/;"	f	class:yaml::ObjectParser
+~Parser	src/yaml/parsers.cc	/^Parser::~Parser()$/;"	f	class:charles::yaml::Parser
+~Reader	src/reader.hh	/^    ~Reader()$/;"	f	struct:Reader
+~ScalarMappingParser	src/yaml/scalarMappingParser.cc	/^ScalarMappingParser::~ScalarMappingParser()$/;"	f	class:yaml::ScalarMappingParser
+~Scene	src/scene.cc	/^Scene::~Scene()$/;"	f	class:Scene
+~SceneParser	src/yaml/sceneParser.cc	/^SceneParser::~SceneParser()$/;"	f	class:yaml::SceneParser
+~UtilityParser	src/yaml/parsers.hh	/^    ~UtilityParser()$/;"	f	struct:charles::yaml::Parser::Encoding::ScalarStyle::SequenceStyle::UtilityParser
+~Writer	src/writer.h	/^    ~Writer()$/;"	f	class:Writer
+~YAMLReader	src/reader_yaml.hh	/^    ~YAMLReader() { }$/;"	f	struct:YAMLReader
