@@ -219,19 +219,17 @@ Vector3
 Box::compute_normal(const Vector3& p)
     const
 {
-    const Double EPS = 0.01;
-
-    if (abs(p.x - mNear.x) < EPS) {
+    if (NearlyEqual(p.x, mNear.x)) {
         return Vector3(-1, 0, 0);
-    } else if (abs(p.x - mFar.x) < EPS) {
+    } else if (NearlyEqual(p.x, mFar.x)) {
         return Vector3(1, 0, 0);
-    } else if (abs(p.y - mNear.y) < EPS) {
+    } else if (NearlyEqual(p.y, mNear.y)) {
         return Vector3(0, -1, 0);
-    } else if (abs(p.y - mFar.y) < EPS) {
+    } else if (NearlyEqual(p.y, mFar.y)) {
         return Vector3(0, 1, 0);
-    } else if (abs(p.z - mNear.z) < EPS) {
+    } else if (NearlyEqual(p.z, mNear.z)) {
         return Vector3(0, 0, -1);
-    } else if (abs(p.z - mFar.y) < EPS) {
+    } else if (NearlyEqual(p.z, mFar.y)) {
         return Vector3(0, 0, 1);
     }
 
