@@ -39,27 +39,35 @@ const Double MAX_DISTANCE = 1.0e7;
  * @param [in] value    The value to check
  * @returns `true` if the value is close enough to zero
  */
+template <typename T>
 inline bool
-NearZero(Double& value)
+NearZero(const T value)
 {
     return std::fabs(value) < EPSILON;
 }
 
 
 /**
- * Same as NearZero, but for temporary values.
+ * Determine if two values are "close enough" to be considered equal. Subtracts
+ * one from the other and checks if the result is near zero.
  *
  * @see NearZero
+ *
+ * @param [in] left     The left parameter
+ * @param [in] right    The right parameter
+ * @returns `true` if the values are close enough to be equal
  */
+template <typename T>
 inline bool
-NearZero(Double&& value)
+NearlyEqual(const T left,
+            const T right)
 {
-    return std::fabs(value) < EPSILON;
+    return NearZero(left - right);
 }
 
 
 inline bool
-TooFar(Double& value)
+TooFar(const Double& value)
 {
     return value > MAX_DISTANCE;
 }
