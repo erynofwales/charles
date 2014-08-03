@@ -64,7 +64,7 @@ Box::DoesIntersect(const Ray& ray,
      * axes. This is the Kay-Kajiya box intersection algorithm.
      */
 
-    Double t0, t1;
+    //Double t0, t1;
     Double tNear = -std::numeric_limits<Double>::infinity();
     Double tFar = std::numeric_limits<Double>::infinity();
 
@@ -82,6 +82,7 @@ Box::DoesIntersect(const Ray& ray,
      * planes (X, Y, and Z planes).
      */
 
+#if 0
     /*
      * Unrolling the loop means lots of duplicated code. So we start with the X
      * planes...
@@ -175,6 +176,17 @@ Box::DoesIntersect(const Ray& ray,
             return false;
         }
     }
+#endif
+
+    if (!IntersectSlab(mNear.x, mFar.x, ray.origin.x, ray.direction.x, tNear, tFar)) {
+        return false;
+    }
+    if (!IntersectSlab(mNear.y, mFar.y, ray.origin.y, ray.direction.y, tNear, tFar)) {
+        return false;
+    }
+    if (!IntersectSlab(mNear.z, mFar.z, ray.origin.z, ray.direction.z, tNear, tFar)) {
+        return false;
+    }
 
     /* We have an intersection! */
     stats.boxIntersections++;
@@ -224,6 +236,60 @@ Box::compute_normal(const Vector3& p)
     }
 
     return Vector3();
+}
+
+
+inline bool
+Box::IntersectSlab(const Double& slabLow,
+                   const Double& slabHigh,
+                   const Double& rayOriginComponent,
+                   const Double& rayDirectionComponent,
+                   Double& tNear,
+                   Double& tFar)
+    const
+{
+    Double t0, t1;
+
+    if (NearZero(rayDirectionComponent)) {
+        /* The ray is parallel to the X axis. */
+        if (rayOriginComponent < slabLow || rayOriginComponent > slabHigh) {
+            /* The ray's origin is not between the slabs, so no intersection. */
+            return false;
+        }
+    } else {
+        t0 = (slabLow - rayOriginComponent) / rayDirectionComponent;
+        t1 = (slabHigh - rayOriginComponent) / rayDirectionComponent;
+#if 0
+        if (t0 <= t1) {
+            tNear = t0;
+            tFar = t1;
+        } else {
+            tNear = t1;
+            tFar = t0;
+        }
+#endif
+        if (t0 > t1) {
+            Double tmp = t0;
+            t0 = t1;
+            t1 = tmp;
+        }
+        if (t0 > tNear) {
+            tNear = t0;
+        }
+        if (t1 < tFar) {
+            tFar = t1;
+        }
+
+        if (tNear > tFar) {
+            /* Box is missed. */
+            return false;
+        }
+        if (tFar < 0.0) {
+            /* Box is behind the ray. */
+            return false;
+        }
+    }
+    return true;
 }
 
 } /* namespace charles */
