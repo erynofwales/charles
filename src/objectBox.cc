@@ -137,6 +137,7 @@ Box::compute_normal(const Vector3& p)
         return Vector3(0, 0, 1);
     }
 
+    /* TODO: Eventually, I might want to raise an error here. */
     return Vector3();
 }
 
