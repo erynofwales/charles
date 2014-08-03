@@ -70,7 +70,7 @@ main(int argc,
     */
 #endif
 
-    PointLight *l1 = new PointLight(Vector3(6.0, -4.0, 2), Color::White, 1.0);
+    PointLight *l1 = new PointLight(Vector3(4.0, 6.0, 1.0), Color::White, 0.8);
     scene.add_light(l1);
 
     std::string logFilename;
