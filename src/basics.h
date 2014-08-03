@@ -124,7 +124,7 @@ struct Ray
     Ray();
     Ray(Vector3 o, Vector3 d);
 
-    Vector3 parameterize(const float t) const;
+    Vector3 parameterize(const Double& t) const;
 
     Vector3 origin, direction;
 };

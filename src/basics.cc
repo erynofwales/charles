@@ -299,7 +299,7 @@ Ray::Ray(Vector3 o, Vector3 d)
  * Compute and return the point given by parameterizing this Ray by time t.
  */
 Vector3
-Ray::parameterize(const float t)
+Ray::parameterize(const Double& t)
     const
 {
     return origin + t * direction;
