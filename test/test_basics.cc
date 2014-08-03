@@ -118,6 +118,11 @@ TEST_F(Vector3Test, OperatorSub)
     EXPECT_EQ(-10, out.y);
     EXPECT_EQ(-12, out.z);
 
+    out = v2 - v1;
+    EXPECT_EQ(6, out.x);
+    EXPECT_EQ(10, out.y);
+    EXPECT_EQ(12, out.z);
+
     v1 -= v2;
     EXPECT_EQ(-6, v1.x);
     EXPECT_EQ(-10, v1.y);
