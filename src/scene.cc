@@ -228,8 +228,10 @@ Scene::trace_ray(const Ray &ray,
     for (Object::Ptr s : shapes) {
         ts.clear();
         if (s->DoesIntersect(ray, ts, mStats)) {
-            intersected_shape = s;
-            nearest_t = ts[0];
+            if (ts[0] < nearest_t) {
+                intersected_shape = s;
+                nearest_t = ts[0];
+            }
         }
     }
 
