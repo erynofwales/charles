@@ -1,11 +1,5 @@
 /* basics.h
- *
- * Declaration of basic types.
- *
- *   - Vector3 is a three tuple vector of x, y, and z.
- *   - Ray is a vector plus a direction.
- *   - Color is a four tuple of red, green, blue, and alpha.
- *
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
