@@ -26,6 +26,25 @@ struct Box
     Vector3 compute_normal(const Vector3 &p) const;
 
 private:
+    /**
+     * Perform the intersection test on a slab, defined by `slabHigh` and
+     * `slabLow`.
+     *
+     * @param [in]     slabLow               The lower bound of the slab
+     * @param [in]     slabHigh              The upper bound of the slab
+     * @param [in]     rayOriginComponent    The ray's origin component
+     * @param [in]     rayDirectionComponent The ray's direction component
+     * @param [in,out] tNear                 The nearest intersection t value
+     * @param [in,out] tFar                  The farthest intersection t value
+     * @returns `true` if the box was hit on this slab
+     */
+    bool IntersectSlab(const Double& slabLow,
+                       const Double& slabHigh,
+                       const Double& rayOriginComponent,
+                       const Double& rayDirectionComponent,
+                       Double& tNear,
+                       Double& tFar) const;
+
     /** The near, lower left corner. */
     Vector3 mNear;
 
