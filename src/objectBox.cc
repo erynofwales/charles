@@ -88,16 +88,16 @@ Box::DoesIntersect(const Ray& ray,
      * planes...
      */
 
-    if (ray.direction.x == 0.0) {
+    if (NearZero(ray.direction.x)) {
         /* The ray is parallel to the X axis. */
         if (ray.origin.x < mNear.x || ray.origin.x > mFar.x) {
             /* The ray's origin is not between the slabs, so no intersection. */
             return false;
         }
     } else {
-        Double invX = 1.0 / ray.direction.x;
-        t0 = (mNear.x - ray.origin.x) * invX;
-        t1 = (mFar.x - ray.origin.x) * invX;
+        //Double invX = 1.0 / ray.direction.x;
+        t0 = (mNear.x - ray.origin.x) / ray.direction.x;
+        t1 = (mFar.x - ray.origin.x) / ray.direction.x;
         if (t0 > t1) {
             tNear = t1;
             tFar = t0;
@@ -118,7 +118,7 @@ Box::DoesIntersect(const Ray& ray,
 
     /* Now the Y planes. */
 
-    if (ray.direction.y == 0.0) {
+    if (NearZero(ray.direction.y)) {
         /* The ray is parallel to the Y axis. */
         if (ray.origin.y < mNear.y || ray.origin.y > mFar.y) {
             /* The ray's origin is not between the slabs, so no intersection. */
@@ -149,7 +149,7 @@ Box::DoesIntersect(const Ray& ray,
 
     /* Finally, the Z planes. */
 
-    if (ray.direction.z == 0.0) {
+    if (NearZero(ray.direction.z)) {
         /* The ray is parallel to the Z axis. */
         if (ray.origin.z < mNear.z || ray.origin.z > mFar.z) {
             /* The ray's origin is not between the slabs, so no intersection. */
