@@ -337,7 +337,7 @@ Scene::LogObjects()
     LOG_DEBUG << "BEGIN SCENE OBJECTS";
 
     for (Object::Ptr obj : shapes) {
-        LOG_DEBUG << *obj;
+        LOG_DEBUG << "  " << *obj;
     }
 
     LOG_DEBUG << "END SCENE OBJECTS";
