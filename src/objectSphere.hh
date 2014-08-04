@@ -5,8 +5,8 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#ifndef __OBJECT_SPHERE_H__
-#define __OBJECT_SPHERE_H__
+#ifndef __OBJECTSPHERE_HH__
+#define __OBJECTSPHERE_HH__
 
 #include "basics.h"
 #include "object.h"
@@ -17,14 +17,12 @@ class Sphere
     : public Object
 {
 public:
-    typedef std::shared_ptr<Sphere> Ptr;
-
     Sphere();
-    Sphere(float r);
-    Sphere(Vector3 o, float r);
+    Sphere(Double r);
+    Sphere(Vector3 o, Double r);
 
-    float get_radius();
-    void set_radius(float r);
+    Double GetRadius() const;
+    void SetRadius(Double r);
 
     bool DoesIntersect(const Ray& ray, TVector& t, Stats& stats) const;
     bool point_is_on_surface(const Vector3 &p) const;
@@ -34,9 +32,9 @@ public:
     void Write(std::ostream& ost) const;
 
 private:
-    float radius;
+    Double mRadius;
 };
 
 } /* namespace charles */
 
-#endif
+#endif /* __OBJECTSPHERE_HH__ */

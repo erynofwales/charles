@@ -9,7 +9,6 @@
 #ifndef __YAML_OBJECTPARSER_HH__
 #define __YAML_OBJECTPARSER_HH__
 
-#include "object_sphere.h"
 #include "yaml/parsers.hh"
 #include "yaml/scalarMappingParser.hh"
 

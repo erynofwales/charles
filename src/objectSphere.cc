@@ -12,7 +12,7 @@
 
 #include "basics.h"
 #include "object.h"
-#include "object_sphere.h"
+#include "objectSphere.hh"
 
 namespace charles {
 
@@ -31,33 +31,30 @@ Sphere::Sphere()
  *
  * Constructor. Create a Sphere with the given radius.
  */
-Sphere::Sphere(float r)
+Sphere::Sphere(Double r)
     : Sphere(Vector3::Zero, r)
 { }
 
 
-Sphere::Sphere(Vector3 o, float r)
+Sphere::Sphere(Vector3 o,
+               Double r)
     : Object(o),
-      radius(r)
+      mRadius(r)
 { }
 
 
-/*
- * Sphere::get_radius --
- * Sphere::set_radius --
- *
- * Get and set the radius of this Sphere.
- */
-float
-Sphere::get_radius()
+Double
+Sphere::GetRadius()
+    const
 {
-    return radius;
+    return mRadius;
 }
 
+
 void
-Sphere::set_radius(float r)
+Sphere::SetRadius(Double r)
 {
-    radius = (radius >= 0.0) ? r : -r;
+    mRadius = std::fabs(r);
 }
 
 
@@ -78,7 +75,7 @@ Sphere::DoesIntersect(const Ray& ray,
     /* Coefficients for quadratic equation. */
     Double a = ray.direction.dot(ray.direction);
     Double b = ray.direction.dot(rayOriginObj) * 2.0;
-    Double c = rayOriginObj.dot(rayOriginObj) - (radius * radius);
+    Double c = rayOriginObj.dot(rayOriginObj) - (mRadius * mRadius);
 
     /* Discriminant for the quadratic equation. */
     Double discrim = (b * b) - (4.0 * a * c);
@@ -137,11 +134,11 @@ Sphere::point_is_on_surface(const Vector3 &p)
     const
 {
     Vector3 o = GetOrigin();
-    float x = p.x - o.x;
-    float y = p.y - o.y;
-    float z = p.z - o.z;
+    Double x = p.x - o.x;
+    Double y = p.y - o.y;
+    Double z = p.z - o.z;
 
-    return x*x + y*y + z*z == radius*radius;
+    return x*x + y*y + z*z == mRadius*mRadius;
 }
 
 
@@ -166,7 +163,7 @@ void
 Sphere::Write(std::ostream& ost)
     const
 {
-    ost << "[Sphere origin=" << GetOrigin() << " r=" << radius << "]";
+    ost << "[Sphere origin=" << GetOrigin() << " r=" << mRadius << "]";
 }
 
 } /* namespace charles */

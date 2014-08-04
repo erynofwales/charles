@@ -14,7 +14,7 @@
 #include "object.h"
 #include "objectBox.hh"
 #include "objectPlane.hh"
-#include "object_sphere.h"
+#include "objectSphere.hh"
 #include "yaml/objectParser.hh"
 #include "yaml/vectorParser.hh"
 
@@ -196,7 +196,7 @@ ObjectParser::HandleRadiusEvent(yaml_event_t& event)
         /* TODO: Clean this up. */
         assert(false);
     }
-    std::dynamic_pointer_cast<Sphere>(mObject)->set_radius(radius);
+    std::dynamic_pointer_cast<Sphere>(mObject)->SetRadius(radius);
     mSection = NoSection;
     SetShouldExpectKey(true);
 }
