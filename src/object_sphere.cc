@@ -161,4 +161,12 @@ Sphere::compute_normal(const Vector3 &p)
     return normal;
 }
 
+
+void
+Sphere::Write(std::ostream& ost)
+    const
+{
+    ost << "[Sphere origin=" << GetOrigin() << " r=" << radius << "]";
+}
+
 } /* namespace charles */

@@ -14,7 +14,7 @@
 #include "object.h"
 
 namespace charles {
-    
+
 #pragma mark - Objects
 
 /*
@@ -68,6 +68,23 @@ void
 Object::SetMaterial(const Material& material)
 {
     mMaterial = material;
+}
+
+
+void
+Object::Write(std::ostream& ost)
+    const
+{
+    ost << "[Object]";
+}
+
+
+std::ostream&
+operator<<(std::ostream& ost,
+           const Object& object)
+{
+    object.Write(ost);
+    return ost;
 }
 
 } /* namespace charles */

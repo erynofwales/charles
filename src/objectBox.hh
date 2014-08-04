@@ -25,6 +25,9 @@ struct Box
     bool point_is_on_surface(const Vector3 &p) const;
     Vector3 compute_normal(const Vector3 &p) const;
 
+    /** @see charles::Object::Write */
+    void Write(std::ostream& ost) const;
+
 private:
     /**
      * Perform the intersection test on a slab, defined by `slabHigh` and

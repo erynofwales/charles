@@ -153,4 +153,12 @@ Plane::compute_normal(const Vector3 &p)
 
 #pragma clang diagnostic pop
 
+
+void
+Plane::Write(std::ostream& ost)
+    const
+{
+    ost << "[Plane normal=" << mNormal << " distance=" << mDistance << "]";
+}
+
 } /* namespace charles */

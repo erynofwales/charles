@@ -195,5 +195,13 @@ Box::IntersectSlab(const Double& slabLow,
     return true;
 }
 
+
+void
+Box::Write(std::ostream& ost)
+    const
+{
+    ost << "[Box near=" << mNear << " far=" << mFar << "]";
+}
+
 } /* namespace charles */
 

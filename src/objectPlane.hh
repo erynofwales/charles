@@ -34,6 +34,9 @@ public:
     bool point_is_on_surface(const Vector3 &p) const;
     Vector3 compute_normal(const Vector3 &p) const;
 
+    /** @see charles::Object::Write */
+    void Write(std::ostream& ost) const;
+
 private:
     /** A normal vector, which specified the orientation of the plane. */
     Vector3 mNormal;

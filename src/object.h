@@ -47,6 +47,8 @@ struct Object
     virtual bool point_is_on_surface(const Vector3 &p) const = 0;
     virtual Vector3 compute_normal(const Vector3 &p) const = 0;
 
+    virtual void Write(std::ostream& ost) const;
+
 private:
     /** The location of this object. */
     Vector3 mOrigin;
@@ -54,6 +56,16 @@ private:
     /** This object's material, surface properties, etc. */
     Material mMaterial;
 };
+
+
+/**
+ * Write a string representation of the Object to an output stream.
+ *
+ * @param [in] ost      The output stream
+ * @param [in] object   The object
+ * @returns The output stream
+ */
+std::ostream& operator<<(std::ostream& ost, const Object& object);
 
 } /* namespace charles */
 
