@@ -151,8 +151,8 @@ Scene::render()
     LOG_INFO << "Rendering scene with " << shapes.size() << " objects.";
     printf("Rendering scene with %lu objects.\n", shapes.size());
 
-    LogObjects();
     LogCamera();
+    LogObjects();
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
