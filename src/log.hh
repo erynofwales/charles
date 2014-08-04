@@ -35,7 +35,7 @@ struct Log
                      unsigned int level = level::Info);
     static void Close();
 
-    Log(const std::string& name = "root", unsigned int level = level::Info);
+    Log(const std::string& name = "ROOT", unsigned int level = level::Info);
     ~Log();
 
     template<typename T> Log& operator<<(const T& item);
