@@ -122,10 +122,17 @@ Camera::LookAt(const Vector3& pt)
     const Double upLength = mUp.length();
     const bool isLeftHanded = IsLeftHanded();
 
+    /* Orient the camera towards the point. */
     mDirection = (pt - mOrigin).normalize();
     /* TODO: Check for zero length direction vector. */
 
     /*
+     * Create a new right vector, normalized and perpendicular to the plane
+     * containing the Y unit vector and direction vector.
+     *
+     * The up vector is perpendicular to the plane containing the new right
+     * vector and the direction vector.
+     *
      * TODO: This is always the Y vector. POV-Ray has a sky vector, which
      * specifies the vector along which LookAt pans and tilts the camera. It
      * might be worth looking into, at some point.
@@ -133,6 +140,10 @@ Camera::LookAt(const Vector3& pt)
     mRight = Vector3::Y.cross(mDirection).normalize();
     mUp = mDirection.cross(mRight);
 
+    /*
+     * Now, fix up the direction, right, and up vectors so that their magnitudes
+     * match what they were before the move.
+     */
     mDirection *= directionLength;
     mRight *= isLeftHanded ? rightLength : -rightLength;
     mUp *= upLength;
