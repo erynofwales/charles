@@ -4,6 +4,10 @@
  */
 
 #include "camera.h"
+#include "log.hh"
+
+#define LOG_NAME "camera"
+#include "logModule.hh"
 
 
 #pragma mark - Generic Camera
@@ -147,6 +151,8 @@ Camera::LookAt(const Vector3& pt)
     mDirection *= directionLength;
     mRight *= isLeftHanded ? rightLength : -rightLength;
     mUp *= upLength;
+
+    LOG_DEBUG << "Camera is looking at " << pt;
 }
 
 
