@@ -52,7 +52,13 @@ struct Camera
     virtual Ray compute_primary_ray(const int x, const int width,
                                     const int y, const int height) const = 0;
 
+    virtual std::string GetTypeString() const;
+
 private:
+    friend std::ostream& operator<<(std::ostream& ost, const Camera& camera);
+
+    void WriteType(std::ostream& ost) const;
+
     /**
      * The location of the camera in the scene. Depending on the type of camera,
      * this is the point from which rays will be emitted.
@@ -73,10 +79,6 @@ private:
      * this and mRight determine the aspect ratio of the image.
      */
     Vector3 mUp;
-
-    virtual void WriteType(std::ostream& ost) const;
-
-    friend std::ostream& operator<<(std::ostream& ost, const Camera& camera);
 };
 
 
@@ -91,7 +93,7 @@ public:
                             const int y, const int height) const;
 
 private:
-    void WriteType(std::ostream& ost) const;
+    std::string GetTypeString() const;
 };
 
 
@@ -106,7 +108,7 @@ public:
                             const int y, const int height) const;
 
 private:
-    void WriteType(std::ostream& ost) const;
+    std::string GetTypeString() const;
 };
 
 
