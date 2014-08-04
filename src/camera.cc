@@ -150,11 +150,19 @@ Camera::LookAt(const Vector3& pt)
 }
 
 
+std::string
+Camera::GetTypeString()
+    const
+{
+    return "GENERIC";
+}
+
+
 void
 Camera::WriteType(std::ostream& ost)
     const
 {
-    ost << "UNKNOWN";
+    ost << GetTypeString();
 }
 
 #pragma mark - Perspective Camera
@@ -190,11 +198,11 @@ PerspectiveCamera::compute_primary_ray(const int x,
 }
 
 
-void
-PerspectiveCamera::WriteType(std::ostream& ost)
+std::string
+PerspectiveCamera::GetTypeString()
     const
 {
-    ost << "perspective";
+    return "perspective";
 }
 
 #pragma mark - Orthographic Camera
@@ -239,11 +247,11 @@ OrthographicCamera::compute_primary_ray(const int x,
 }
 
 
-void
-OrthographicCamera::WriteType(std::ostream& ost)
+std::string
+OrthographicCamera::GetTypeString()
     const
 {
-    ost << "orthographic";
+    return "orthographic";
 }
 
 

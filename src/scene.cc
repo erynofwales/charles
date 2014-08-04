@@ -336,7 +336,17 @@ void
 Scene::LogCamera()
     const
 {
-    LOG_DEBUG << *mCamera;
+    const Camera& c = *mCamera;
+
+    LOG_DEBUG << "BEGIN CAMERA";
+    LOG_DEBUG << "  type      = " << c.GetTypeString();
+    LOG_DEBUG << "  origin    = " << c.GetOrigin();
+    LOG_DEBUG << "  direction = " << c.get_direction();
+    LOG_DEBUG << "  right     = " << c.GetRight();
+    LOG_DEBUG << "  up        = " << c.GetUp();
+    LOG_DEBUG << "  coordinate system is "
+              << (c.IsLeftHanded() ? "left-handed" : "right-handed");
+    LOG_DEBUG << "END CAMERA";
 }
 
 
