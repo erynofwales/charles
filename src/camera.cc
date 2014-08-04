@@ -1,8 +1,5 @@
-/* camera.h
- *
- * The Camera is the eye into the scene. It defines several parameters and a single compute_primary_ray method
- * that generates rays with which the ray tracer draws the scene.
- *
+/* camera.cc
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
