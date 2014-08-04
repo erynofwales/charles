@@ -108,13 +108,9 @@ Camera::LookAt(const Vector3& pt)
 
     mRight = Vector3::Y.cross(mDirection).normalize();
     mUp = mDirection.cross(mRight);
-    mDirection *= directionLength;
 
-    if (handedness > 0.0) {
-        mRight *= rightLength;
-    } else {
-        mRight *= -rightLength;
-    }
+    mDirection *= directionLength;
+    mRight *= (handedness > 0.0) ? rightLength : -rightLength;
     mUp *= upLength;
 }
 
