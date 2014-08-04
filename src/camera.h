@@ -36,6 +36,13 @@ struct Camera
     void SetUp(const Vector3& up);
 
     /**
+     * Get the camera's handedness. Left handed is the default.
+     *
+     * @returns `true` if the camera is set up for left-handed coordinates.
+     */
+    bool IsLeftHanded() const;
+
+    /**
      * Pan and tilt the camera towards the given point.
      *
      * @param [in] pt   The point at which to face the camera

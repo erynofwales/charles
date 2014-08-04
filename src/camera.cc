@@ -91,6 +91,25 @@ Camera::SetUp(const Vector3& up)
 }
 
 
+bool
+Camera::IsLeftHanded()
+    const
+{
+    /*
+     * The cross product of the up and direction vectors is a vector
+     * perpendicular to the plane containing those vectors. By definition the
+     * right vector is (in almost all cases) perpendicular to that plane.
+     *
+     * The dot product indicates the angle between this vector and the right
+     * vector. If it's greater than 0, then the vector is pointing right of the
+     * up-direction plane and the coordinate system is right handed. If less
+     * than 0, the vector is pointing left of the up-direction plane and the
+     * coordinate system is left-handed.
+     */
+    return mUp.cross(mDirection).dot(mRight) < 0.0;
+}
+
+
 void
 Camera::LookAt(const Vector3& pt)
 {
@@ -101,8 +120,7 @@ Camera::LookAt(const Vector3& pt)
     const Double directionLength = mDirection.length();
     const Double rightLength = mRight.length();
     const Double upLength = mUp.length();
-    /* TODO: What does this actually do? */
-    const Double handedness = mUp.cross(mDirection).dot(mRight);
+    const bool isLeftHanded = IsLeftHanded();
 
     mDirection = (pt - mOrigin).normalize();
     /* TODO: Check for zero length direction vector. */
@@ -116,7 +134,7 @@ Camera::LookAt(const Vector3& pt)
     mUp = mDirection.cross(mRight);
 
     mDirection *= directionLength;
-    mRight *= (handedness > 0.0) ? rightLength : -rightLength;
+    mRight *= isLeftHanded ? rightLength : -rightLength;
     mUp *= upLength;
 }
 
