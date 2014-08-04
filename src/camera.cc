@@ -97,6 +97,10 @@ Camera::SetUp(const Vector3& up)
 void
 Camera::LookAt(const Vector3& pt)
 {
+    /*
+     * Precalulate these in order to preserve the aspect ratio and orientation
+     * of the camera across the LookAt operation.
+     */
     const Double directionLength = mDirection.length();
     const Double rightLength = mRight.length();
     const Double upLength = mUp.length();
@@ -106,6 +110,11 @@ Camera::LookAt(const Vector3& pt)
     mDirection = (pt - mOrigin).normalize();
     /* TODO: Check for zero length direction vector. */
 
+    /*
+     * TODO: This is always the Y vector. POV-Ray has a sky vector, which
+     * specifies the vector along which LookAt pans and tilts the camera. It
+     * might be worth looking into, at some point.
+     */
     mRight = Vector3::Y.cross(mDirection).normalize();
     mUp = mDirection.cross(mRight);
 

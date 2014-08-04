@@ -35,6 +35,11 @@ struct Camera
     const Vector3& GetUp() const;
     void SetUp(const Vector3& up);
 
+    /**
+     * Pan and tilt the camera towards the given point.
+     *
+     * @param [in] pt   The point at which to face the camera
+     */
     void LookAt(const Vector3& pt);
 
     virtual Ray compute_primary_ray(const int x, const int width,
