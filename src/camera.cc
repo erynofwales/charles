@@ -123,6 +123,14 @@ Camera::LookAt(const Vector3& pt)
     mUp *= upLength;
 }
 
+
+void
+Camera::WriteType(std::ostream& ost)
+    const
+{
+    ost << "UNKNOWN";
+}
+
 #pragma mark - Perspective Camera
 
 PerspectiveCamera::PerspectiveCamera()
@@ -153,6 +161,14 @@ PerspectiveCamera::compute_primary_ray(const int x,
                                           x0, GetRight(),
                                           y0, GetUp());
     return Ray(GetOrigin(), direction.normalize());
+}
+
+
+void
+PerspectiveCamera::WriteType(std::ostream& ost)
+    const
+{
+    ost << "perspective";
 }
 
 #pragma mark - Orthographic Camera
@@ -194,4 +210,27 @@ OrthographicCamera::compute_primary_ray(const int x,
                                        x0, GetRight(),
                                        y0, GetUp());
     return Ray(origin, get_direction());
+}
+
+
+void
+OrthographicCamera::WriteType(std::ostream& ost)
+    const
+{
+    ost << "orthographic";
+}
+
+
+std::ostream&
+operator<<(std::ostream& ost,
+           const Camera& camera)
+{
+    ost << "[Camera ";
+    camera.WriteType(ost);
+    ost << " origin=" << camera.mOrigin
+        << " direction=" << camera.mDirection
+        << " right=" << camera.mRight
+        << " up=" << camera.mUp
+        << "]";
+    return ost;
 }

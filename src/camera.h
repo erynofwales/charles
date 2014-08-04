@@ -66,6 +66,10 @@ private:
      * this and mRight determine the aspect ratio of the image.
      */
     Vector3 mUp;
+
+    virtual void WriteType(std::ostream& ost) const;
+
+    friend std::ostream& operator<<(std::ostream& ost, const Camera& camera);
 };
 
 
@@ -78,6 +82,9 @@ public:
 
     Ray compute_primary_ray(const int x, const int width,
                             const int y, const int height) const;
+
+private:
+    void WriteType(std::ostream& ost) const;
 };
 
 
@@ -90,7 +97,12 @@ public:
 
     Ray compute_primary_ray(const int x, const int width,
                             const int y, const int height) const;
+
+private:
+    void WriteType(std::ostream& ost) const;
 };
 
+
+std::ostream& operator<<(std::ostream& ost, const Camera& camera);
 
 #endif
