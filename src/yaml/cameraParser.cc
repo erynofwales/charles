@@ -32,6 +32,7 @@ CameraParser::HandleKeyEvent(const std::string& key)
 {
     static const std::map<std::string, Section> sSections = {
         {"direction", DirectionSection},
+        {"lookAt", LookAtSection},
         {"origin", OriginSection},
         {"right", RightSection},
         {"type", TypeSection},
@@ -53,6 +54,9 @@ CameraParser::HandleValueEvent(yaml_event_t& event)
     switch (mSection) {
         case DirectionSection:
             HandleDirectionEvent(event);
+            break;
+        case LookAtSection:
+            HandleLookAtEvent(event);
             break;
         case OriginSection:
             HandleOriginEvent(event);
@@ -84,6 +88,25 @@ CameraParser::HandleDirectionEvent(yaml_event_t& event)
 
     auto onDone = [this](Vector3 origin) {
         mCamera->set_direction(origin);
+        mSection = NoSection;
+        SetShouldExpectKey(true);
+    };
+
+    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+}
+
+
+void
+CameraParser::HandleLookAtEvent(yaml_event_t& event)
+{
+    if (event.type != YAML_SEQUENCE_START_EVENT) {
+        /* TODO: Clean this up. */
+        assert(event.type != YAML_SEQUENCE_START_EVENT);
+        return;
+    }
+
+    auto onDone = [this](Vector3 lookAt) {
+        mCamera->LookAt(lookAt);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };

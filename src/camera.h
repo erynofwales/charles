@@ -35,6 +35,8 @@ struct Camera
     const Vector3& GetUp() const;
     void SetUp(const Vector3& up);
 
+    void LookAt(const Vector3& pt);
+
     virtual Ray compute_primary_ray(const int x, const int width,
                                     const int y, const int height) const = 0;
 

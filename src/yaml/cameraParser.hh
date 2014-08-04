@@ -28,6 +28,7 @@ private:
     enum Section {
         NoSection,
         DirectionSection,
+        LookAtSection,
         OriginSection,
         RightSection,
         TypeSection,
@@ -40,6 +41,7 @@ private:
     };
 
     void HandleDirectionEvent(yaml_event_t& event);
+    void HandleLookAtEvent(yaml_event_t& event);
     void HandleOriginEvent(yaml_event_t& event);
     void HandleRightEvent(yaml_event_t& event);
     void HandleTypeEvent(yaml_event_t& event);

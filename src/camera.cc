@@ -93,6 +93,31 @@ Camera::SetUp(const Vector3& up)
     mUp = up;
 }
 
+
+void
+Camera::LookAt(const Vector3& pt)
+{
+    const Double directionLength = mDirection.length();
+    const Double rightLength = mRight.length();
+    const Double upLength = mUp.length();
+    /* TODO: What does this actually do? */
+    const Double handedness = mUp.cross(mDirection).dot(mRight);
+
+    mDirection = (pt - mOrigin).normalize();
+    /* TODO: Check for zero length direction vector. */
+
+    mRight = Vector3::Y.cross(mDirection).normalize();
+    mUp = mDirection.cross(mRight);
+    mDirection *= directionLength;
+
+    if (handedness > 0.0) {
+        mRight *= rightLength;
+    } else {
+        mRight *= -rightLength;
+    }
+    mUp *= upLength;
+}
+
 #pragma mark - Perspective Camera
 
 PerspectiveCamera::PerspectiveCamera()
