@@ -53,6 +53,8 @@ public:
 private:
     Color trace_ray(const Ray &ray, const int depth = 0, const float weight = 1.0);
 
+    void LogObjects() const;
+
     // Pixel dimensions of the image.
     int width, height;
 

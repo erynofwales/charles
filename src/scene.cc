@@ -150,6 +150,8 @@ Scene::render()
 {
     LOG_INFO << "Rendering scene with " << shapes.size() << " objects.";
     printf("Rendering scene with %lu objects.\n", shapes.size());
+    LogObjects();
+
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
@@ -325,4 +327,18 @@ Scene::trace_ray(const Ray &ray,
 #endif
 
     return out_color;
+}
+
+
+void
+Scene::LogObjects()
+    const
+{
+    LOG_DEBUG << "BEGIN SCENE OBJECTS";
+
+    for (Object::Ptr obj : shapes) {
+        LOG_DEBUG << *obj;
+    }
+
+    LOG_DEBUG << "END SCENE OBJECTS";
 }
