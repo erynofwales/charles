@@ -6,6 +6,7 @@
  */
 
 #include <cstdio>
+#include <libgen.h>
 #include <unistd.h>
 
 #include "basics.h"
@@ -20,6 +21,19 @@
 
 
 int verbosity = 0;
+
+
+static std::string
+GetBaseFilename(const std::string& filename)
+{
+    std::string bn = basename(const_cast<char*>(filename.c_str()));
+    size_t lastDot = bn.find_last_of('.');
+    if (lastDot == std::string::npos) {
+        return bn;
+    } else {
+        return bn.substr(0, lastDot);
+    }
+}
 
 
 static void
@@ -96,22 +110,28 @@ main(int argc,
         }
     }
 
-    /* Set up logging */
-    if (logLevel > 0) {
-        if (logFilename.empty()) {
-            logFilename = "charles.log";
-        }
-        Log::Init(logFilename, logLevel);
-    }
+    std::string baseFilename;
 
-    if (optind >= argc) {
-        LOG_ERROR << "Input file required.";
+    int numInputFiles = argc - optind;
+    if (numInputFiles <= 0) {
         fprintf(stderr, "Input file required.\n");
         usage(argv[0]);
         return -1;
     }
 
-    infile = argv[optind];
+    if (numInputFiles == 1) {
+        baseFilename = GetBaseFilename(argv[optind]);
+    } else {
+        baseFilename = "charles";
+    }
+
+    /* Set up logging */
+    if (logLevel > 0) {
+        if (logFilename.empty()) {
+            logFilename = baseFilename + ".log";
+        }
+        Log::Init(logFilename, logLevel);
+    }
 
     if (outfile.empty()) {
         outfile = "charles_out.png";
@@ -120,11 +140,11 @@ main(int argc,
     /* Parse YAML files. */
     YAMLReader reader(scene);
     for (int i = optind; i < argc; i++) {
+        infile = argv[i];
         reader.read_file(infile);
     }
 
     /* Call tracer. */
-    LOG_INFO << "Beginning render";
     scene.render();
 
     /* Write rendered scene to PNG file. */
