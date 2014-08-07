@@ -1,10 +1,18 @@
 --- !Scene
 dimensions: [800, 600]
 camera: !Camera.Perspective
-    origin: [3, 2, -3]
-    direction: [-0.6396, -0.4264, 0.6396]
+    origin: [7.48, 6.5, 5.34]
+    lookAt: [0, 0, 0]
 objects:
     - !Object.Box
-      near: [-0.5, -0.5, -0.5]
-      far: [0.5, 0.5, 0.5]
-      color: [0.2, 0.328, 1.0]
+      near: [-1, -1, -1]
+      far: [1, 1, 1]
+      color: [1, 0, 0]
+    - !Object.Sphere
+      origin: [1.5, 0, 0]
+      radius: 0.25
+      color: [0, 1, 0]
+    - !Object.Plane
+      normal: [0, 1, 0]
+      distance: 1
+      color: [0, 0, 1]
