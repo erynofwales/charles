@@ -119,6 +119,81 @@ Vector3 LinearCombination(const Double k1, const Vector3& v1,
                           const Double k3, const Vector3& v3);
 
 
+struct Matrix4
+{
+    /** Create a 4x4 zero matrix. That is, all cells are 0. */
+    static Matrix4 Zero();
+
+    /** Create a 4x4 identity matrix. */
+    static Matrix4 Identity();
+
+    Matrix4();
+    Matrix4(const Double cells[16]);
+    Matrix4(const Matrix4& rhs);
+
+    /**
+     * Create a 4x4 translation matrix. A translation matrix looks like this:
+     *
+     *     [1 0 0 x]
+     *     [0 1 0 y]
+     *     [0 0 1 z]
+     *     [0 0 0 1]
+     *
+     * @param [in] x    X translation
+     * @param [in] y    Y translation
+     * @param [in] z    Z translation
+     * @returns The translation matrix
+     */
+    static Matrix4 Translation(Double x, Double y, Double z);
+
+    /**
+     * Create a 4x4 rotation matrix. A rotation matrices are quite complicated.
+     *
+     * @param [in] x    X rotation angle in radians
+     * @param [in] y    Y rotation angle in radians
+     * @param [in] z    Z rotation angle in radians
+     * @returns The rotation matrix
+     */
+    static Matrix4 Rotation(Double x, Double y, Double z);
+
+    /**
+     * Get the value of the cell at (row, col).
+     *
+     * @param [in] row  The row, must be less than the matrix's width
+     * @param [in] col  The column, must be less than the matrix's height
+     * @returns The value of the cell at (row, col)
+     */
+    Double& operator()(const unsigned int row, const unsigned int col);
+
+    /**
+     * Scalar multiplication.
+     *
+     * @param [in] rhs  The scalar factor
+     * @returns A copy of this matrix, multiplied by the scalar
+     */
+    Matrix4 operator*(const Double rhs) const;
+
+    /**
+     * Scalar multiplication. Multiplies this matrix by the given factor.
+     *
+     * @param [in] rhs  The scalar factor
+     * @returns *this
+     */
+    Matrix4& operator*=(const Double rhs);
+
+    Matrix4 operator*(const Matrix4& rhs) const;
+    Matrix4& operator*=(const Matrix4& rhs);
+
+    const Double* CArray() const;
+
+private:
+    Double mCells[16];
+};
+
+
+Matrix4 operator*(const Double lhs, const Matrix4& rhs);
+
+
 struct Ray
 {
     Ray();

@@ -162,3 +162,112 @@ TEST_F(Vector3Test, DotProduct)
 {
     EXPECT_EQ(131.0, v1.dot(v2));
 }
+
+#pragma mark Matrix4 Tests
+
+class Matrix4Test
+    : public ::testing::Test
+{
+public:
+    virtual void SetUp();
+
+protected:
+    Matrix4 m1, m2;
+};
+
+
+void
+Matrix4Test::SetUp()
+{
+    const Double m1Cells[] = { 1,  2,  3,  4,
+                               5,  6,  7,  8,
+                               9, 10, 11, 12,
+                              13, 14, 15, 16};
+    m1 = Matrix4(m1Cells);
+
+    const Double m2Cells[] = {  1,  1,    2,   3,
+                                5,  8,   13,  21,
+                               34,  55,  89, 144,
+                              233, 377, 610, 987};
+    m2 = Matrix4(m2Cells);
+}
+
+
+TEST(Matrix4StaticTest, Zero)
+{
+    Matrix4 zero = Matrix4::Zero();
+    for (int i = 0; i < 16; i++) {
+        EXPECT_EQ(zero.CArray()[i], 0.0);
+    }
+}
+
+
+TEST(Matrix4StaticTest, Identity)
+{
+    Matrix4 id = Matrix4::Identity();
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            EXPECT_EQ(id.CArray()[i * 4 + j], ((i == j) ? 1.0 : 0.0));
+        }
+    }
+}
+
+
+TEST_F(Matrix4Test, OperatorCall)
+{
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            EXPECT_EQ(m1(i, j), 4 * i + j + 1);
+        }
+    }
+}
+
+
+TEST_F(Matrix4Test, ScalarMultiplication)
+{
+    Matrix4 p1 = m1 * 2.0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            EXPECT_EQ(p1(i, j), m1(i, j) * 2.0);
+        }
+    }
+
+    Matrix4 p2 = 2.0 * m1;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            EXPECT_EQ(p2(i, j), m1(i, j) * 2.0);
+        }
+    }
+}
+
+
+TEST_F(Matrix4Test, MatrixMultiplication)
+{
+    const Double p1Expect[] = {1045,  1690,  2735,  4425,
+                               2137,  3454,  5591,  9045,
+                               3229,  5218,  8447, 13665,
+                               4321,  6982, 11303, 18285};
+    Matrix4 p1 = m1 * m2;
+    for (int i = 0; i < 16; i++) {
+        EXPECT_EQ(p1.CArray()[i], p1Expect[i]);
+    }
+
+    const Double p2Expect[] = {   63,    70,    77,    84,
+                                 435,   482,   529,   576,
+                                2982,  3304,  3626,  3948,
+                               20439, 22646, 24853, 27060};
+    Matrix4 p2 = m2 * m1;
+    for (int i = 0; i < 16; i++) {
+        EXPECT_EQ(p2.CArray()[i], p2Expect[i]);
+    }
+
+    /* Multiplication with the identity matrix produces the same matrix. */
+    Matrix4 p3 = m1 * Matrix4::Identity();
+    for (int i = 0; i < 16; i++) {
+        EXPECT_EQ(p3.CArray()[i], m1.CArray()[i]);
+    }
+    Matrix4 p4 = Matrix4::Identity() * m1;
+    for (int i = 0; i < 16; i++) {
+        EXPECT_EQ(p4.CArray()[i], m1.CArray()[i]);
+    }
+}

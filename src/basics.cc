@@ -9,7 +9,10 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#include <cassert>
 #include <cmath>
+#include <cstring>
+
 #include "basics.h"
 
 #pragma mark - Vectors
@@ -269,6 +272,221 @@ LinearCombination(const Double k1, const Vector3& v1,
     return Vector3(k1 * v1.x + k2 * v2.x + k3 * v3.x,
                    k1 * v1.y + k2 * v2.y + k3 * v3.y,
                    k1 * v1.z + k2 * v2.z + k3 * v3.z);
+}
+
+#pragma mark - Matrices
+
+/* static */ Matrix4
+Matrix4::Zero()
+{
+    Matrix4 m;
+    memset(m.mCells, 0, 16 * sizeof(Double));
+    return m;
+}
+
+
+/* static */ Matrix4
+Matrix4::Identity()
+{
+    Matrix4 m = Zero();
+    for (int i = 0; i < 4; i++) {
+        m.mCells[i * 4 + i] = 1.0;
+    }
+    return m;
+}
+
+
+/* static */ Matrix4
+Matrix4::Translation(Double x,
+                     Double y,
+                     Double z)
+{
+    Matrix4 m = Identity();
+    m.mCells[3] = x;
+    m.mCells[7] = y;
+    m.mCells[11] = z;
+    return m;
+}
+
+
+/* static */ Matrix4
+Matrix4::Rotation(Double x,
+                  Double y,
+                  Double z)
+{
+    Matrix4 m = Identity();
+
+    if (x == 0.0 && y == 0.0 && z == 0.0) {
+        /* No rotation, just return the identity matrix. */
+    } else if (x != 0.0 && y == 0.0 && z == 0.0) {
+        /*
+         * Fill in m with values for an X rotation matrix.
+         *
+         *   [1     0       0  0]
+         *   [0 cos(x) -sin(x) 0]
+         *   [0 sin(x)  cos(x) 0]
+         *   [0     0       0  1]
+         */
+        Double cosX = std::cos(x);
+        Double sinX = std::sin(x);
+        m.mCells[5] = cosX;
+        m.mCells[6] = -sinX;
+        m.mCells[9] = sinX;
+        m.mCells[10] = cosX;
+    } else if (x == 0.0 && y != 0.0 && z == 0.0) {
+        /*
+         * Fill in m with values for a Y rotation matrix.
+         *
+         *   [ cos(y) 0 sin(y) 0]
+         *   [     0  1     0  0]
+         *   [-sin(y) 0 cos(y) 0]
+         *   [     0  0     0  1]
+         */
+        Double cosY = std::cos(y);
+        Double sinY = std::sin(y);
+        m.mCells[0] = cosY;
+        m.mCells[2] = sinY;
+        m.mCells[8] = -sinY;
+        m.mCells[10] = cosY;
+    } else if (x == 0.0 && y == 0.0 && z != 0.0) {
+        /*
+         * Fill in m with values for a Z rotation matrix.
+         *
+         *   [cos(z) -sin(z) 0 0]
+         *   [sin(z)  cos(z) 0 0]
+         *   [    0       0  1 0]
+         *   [    0       0  0 1]
+         */
+        Double cosZ = std::cos(z);
+        Double sinZ = std::sin(z);
+        m.mCells[0] = cosZ;
+        m.mCells[1] = -sinZ;
+        m.mCells[4] = sinZ;
+        m.mCells[5] = cosZ;
+    } else {
+        /*
+         * TODO: Rotation in more than one dimension. So do a general rotation
+         * matrix. There's some magic way to do this with matrix multiplication
+         * that avoids gimbal lock. I should figure out how to do it properly.
+         */
+        assert(0);
+    }
+
+    return m;
+}
+
+
+/*
+ * Matrix4::Matrix4 --
+ */
+Matrix4::Matrix4()
+    : mCells()
+{ }
+
+
+/*
+ * Matrix4::Matrix4 --
+ */
+Matrix4::Matrix4(const Double cells[16])
+    : mCells()
+{
+    memcpy(mCells, cells, 16 * sizeof(Double));
+}
+
+
+/*
+ * Matrix4::Matrix4 --
+ */
+Matrix4::Matrix4(const Matrix4& rhs)
+    : Matrix4(rhs.mCells)
+{ }
+
+
+/*
+ * Matrix4::operator() --
+ */
+Double&
+Matrix4::operator()(const unsigned int row,
+                    const unsigned int col)
+{
+    assert(row < 4 && col < 4);
+    return mCells[4*row + col];
+}
+
+
+/*
+ * Matrix4::operator* --
+ */
+Matrix4
+Matrix4::operator*(const Double rhs)
+    const
+{
+    return Matrix4(*this) *= rhs;
+}
+
+
+/*
+ * Matrix4::operator*= --
+ */
+Matrix4&
+Matrix4::operator*=(const Double rhs)
+{
+    for (int i = 0; i < 16; i++) {
+        mCells[i] *= rhs;
+    }
+    return *this;
+}
+
+
+/*
+ * Matrix4::operator* --
+ */
+Matrix4
+Matrix4::operator*(const Matrix4& rhs)
+    const
+{
+    return Matrix4(*this) *= rhs;
+}
+
+
+/*
+ * Matrix4::operator*=
+ */
+Matrix4&
+Matrix4::operator*=(const Matrix4& rhs)
+{
+    Matrix4 lhs(*this);
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            /* Each cell is Sigma(k=0, 4)(lhs[ik] * rhs[kj]) */
+            const int cell = i*4 + j;
+            mCells[cell] = 0.0;
+            for (int k = 0; k < 4; k++) {
+                mCells[cell] += lhs.mCells[i*4 + k] * rhs.mCells[k*4 + j];
+            }
+        }
+    }
+    return *this;
+}
+
+
+/*
+ * Matrix4::CArray --
+ */
+const Double*
+Matrix4::CArray()
+    const
+{
+    return mCells;
+}
+
+
+Matrix4
+operator*(const Double rhs,
+          const Matrix4& lhs)
+{
+    /* Scalar multiplication is commutative. */
+    return lhs * rhs;
 }
 
 #pragma mark - Rays
