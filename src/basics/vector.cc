@@ -14,14 +14,6 @@ namespace basics {
 /*
  * charles::basics::Vector4::Vector4 --
  */
-Vector4::Vector4()
-    : Vector4(0, 0, 0)
-{ }
-
-
-/*
- * charles::basics::Vector4::Vector4 --
- */
 Vector4::Vector4(const Double& x,
                  const Double& y,
                  const Double& z)

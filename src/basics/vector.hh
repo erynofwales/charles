@@ -22,8 +22,7 @@ struct Vector
 struct Vector4
     : public Vector<4>
 {
-    Vector4();
-    Vector4(const Double& x, const Double& y, const Double& z);
+    Vector4(const Double& x = 0.0, const Double& y = 0.0, const Double& z = 0.0);
     Vector4(const Matrix<4,1>&& m);
 
     Double& X();
