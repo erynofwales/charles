@@ -249,13 +249,12 @@ Matrix<N,M>::operator*(Matrix<M,P> rhs)
     const
 {
     Matrix<N,P> result;
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < P; j++) {
+    for (UInt i = 0; i < N; i++) {
+        for (UInt j = 0; j < P; j++) {
             /* Each cell is Sigma(k=0, M)(lhs[ik] * rhs[kj]) */
-            const int ij = i*N + j;
-            mData[ij] = 0.0;
-            for (int k = 0; k < M; k++) {
-                result.mData[ij] += mData[i*N + k] * rhs.mData[k*P + j];
+            result(i, j) = 0.0;
+            for (UInt k = 0; k < M; k++) {
+                result(i, j) += mData[i*N + k] * rhs(k*P, j);
             }
         }
     }
