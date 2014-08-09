@@ -19,6 +19,17 @@ using charles::Double;
 
 
 /**
+ * A very small constant. If a value is between EPSILON and 0.0, it is
+ * considered to be zero.
+ */
+const Double EPSILON = 1.0e-10;
+
+/**
+ * The maximum distance a ray can travel. This is the maximum value t can be.
+ */
+const Double MAX_DISTANCE = 1.0e7;
+
+/**
  * Determine if the value is "close enough" to zero. Takes the absolute value
  * and compares it to `EPSILON`.
  *
