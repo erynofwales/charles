@@ -3,9 +3,11 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include "basics.h"
-#include "object.h"
-#include "types.hh"
+#ifndef __OBJECTBOX_HH__
+#define __OBJECTBOX_HH__
+
+#include "object.hh"
+#include "basics/basics.hh"
 
 
 namespace charles {
@@ -14,22 +16,20 @@ struct Box
     : public Object
 {
     Box();
-    Box(const Vector3& near, const Vector3& far);
+    Box(const basics::Vector4& near, const basics::Vector4& far);
 
-    Vector3& GetNear();
-    void SetNear(const Vector3& near);
-    Vector3& GetFar();
-    void SetFar(const Vector3& far);
+    basics::Vector4& GetNear();
+    void SetNear(const basics::Vector4& near);
 
-    bool DoesIntersect(const Ray& ray, TVector& t, Stats& stats) const;
-    bool point_is_on_surface(const Vector3 &p) const;
-    Vector3 compute_normal(const Vector3 &p) const;
+    basics::Vector4& GetFar();
+    void SetFar(const basics::Vector4& far);
 
     /** @see charles::Object::Write */
     void Write(std::ostream& ost) const;
 
 protected:
     bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
+    basics::Vector4 DoNormal(const basics::Vector4& p) const;
 
 private:
     /**
@@ -52,10 +52,12 @@ private:
                        Double& tFar) const;
 
     /** The near, lower left corner. */
-    Vector3 mNear;
+    basics::Vector4 mNear;
 
     /** The far, upper right corner. */
-    Vector3 mFar;
+    basics::Vector4 mFar;
 };
 
 } /* namespace charles */
+
+#endif /* __OBJECTBOX_HH__ */
