@@ -51,7 +51,6 @@ struct Camera
     virtual basics::Ray PrimaryRay(const int x, const int width,
                                    const int y, const int height) const = 0;
 
-protected:
     virtual std::string GetTypeString() const;
 
 private:
