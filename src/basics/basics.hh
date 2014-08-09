@@ -11,12 +11,14 @@
 
 #include "basics/matrix.hh"
 #include "basics/types.hh"
+#include "basics/vector.hh"
 
 
 namespace charles {
 namespace basics {
 
-typedef Matrix<4,4> Matrix4;
+/** A 4-square matrix */
+typedef Matrix<4> Matrix4;
 
 } /* namespace basics */
 } /* namespace charles */

@@ -13,7 +13,7 @@
 namespace charles {
 namespace basics {
 
-template<uint N>
+template<UInt N>
 struct Vector
     : public Matrix<N,1>
 { };
@@ -23,7 +23,7 @@ struct Vector4
     : public Vector<4>
 {
     Vector4();
-    Vector4(Double x, Double y, Double z);
+    Vector4(const Double& x, const Double& y, const Double& z);
 
     Double& X();
     Double& Y();

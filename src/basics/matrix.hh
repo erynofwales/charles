@@ -27,7 +27,7 @@ struct Matrix
     /** Construct an N x M matrix of zeros. */
     static Matrix<N,M> Zero();
 
-    /** 
+    /**
      * Construct an N x M identity matrix. Identity matrices are always square.
      * It is a (compile time) error to call Identity on a Matrix class where
      * N != M.
@@ -216,9 +216,9 @@ Matrix<N,M>::operator*(Matrix<M,P> rhs)
         for (int j = 0; j < P; j++) {
             /* Each cell is Sigma(k=0, M)(lhs[ik] * rhs[kj]) */
             const int ij = i*N + j;
-            mCells[ij] = 0.0;
+            mData[ij] = 0.0;
             for (int k = 0; k < M; k++) {
-                result.mCells[ij] += mCells[i*N + k] * rhs.mCells[k*P + j];
+                result.mData[ij] += mData[i*N + k] * rhs.mData[k*P + j];
             }
         }
     }

@@ -9,10 +9,25 @@
 namespace charles {
 namespace basics {
 
+/*
+ * charles::basics::Vector4::Vector4 --
+ */
 Vector4::Vector4()
-    : mCells({0.0, 0.0, 0.0, 1.0})
-{
+    : Vector4(0, 0, 0)
+{ }
 
+
+/*
+ * charles::basics::Vector4::Vector4 --
+ */
+Vector4::Vector4(const Double& x,
+                 const Double& y,
+                 const Double& z)
+{
+    mData[0] = x;
+    mData[1] = y;
+    mData[2] = z;
+    mData[3] = 1.0;
 }
 
 
