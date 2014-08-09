@@ -21,7 +21,7 @@ namespace basics {
  * number of rows. `M` is the number of columns. If `M` is not specified, the
  * matrix will be square.
  */
-template<uint N, uint M = N>
+template<UInt N, UInt M = N>
 struct Matrix
 {
     /** Construct an N x M matrix of zeros. */
@@ -44,19 +44,19 @@ struct Matrix
     bool operator!=(const Matrix<N,M>& rhs);
 
     /** Value accessor. Get the ij'th item. */
-    Double& operator(uint i, uint j);
+    Double& operator()(UInt i, UInt j);
 
     /** Scalar multiplication */
     Matrix<N,M> operator*(const Double& rhs) const;
 
     /** Matrix multiplication */
-    template<uint P>
+    template<UInt P>
     Matrix<N,P> operator*(Matrix<M,P> rhs) const;
 
     /** Get the underlying C array */
     const Double* CArray() const;
 
-private:
+protected:
     /** The matrix data, stored in row-major format. */
     Double mData[N * M];
 };
@@ -66,14 +66,14 @@ typedef Matrix<4> Matrix4;
 
 
 /** Scalar multiplication, scalar factor on the left. */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M> operator*(const Double& lhs, const Matrix<N,M>& rhs);
 
 
 /*
  * charles::basics::Matrix<>::Matrix --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>::Matrix()
     : mData()
 { }
@@ -82,7 +82,7 @@ Matrix<N,M>::Matrix()
 /*
  * charles::basics::Matrix<>::Matrix --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>::Matrix(const Double data[N*M])
 {
     memcpy(mData, data, sizeof(Double) * N * M);
@@ -92,7 +92,7 @@ Matrix<N,M>::Matrix(const Double data[N*M])
 /*
  * charles::basics::Matrix<>::Matrix --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>::Matrix(const Matrix<N,M>& rhs)
     : Matrix(rhs.mData)
 { }
@@ -101,7 +101,7 @@ Matrix<N,M>::Matrix(const Matrix<N,M>& rhs)
 /*
  * charles::basics::Matrix<>::operator= --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>&
 Matrix<N,M>::operator=(const Matrix<N,M>& rhs)
 {
@@ -113,12 +113,13 @@ Matrix<N,M>::operator=(const Matrix<N,M>& rhs)
 /*
  * charles::basics::Matrix<>::operator== --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 bool
 Matrix<N,M>::operator==(const Matrix<N,M>& rhs)
     const
 {
     for (int i = 0; i < N*M; i++) {
+        /* TODO: Use NearlyEqual. */
         if (mData[i] != rhs.mData[i]) {
             return false;
         }
@@ -130,7 +131,7 @@ Matrix<N,M>::operator==(const Matrix<N,M>& rhs)
 /*
  * charles::basics::Matrix<>::operator!= --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 bool
 Matrix<N,M>::operator!=(const Matrix<N,M>& rhs)
     const
@@ -142,7 +143,7 @@ Matrix<N,M>::operator!=(const Matrix<N,M>& rhs)
 /*
  * charles::basics::Matrix<>::Zero --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>
 Matrix<N,M>::Zero()
 {
@@ -155,7 +156,7 @@ Matrix<N,M>::Zero()
 /*
  * charles::basics::Matrix<>::Identity --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>
 Matrix<N,M>::Identity()
 {
@@ -176,9 +177,9 @@ Matrix<N,M>::Identity()
 /*
  * charles::basics::Matrix<>::operator() --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Double&
-Matrix<N,M>::operator()(uint i, uint j)
+Matrix<N,M>::operator()(UInt i, UInt j)
 {
     assert(i < N && j < M);
     return mData[i * N + j];
@@ -188,7 +189,7 @@ Matrix<N,M>::operator()(uint i, uint j)
 /*
  * charles::basics::Matrix<>::operator* --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>
 Matrix<N,M>::operator*(const Double& rhs)
     const
@@ -204,8 +205,8 @@ Matrix<N,M>::operator*(const Double& rhs)
 /*
  * charles::basics::Matrix<>::operator* --
  */
-template<uint N, uint M>
-template<uint P>
+template<UInt N, UInt M>
+template<UInt P>
 Matrix<N,P>
 Matrix<N,M>::operator*(Matrix<M,P> rhs)
     const
@@ -228,7 +229,7 @@ Matrix<N,M>::operator*(Matrix<M,P> rhs)
 /*
  * charles::basics::Matrix<>::CArray --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 const Double*
 Matrix<N,M>::CArray()
     const
@@ -240,7 +241,7 @@ Matrix<N,M>::CArray()
 /*
  * charles::basics::operator* --
  */
-template<uint N, uint M>
+template<UInt N, UInt M>
 Matrix<N,M>
 operator*(const Double& lhs,
           const Matrix<N,M>& rhs)

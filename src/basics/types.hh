@@ -13,8 +13,7 @@
 
 
 typedef double Double;
-
-typedef unsigned int uint;
+typedef unsigned int UInt;
 
 typedef std::vector<Double> DoubleVector;
 typedef DoubleVector TVector;
