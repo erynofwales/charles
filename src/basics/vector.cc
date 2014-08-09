@@ -64,7 +64,7 @@ Vector4::Z()
 
 
 /*
- * charles::basics::Vector4::length2 --
+ * charles::basics::Vector4::Length2 --
  */
 Double
 Vector4::Length2()
@@ -74,6 +74,9 @@ Vector4::Length2()
 }
 
 
+/*
+ * charles::basics::Vector4::Length --
+ */
 Double
 Vector4::Length()
     const
@@ -82,6 +85,9 @@ Vector4::Length()
 }
 
 
+/*
+ * charles::basics::Vector4::Dot --
+ */
 Double
 Vector4::Dot(const Vector4& rhs)
     const
@@ -90,6 +96,9 @@ Vector4::Dot(const Vector4& rhs)
 }
 
 
+/*
+ * charles::basics::Vector4::Cross --
+ */
 Vector4
 Vector4::Cross(const Vector4& rhs)
     const
@@ -100,10 +109,18 @@ Vector4::Cross(const Vector4& rhs)
 }
 
 
+/*
+ * charles::basics::Vector4::Normalize --
+ */
 Vector4&
 Vector4::Normalize()
 {
-    return *this /= Length();
+    /* XXX: Is there some way to do this with the Matrix<>::operator/? */
+    const Double len = Length();
+    X() = X() / len;
+    Y() = Y() / len;
+    Z() = Z() / len;
+    return *this;
 }
 
 } /* namespace basics */
