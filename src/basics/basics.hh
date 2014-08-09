@@ -10,6 +10,7 @@
 #define __BASICS_BASICS_HH__
 
 #include "basics/matrix.hh"
+#include "basics/ray.hh"
 #include "basics/types.hh"
 #include "basics/vector.hh"
 
