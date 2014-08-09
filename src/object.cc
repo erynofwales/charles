@@ -9,18 +9,17 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "basics.h"
+#include "object.hh"
+
 #include "material.h"
-#include "object.h"
 #include "basics/basics.hh"
 
 
+using charles::basics::Ray;
 using charles::basics::Vector4;
 
 
 namespace charles {
-
-#pragma mark - Objects
 
 /*
  * charles::Object::Object --
@@ -38,6 +37,9 @@ Object::~Object()
 { }
 
 
+/*
+ * charles::Object::GetMaterial --
+ */
 Material&
 Object::GetMaterial()
 {
@@ -45,6 +47,9 @@ Object::GetMaterial()
 }
 
 
+/*
+ * charles::Object::SetMaterial --
+ */
 void
 Object::SetMaterial(const Material& material)
 {
@@ -61,28 +66,60 @@ Object::Intersect(const basics::Ray& ray,
                   Stats& stats)
     const
 {
-    /* TODO: Remove basics:: when the old Ray class goes away. */
-    basics::Ray objRay = ToObjectSpace(ray);
-    return DoIntersect(objRay, t, stats);
+    return DoIntersect(ToObjectSpace(ray), t, stats);
+}
+
+
+/*
+ * charles::Object::Normal --
+ */
+Vector4
+Object::Normal(const Vector4& p)
+    const
+{
+    return FromObjectSpace(DoNormal(ToObjectSpace(p)));
 }
 
 
 /*
  * charles::Object::ToObjectSpace --
  */
-/* TODO: Remove basics:: when the old Ray class goes away. */
-basics::Ray
-Object::ToObjectSpace(const basics::Ray& ray)
+Ray
+Object::ToObjectSpace(const Ray& ray)
     const
 {
-    /* TODO: Remove basics:: when the old Ray class goes away. */
-    basics::Ray objRay(ray);
+    Ray objRay(ray);
     objRay.origin = mTranslation * objRay.origin;
     objRay.direction = mTranslation * objRay.direction;
     return objRay;
 }
 
 
+/*
+ * charles::Object::ToObjectSpace --
+ */
+Vector4
+Object::ToObjectSpace(const Vector4& v)
+    const
+{
+    return mTranslation * v;
+}
+
+
+/*
+ * charles::Object::FromObjectSpace --
+ */
+Vector4
+Object::FromObjectSpace(const Vector4& v)
+    const
+{
+    return v;
+}
+
+
+/*
+ * charles::Object::Write --
+ */
 void
 Object::Write(std::ostream& ost)
     const
@@ -91,6 +128,9 @@ Object::Write(std::ostream& ost)
 }
 
 
+/*
+ * charles::operator<< --
+ */
 std::ostream&
 operator<<(std::ostream& ost,
            const Object& object)

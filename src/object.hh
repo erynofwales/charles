@@ -1,8 +1,5 @@
 /* object.h
- *
- * Declaration of abstract, top-level scene objects. The Object class is the top of this hierarchy. All other scene
- * objects are based on it. The Shape class defines a visible shape in the scene.
- *
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
@@ -13,7 +10,6 @@
 #include <memory>
 #include <vector>
 
-#include "basics.h"
 #include "material.h"
 #include "stats.hh"
 #include "texture.h"
@@ -30,9 +26,6 @@ struct Object
     Object(const basics::Vector4& origin = basics::Vector4());
     virtual ~Object();
 
-    Vector3 GetOrigin() const;
-    void SetOrigin(const Vector3& origin);
-
     Material& GetMaterial();
     void SetMaterial(const Material& material);
 
@@ -45,24 +38,36 @@ struct Object
     bool Intersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
 
     /**
-     * Determine if the given ray intersects with this object. All intersection
-     * t values are returned in the `t` argument, in increasing order.
-     *
-     * @param [in]  ray     The ray to test for intersection
-     * @param [out] t       A vector of all intersection t values
-     * @return `true` if the ray intersects with this object
+     * Get the normal vector at the given point p. p is assumed to be on the
+     * surface.
      */
-    virtual bool DoesIntersect(const Ray& ray, TVector& t, Stats& stats) const = 0;
-    virtual bool point_is_on_surface(const Vector3 &p) const = 0;
-    virtual Vector3 compute_normal(const Vector3 &p) const = 0;
+    basics::Vector4 Normal(const basics::Vector4& p) const;
 
+    /** Write a string representation of this object to the stream. */
     virtual void Write(std::ostream& ost) const;
 
 protected:
+    /**
+     * Do the actual intersection work. Subclasses are expected to override
+     * this.
+     */
     virtual bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const = 0;
 
+    /**
+     * Do the actual work of finding a normal for point p. Subclasses are
+     * expected to override this.
+     */
+    virtual basics::Vector4 DoNormal(const basics::Vector4& p) const = 0;
+
 private:
+    /** Convert `ray` to object space from global space. */
     basics::Ray ToObjectSpace(const basics::Ray& ray) const;
+
+    /** Convert `v` to object space from global space. */
+    basics::Vector4 ToObjectSpace(const basics::Vector4& v) const;
+
+    /** Convert `v` to global space from object space. */
+    basics::Vector4 FromObjectSpace(const basics::Vector4& v) const;
 
     /** A translation matrix from global coordinates to this object's space. */
     basics::Matrix4 mTranslation;
@@ -72,13 +77,7 @@ private:
 };
 
 
-/**
- * Write a string representation of the Object to an output stream.
- *
- * @param [in] ost      The output stream
- * @param [in] object   The object
- * @returns The output stream
- */
+/** Write a string representation of the Object to an output stream. */
 std::ostream& operator<<(std::ostream& ost, const Object& object);
 
 } /* namespace charles */
