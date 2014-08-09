@@ -119,6 +119,7 @@ Vector3 LinearCombination(const Double k1, const Vector3& v1,
                           const Double k3, const Vector3& v3);
 
 
+#if 0
 struct Matrix4
 {
     /** Create a 4x4 zero matrix. That is, all cells are 0. */
@@ -192,6 +193,7 @@ private:
 
 
 Matrix4 operator*(const Double lhs, const Matrix4& rhs);
+#endif
 
 
 struct Ray

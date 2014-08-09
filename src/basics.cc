@@ -276,6 +276,7 @@ LinearCombination(const Double k1, const Vector3& v1,
 
 #pragma mark - Matrices
 
+#if 0
 /* static */ Matrix4
 Matrix4::Zero()
 {
@@ -488,6 +489,7 @@ operator*(const Double rhs,
     /* Scalar multiplication is commutative. */
     return lhs * rhs;
 }
+#endif
 
 #pragma mark - Rays
 
