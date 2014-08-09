@@ -59,7 +59,7 @@ struct Object
     virtual void Write(std::ostream& ost) const;
 
 protected:
-    virtual bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
+    virtual bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const = 0;
 
 private:
     basics::Ray ToObjectSpace(const basics::Ray& ray) const;
