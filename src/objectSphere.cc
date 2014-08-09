@@ -1,7 +1,5 @@
-/* object_sphere.h
- *
- * Spheres are Scene objects defined by a center point and a radius.
- *
+/* objectSphere.cc
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
@@ -10,11 +8,10 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "basics.h"
-#include "object.h"
 #include "objectSphere.hh"
 
 
+using charles::basics::Ray;
 using charles::basics::Vector4;
 
 
@@ -30,6 +27,9 @@ Sphere::Sphere(const Vector4& origin,
 { }
 
 
+/*
+ * charles::Sphere::GetRadius --
+ */
 Double
 Sphere::GetRadius()
     const
@@ -38,28 +38,31 @@ Sphere::GetRadius()
 }
 
 
+/*
+ * charles::Sphere::SetRadius --
+ */
 void
-Sphere::SetRadius(Double r)
+Sphere::SetRadius(const Double& r)
 {
     mRadius = std::fabs(r);
 }
 
 
 /*
- * Sphere::DoesIntersect --
+ * charles::Sphere::DoesIntersect --
  */
 bool
-Sphere::DoesIntersect(const Ray& ray,
-                      TVector& t,
-                      Stats& stats)
+Sphere::DoIntersect(const Ray& ray,
+                    TVector& t,
+                    Stats& stats)
     const
 {
     stats.sphereIntersectionTests++;
 
     /* Coefficients for quadratic equation. */
-    Double a = ray.direction.dot(ray.direction);
-    Double b = ray.direction.dot(ray.origin) * 2.0;
-    Double c = ray.origin.dot(ray.origin) - (mRadius * mRadius);
+    Double a = ray.direction.Dot(ray.direction);
+    Double b = ray.direction.Dot(ray.origin) * 2.0;
+    Double c = ray.origin.Dot(ray.origin) - (mRadius * mRadius);
 
     /* Discriminant for the quadratic equation. */
     Double discrim = (b * b) - (4.0 * a * c);
@@ -76,7 +79,7 @@ Sphere::DoesIntersect(const Ray& ray,
      * Compute the intersections, the roots of the quadratic equation. Spheres
      * have at most two intersections.
      */
-    Double sqrtDiscrim = sqrt(discrim);
+    Double sqrtDiscrim = std::sqrt(discrim);
     Double t0 = (-b - sqrtDiscrim) / (2.0 * a);
     Double t1 = (-b + sqrtDiscrim) / (2.0 * a);
 
@@ -109,45 +112,28 @@ Sphere::DoesIntersect(const Ray& ray,
 
 
 /*
- * Sphere::point_is_on_surface --
- *
- * Determine if a point lies on the surface of this Sphere.
+ * charles::Sphere::DoNormal --
  */
-bool
-Sphere::point_is_on_surface(const Vector3 &p)
+Vector4
+Sphere::DoNormal(const Vector4& p)
     const
 {
-    Vector3 o = GetOrigin();
-    Double x = p.x - o.x;
-    Double y = p.y - o.y;
-    Double z = p.z - o.z;
-
-    return x*x + y*y + z*z == mRadius*mRadius;
+    /*
+     * The fun thing about sphere is the normal to any point on the sphere is
+     * the point itself. Woo!
+     */
+    return Normalized(p);
 }
 
 
 /*
- * Sphere::compute_normal --
- *
- * Compute the normal for this Sphere at the given point. If the point does not lie on the surface of the sphere, a zero
- * vector is returned.
+ * charles::Sphere::Write --
  */
-Vector3
-Sphere::compute_normal(const Vector3 &p)
-    const
-{
-    // The fun thing about sphere is the normal to any point on the sphere is the point itself. Woo!
-    Vector3 normal = p - GetOrigin();
-    normal.normalize();
-    return normal;
-}
-
-
 void
 Sphere::Write(std::ostream& ost)
     const
 {
-    ost << "[Sphere origin=" << GetOrigin() << " r=" << mRadius << "]";
+    ost << "[Sphere r=" << mRadius << "]";
 }
 
 } /* namespace charles */
