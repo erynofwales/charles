@@ -82,7 +82,7 @@ typedef Matrix<4> Matrix4;
  * Create a translation matrix that will translate a vector to the given
  * coordinates.
  */
-static Matrix4 TranslationMatrix(const Double& x, const Double& y, const Double& z);
+Matrix4 TranslationMatrix(const Double& x, const Double& y, const Double& z);
 
 #pragma mark Static Methods
 
