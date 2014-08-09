@@ -3,6 +3,8 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#include <cmath>
+
 #include "basics/vector.hh"
 
 
@@ -58,6 +60,50 @@ Double&
 Vector4::Z()
 {
     return mData[2];
+}
+
+
+/*
+ * charles::basics::Vector4::length2 --
+ */
+Double
+Vector4::Length2()
+    const
+{
+    return mData[0] * mData[0] + mData[1] * mData[1] + mData[2] * mData[2];
+}
+
+
+Double
+Vector4::Length()
+    const
+{
+    return std::sqrt(Length2());
+}
+
+
+Double
+Vector4::Dot(const Vector4& rhs)
+    const
+{
+    return mData[0] * rhs.mData[0] + mData[1] * rhs.mData[1] + mData[2] + rhs.mData[2];
+}
+
+
+Vector4
+Vector4::Cross(const Vector4& rhs)
+    const
+{
+    return Vector4(mData[1]*rhs.mData[2] - mData[2]*rhs.mData[1],
+                   mData[2]*rhs.mData[0] - mData[0]*rhs.mData[2],
+                   mData[0]*rhs.mData[1] - mData[1]*rhs.mData[0]);
+}
+
+
+Vector4&
+Vector4::Normalize()
+{
+    return *this /= Length();
 }
 
 } /* namespace basics */
