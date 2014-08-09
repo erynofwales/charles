@@ -12,30 +12,24 @@
 #include "basics.h"
 #include "material.h"
 #include "object.h"
+#include "basics/basics.hh"
+
+
+using charles::basics::Vector4;
+
 
 namespace charles {
 
 #pragma mark - Objects
 
-/*
- * Object::Object --
- *
- * Default constructor. Create a new Object with an origin at (0, 0, 0).
- */
-Object::Object()
-    : Object(Vector3::Zero)
-{ }
-
-
-/*
- * Object::Object --
- *
- * Constructor. Create a new Object with an origin at o.
- */
-Object::Object(Vector3 origin)
-    : mOrigin(origin),
+Object::Object(const Vector4& origin)
+    : mTranslation(basics::TranslationMatrix(origin.X(), origin.Y(), origin.Z())),
       mMaterial()
 { }
+
+
+/*
+ */
 
 
 Vector3

@@ -10,6 +10,8 @@
 
 #include "basics.h"
 #include "object.h"
+#include "basics/basics.hh"
+
 
 namespace charles {
 
@@ -17,9 +19,7 @@ class Sphere
     : public Object
 {
 public:
-    Sphere();
-    Sphere(Double r);
-    Sphere(Vector3 o, Double r);
+    Sphere(const basics::Vector4& origin = basics::Vector4(), Double radius = 1.0);
 
     Double GetRadius() const;
     void SetRadius(Double r);

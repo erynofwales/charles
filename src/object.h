@@ -18,6 +18,8 @@
 #include "stats.hh"
 #include "texture.h"
 #include "types.hh"
+#include "basics/basics.hh"
+
 
 namespace charles {
 
@@ -25,8 +27,7 @@ struct Object
 {
     typedef std::shared_ptr<Object> Ptr;
 
-    Object();
-    Object(Vector3 o);
+    Object(const basics::Vector4& origin = basics::Vector4());
     virtual ~Object();
 
     Vector3 GetOrigin() const;

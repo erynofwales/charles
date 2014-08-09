@@ -14,32 +14,19 @@
 #include "object.h"
 #include "objectSphere.hh"
 
+
+using charles::basics::Vector4;
+
+
 namespace charles {
 
 /*
- * Sphere::Sphere --
- *
- * Default constructor. Create a Sphere with radius 1.0.
+ * charles::Sphere::Sphere --
  */
-Sphere::Sphere()
-    : Sphere(1.0)
-{ }
-
-
-/*
- * Sphere::Sphere --
- *
- * Constructor. Create a Sphere with the given radius.
- */
-Sphere::Sphere(Double r)
-    : Sphere(Vector3::Zero, r)
-{ }
-
-
-Sphere::Sphere(Vector3 o,
-               Double r)
-    : Object(o),
-      mRadius(r)
+Sphere::Sphere(const Vector4& origin,
+               Double radius)
+    : Object(origin),
+      mRadius(radius)
 { }
 
 
@@ -69,13 +56,10 @@ Sphere::DoesIntersect(const Ray& ray,
 {
     stats.sphereIntersectionTests++;
 
-    /* Origin of the vector in object space. */
-    Vector3 rayOriginObj = ray.origin - GetOrigin();
-
     /* Coefficients for quadratic equation. */
     Double a = ray.direction.dot(ray.direction);
-    Double b = ray.direction.dot(rayOriginObj) * 2.0;
-    Double c = rayOriginObj.dot(rayOriginObj) - (mRadius * mRadius);
+    Double b = ray.direction.dot(ray.origin) * 2.0;
+    Double c = ray.origin.dot(ray.origin) - (mRadius * mRadius);
 
     /* Discriminant for the quadratic equation. */
     Double discrim = (b * b) - (4.0 * a * c);
