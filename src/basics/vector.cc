@@ -33,6 +33,11 @@ Vector4::Vector4(const Double& x,
 }
 
 
+Vector4::Vector4(const Matrix<4,1>&& rhs)
+    : Vector4(static_cast<const Vector4&&>(rhs))
+{ }
+
+
 /*
  * charles::basics::Vector4::X --
  */
@@ -96,7 +101,7 @@ Vector4
 Vector4::operator*(const Double& rhs)
     const
 {
-    return dynamic_cast<Vector4&&>(*this * rhs);
+    return static_cast<Vector4&&>(*this * rhs);
 }
 
 

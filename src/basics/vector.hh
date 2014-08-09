@@ -24,6 +24,7 @@ struct Vector4
 {
     Vector4();
     Vector4(const Double& x, const Double& y, const Double& z);
+    Vector4(const Matrix<4,1>&& m);
 
     Double& X();
     const Double& X() const;
