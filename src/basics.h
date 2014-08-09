@@ -195,6 +195,7 @@ Matrix4 operator*(const Double lhs, const Matrix4& rhs);
 #endif
 
 
+#if 0
 struct Ray
 {
     Ray();
@@ -206,6 +207,7 @@ struct Ray
 };
 
 std::ostream &operator<<(std::ostream &os, const Ray &r);
+#endif
 
 
 struct Color
