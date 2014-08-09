@@ -3,29 +3,45 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include "camera.h"
+#include "camera.hh"
 #include "log.hh"
 
 #define LOG_NAME "camera"
 #include "logModule.hh"
 
 
+using charles::basics::Ray;
+using charles::basics::Vector4;
+
+
+namespace charles {
+
 #pragma mark - Generic Camera
 
+/*
+ * charles::Camera::Camera --
+ */
 Camera::Camera()
-    : mDirection(Vector3::Z),
+    : mDirection(0, 0, 1),
       mRight(1.33, 0, 0),
-      mUp(Vector3::Y)
+      mUp(0, 1, 0)
 { }
 
 
-Camera::Camera(const Camera& other)
-  : mDirection(other.mDirection),
-    mRight(other.mRight),
-    mUp(other.mUp)
+/*
+ * charles::Camera::Camera --
+ */
+Camera::Camera(const Camera& rhs)
+  : mOrigin(rhs.mOrigin),
+    mDirection(rhs.mDirection),
+    mRight(rhs.mRight),
+    mUp(rhs.mUp)
 { }
 
 
+/*
+ * charles::Camera::~Camera --
+ */
 Camera::~Camera()
 { }
 
@@ -33,7 +49,17 @@ Camera::~Camera()
 /*
  * Camera::GetOrigin --
  */
-const Vector3&
+Vector4&
+Camera::GetOrigin()
+{
+    return mOrigin;
+}
+
+
+/*
+ * Camera::GetOrigin --
+ */
+const Vector4&
 Camera::GetOrigin()
     const
 {
@@ -45,27 +71,57 @@ Camera::GetOrigin()
  * Camera::SetOrigin --
  */
 void
-Camera::SetOrigin(const Vector3 &origin)
+Camera::SetOrigin(const Vector4& origin)
 {
     mOrigin = origin;
 }
 
 
-const Vector3&
-Camera::get_direction()
+/*
+ * Camera::GetDirection --
+ */
+Vector4&
+Camera::GetDirection()
+{
+    return mDirection;
+}
+
+
+/*
+ * Camera::GetDirection --
+ */
+const Vector4&
+Camera::GetDirection()
     const
 {
     return mDirection;
 }
 
+
+/*
+ * Camera::SetDirection --
+ */
 void
-Camera::set_direction(const Vector3 &direction)
+Camera::SetDirection(const Vector4& direction)
 {
     mDirection = direction;
 }
 
 
-const Vector3&
+/*
+ * Camera::GetRight --
+ */
+Vector4&
+Camera::GetRight()
+{
+    return mRight;
+}
+
+
+/*
+ * Camera::GetRight --
+ */
+const Vector4&
 Camera::GetRight()
     const
 {
@@ -73,14 +129,30 @@ Camera::GetRight()
 }
 
 
+/*
+ * Camera::SetRight --
+ */
 void
-Camera::SetRight(const Vector3& right)
+Camera::SetRight(const Vector4& right)
 {
     mRight = right;
 }
 
 
-const Vector3&
+/*
+ * Camera::GetUp --
+ */
+Vector4&
+Camera::GetUp()
+{
+    return mUp;
+}
+
+
+/*
+ * Camera::GetUp --
+ */
+const Vector4&
 Camera::GetUp()
     const
 {
@@ -88,13 +160,19 @@ Camera::GetUp()
 }
 
 
+/*
+ * Camera::SetUp --
+ */
 void
-Camera::SetUp(const Vector3& up)
+Camera::SetUp(const Vector4& up)
 {
     mUp = up;
 }
 
 
+/*
+ * Camera::IsLeftHanded --
+ */
 bool
 Camera::IsLeftHanded()
     const
@@ -110,24 +188,27 @@ Camera::IsLeftHanded()
      * than 0, the vector is pointing left of the up-direction plane and the
      * coordinate system is left-handed.
      */
-    return mUp.cross(mDirection).dot(mRight) < 0.0;
+    return mUp.Cross(mDirection).Dot(mRight) < 0.0;
 }
 
 
+/*
+ * Camera::LookAt --
+ */
 void
-Camera::LookAt(const Vector3& pt)
+Camera::LookAt(const Vector4& p)
 {
     /*
      * Precalulate these in order to preserve the aspect ratio and orientation
      * of the camera across the LookAt operation.
      */
-    const Double directionLength = mDirection.length();
-    const Double rightLength = mRight.length();
-    const Double upLength = mUp.length();
+    const Double directionLength = mDirection.Length();
+    const Double rightLength = mRight.Length();
+    const Double upLength = mUp.Length();
     const bool isLeftHanded = IsLeftHanded();
 
     /* Orient the camera towards the point. */
-    mDirection = (pt - mOrigin).normalize();
+    mDirection = basics::Normalized(p - mOrigin);
     /* TODO: Check for zero length direction vector. */
 
     /*
@@ -141,8 +222,8 @@ Camera::LookAt(const Vector3& pt)
      * specifies the vector along which LookAt pans and tilts the camera. It
      * might be worth looking into, at some point.
      */
-    mRight = Vector3::Y.cross(mDirection).normalize();
-    mUp = mDirection.cross(mRight);
+    mRight = basics::Normalized(Vector4(0, 1, 0).Cross(mDirection));
+    mUp = mDirection.Cross(mRight);
 
     /*
      * Now, fix up the direction, right, and up vectors so that their magnitudes
@@ -152,10 +233,13 @@ Camera::LookAt(const Vector3& pt)
     mRight *= isLeftHanded ? rightLength : -rightLength;
     mUp *= upLength;
 
-    LOG_DEBUG << "Camera is looking at " << pt;
+    LOG_DEBUG << "Camera is looking at " << p;
 }
 
 
+/*
+ * charles::Camera::GetTypeString --
+ */
 std::string
 Camera::GetTypeString()
     const
@@ -164,6 +248,9 @@ Camera::GetTypeString()
 }
 
 
+/*
+ * charles::Camera::WriteType --
+ */
 void
 Camera::WriteType(std::ostream& ost)
     const
@@ -184,23 +271,23 @@ PerspectiveCamera::PerspectiveCamera(const Camera& other)
 
 
 Ray
-PerspectiveCamera::compute_primary_ray(const int x,
-                                       const int width,
-                                       const int y,
-                                       const int height)
+PerspectiveCamera::PrimaryRay(const int x,
+                              const int width,
+                              const int y,
+                              const int height)
     const
 {
     /*
      * Center x and y in the pixel and convert them to be coordinates between
      * -0.5 and 0.5.
      */
-    double x0 = (x + 0.5) / width - 0.5;
-    double y0 = ((height - 1.0) - (y - 0.5)) / height - 0.5;
+    Double x0 = (x + 0.5) / width - 0.5;
+    Double y0 = ((height - 1.0) - (y - 0.5)) / height - 0.5;
 
-    Vector3 direction = LinearCombination(1.0, get_direction(),
+    Vector4 direction = LinearCombination(1.0, GetDirection(),
                                           x0, GetRight(),
                                           y0, GetUp());
-    return Ray(GetOrigin(), direction.normalize());
+    return Ray(GetOrigin(), basics::Normalized(direction));
 }
 
 
@@ -226,30 +313,24 @@ OrthographicCamera::OrthographicCamera(const Camera& other)
 /*
  * OrthographicCamera::compute_primary_ray --
  */
-/**
- * Compute a primary ray given an (x,y) coordinate pair. The orthographic camera
- * projects rays parallel to the viewing direction through the (x,y) coordinate
- * given. Thus, the size of the orthographic camera should be set to the size of
- * the view into the scene.
- */
 Ray
-OrthographicCamera::compute_primary_ray(const int x,
-                                        const int width,
-                                        const int y,
-                                        const int height)
+OrthographicCamera::PrimaryRay(const int x,
+                               const int width,
+                               const int y,
+                               const int height)
     const
 {
     /*
      * Center x and y in the pixel and convert them to be coordinates between
      * -0.5 and 0.5.
      */
-    double x0 = (x + 0.5) / width + 0.5;
-    double y0 = ((height - 1.0) - (y - 0.5)) / height - 0.5;
+    Double x0 = (x + 0.5) / width + 0.5;
+    Double y0 = ((height - 1.0) - (y - 0.5)) / height - 0.5;
 
-    Vector3 origin = LinearCombination(1.0, GetOrigin(),
+    Vector4 origin = LinearCombination(1.0, GetOrigin(),
                                        x0, GetRight(),
                                        y0, GetUp());
-    return Ray(origin, get_direction());
+    return Ray(origin, GetDirection());
 }
 
 
@@ -274,3 +355,5 @@ operator<<(std::ostream& ost,
         << "]";
     return ost;
 }
+
+} /* namespace charles */
