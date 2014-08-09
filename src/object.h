@@ -37,7 +37,15 @@ struct Object
     void SetMaterial(const Material& material);
 
     /**
-     * Determines if the given ray intersects with this object. All intersection
+     * Determine if the given ray intersects with this object. Converts the
+     * ray's origin and direction to object space before calling the protected
+     * Object::DoIntersect method. All intersection t values are returned in the
+     * `t` argument, in ascending order.
+     */
+    bool Intersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
+
+    /**
+     * Determine if the given ray intersects with this object. All intersection
      * t values are returned in the `t` argument, in increasing order.
      *
      * @param [in]  ray     The ray to test for intersection
@@ -50,7 +58,14 @@ struct Object
 
     virtual void Write(std::ostream& ost) const;
 
+protected:
+    virtual bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
+
 private:
+    basics::Ray ToObjectSpace(const basics::Ray& ray) const;
+
+    /** A translation matrix from global coordinates to this object's space. */
+    basics::Matrix4 mTranslation;
 
     /** This object's material, surface properties, etc. */
     Material mMaterial;
