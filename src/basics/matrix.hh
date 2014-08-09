@@ -46,12 +46,15 @@ struct Matrix
     /** Value accessor. Get the ij'th item. */
     Double& operator()(UInt i, UInt j);
 
-    /** Scalar multiplication */
+    /**
+     * @defgroup Scalar multiplication
+     * @{
+     */
     Matrix<N,M> operator*(const Double& rhs) const;
     Matrix<N,M>& operator*=(const Double& rhs);
-
     Matrix<N,M> operator/(const Double& rhs) const;
     Matrix<N,M>& operator/=(const Double& rhs);
+    /** @} */
 
     /** Matrix multiplication */
     template<UInt P>
