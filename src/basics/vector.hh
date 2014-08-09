@@ -19,7 +19,16 @@ struct Vector
 { };
 
 
-typedef Vector<4> Vector4;
+struct Vector4
+    : public Vector<4>
+{
+    Vector4();
+    Vector4(Double x, Double y, Double z);
+
+    Double& X();
+    Double& Y();
+    Double& Z();
+};
 
 } /* namespace basics */
 } /* namespace charles */
