@@ -42,6 +42,13 @@ Vector4::X()
     return mData[0];
 }
 
+const Double&
+Vector4::X()
+    const
+{
+    return mData[0];
+}
+
 
 /*
  * charles::basics::Vector4::Y --
@@ -53,11 +60,27 @@ Vector4::Y()
 }
 
 
+const Double&
+Vector4::Y()
+    const
+{
+    return mData[1];
+}
+
+
 /*
  * charles::basics::Vector4::Z --
  */
 Double&
 Vector4::Z()
+{
+    return mData[2];
+}
+
+
+const Double&
+Vector4::Z()
+    const
 {
     return mData[2];
 }

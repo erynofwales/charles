@@ -26,8 +26,11 @@ struct Vector4
     Vector4(const Double& x, const Double& y, const Double& z);
 
     Double& X();
+    const Double& X() const;
     Double& Y();
+    const Double& Y() const;
     Double& Z();
+    const Double& Z() const;
 
     /** Get the length-squared of this vector. */
     Double Length2() const;
