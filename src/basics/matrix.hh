@@ -40,8 +40,8 @@ struct Matrix
 
     Matrix<N,M>& operator=(const Matrix<N,M>& rhs);
 
-    bool operator==(const Matrix<N,M>& rhs);
-    bool operator!=(const Matrix<N,M>& rhs);
+    bool operator==(const Matrix<N,M>& rhs) const;
+    bool operator!=(const Matrix<N,M>& rhs) const;
 
     /** Value accessor. Get the ij'th item. */
     Double& operator()(UInt i, UInt j);
