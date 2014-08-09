@@ -65,6 +65,13 @@ protected:
 typedef Matrix<4> Matrix4;
 
 
+/**
+ * Create a translation matrix that will translate a vector to the given
+ * coordinates.
+ */
+static Matrix4 TranslationMatrix(const Double& x, const Double& y, const Double& z);
+
+
 /** Scalar multiplication, scalar factor on the left. */
 template<UInt N, UInt M>
 Matrix<N,M> operator*(const Double& lhs, const Matrix<N,M>& rhs);
