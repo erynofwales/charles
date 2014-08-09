@@ -28,6 +28,9 @@ struct Box
     /** @see charles::Object::Write */
     void Write(std::ostream& ost) const;
 
+protected:
+    bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
+
 private:
     /**
      * Perform the intersection test on a slab, defined by `slabHigh` and

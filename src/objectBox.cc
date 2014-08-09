@@ -52,56 +52,6 @@ Box::SetFar(const Vector3& far)
 
 
 bool
-Box::DoesIntersect(const Ray& ray,
-                   TVector& t,
-                   Stats& stats)
-    const
-{
-    stats.boxIntersectionTests++;
-
-    /*
-     * XXX: For now, I'm assuming that all boxes are parallel to the coordinate
-     * axes. This is the Kay-Kajiya box intersection algorithm.
-     */
-
-    //Double t0, t1;
-    Double tNear = -std::numeric_limits<Double>::infinity();
-    Double tFar = std::numeric_limits<Double>::infinity();
-
-    /*
-     * From the Ray Tracing book:
-     *
-     *   For a more efficient algorithm, unwrap the loop, expand the swap of t0
-     *   and t1 into two branches, and change the calculations to multiply by
-     *   the inverse of the ray's direction to avoid divisions. Unwrapping the
-     *   loop allows elimination of comparing t0 adn t1 to tNear and tFar [for
-     *   the X planes], as tNear will always be set to the smaller and tFar the
-     *   larger of t0 and t1.
-     *
-     * Initially there was a for loop iterating over each parallel pair of
-     * planes (X, Y, and Z planes).
-     */
-
-    if (!IntersectSlab(mNear.x, mFar.x, ray.origin.x, ray.direction.x, tNear, tFar)) {
-        return false;
-    }
-    if (!IntersectSlab(mNear.y, mFar.y, ray.origin.y, ray.direction.y, tNear, tFar)) {
-        return false;
-    }
-    if (!IntersectSlab(mNear.z, mFar.z, ray.origin.z, ray.direction.z, tNear, tFar)) {
-        return false;
-    }
-
-    /* We have an intersection! */
-    stats.boxIntersections++;
-    t.push_back(tNear);
-    t.push_back(tFar);
-
-    return true;
-}
-
-
-bool
 Box::point_is_on_surface(const Vector3& p)
     const
 {
@@ -142,6 +92,44 @@ Box::compute_normal(const Vector3& p)
 }
 
 
+/*
+ * charles::Box::DoIntersect --
+ */
+bool
+Box::DoIntersect(const basics::Ray& ray,
+                 TVector& t,
+                 Stats& stats)
+    const
+{
+    stats.boxIntersectionTests++;
+
+    /* This is the Kay-Kajiya box intersection algorithm. */
+
+    Double tNear = -std::numeric_limits<Double>::infinity();
+    Double tFar = std::numeric_limits<Double>::infinity();
+
+    if (!IntersectSlab(mNear.x, mFar.x, ray.origin.x, ray.direction.x, tNear, tFar)) {
+        return false;
+    }
+    if (!IntersectSlab(mNear.y, mFar.y, ray.origin.y, ray.direction.y, tNear, tFar)) {
+        return false;
+    }
+    if (!IntersectSlab(mNear.z, mFar.z, ray.origin.z, ray.direction.z, tNear, tFar)) {
+        return false;
+    }
+
+    /* We have an intersection! */
+    stats.boxIntersections++;
+    t.push_back(tNear);
+    t.push_back(tFar);
+
+    return true;
+}
+
+
+/*
+ * charles::Box::IntersectSlab --
+ */
 inline bool
 Box::IntersectSlab(const Double& slabLow,
                    const Double& slabHigh,
@@ -152,6 +140,20 @@ Box::IntersectSlab(const Double& slabLow,
     const
 {
     Double t0, t1;
+
+    /*
+     * From the Ray Tracing book:
+     *
+     *   For a more efficient algorithm, unwrap the loop, expand the swap of t0
+     *   and t1 into two branches, and change the calculations to multiply by
+     *   the inverse of the ray's direction to avoid divisions. Unwrapping the
+     *   loop allows elimination of comparing t0 adn t1 to tNear and tFar [for
+     *   the X planes], as tNear will always be set to the smaller and tFar the
+     *   larger of t0 and t1.
+     *
+     * Initially there was a for loop iterating over each parallel pair of
+     * planes (X, Y, and Z planes).
+     */
 
     if (NearZero(rayDirectionComponent)) {
         /* The ray is parallel to the X axis. */
@@ -170,12 +172,13 @@ Box::IntersectSlab(const Double& slabLow,
             tNear = t1;
             tFar = t0;
         }
-#endif
+#else
         if (t0 > t1) {
             Double tmp = t0;
             t0 = t1;
             t1 = tmp;
         }
+#endif
         if (t0 > tNear) {
             tNear = t0;
         }
