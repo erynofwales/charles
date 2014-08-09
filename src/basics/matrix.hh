@@ -48,6 +48,10 @@ struct Matrix
 
     /** Scalar multiplication */
     Matrix<N,M> operator*(const Double& rhs) const;
+    Matrix<N,M>& operator*=(const Double& rhs);
+
+    Matrix<N,M> operator/(const Double& rhs) const;
+    Matrix<N,M>& operator/=(const Double& rhs);
 
     /** Matrix multiplication */
     template<UInt P>
@@ -62,6 +66,12 @@ protected:
 };
 
 
+/** Scalar multiplication, scalar factor on the left. */
+template<UInt N, UInt M>
+Matrix<N,M> operator*(const Double& lhs, const Matrix<N,M>& rhs);
+
+
+/** A standard 4x4 matrix. */
 typedef Matrix<4> Matrix4;
 
 
@@ -71,11 +81,7 @@ typedef Matrix<4> Matrix4;
  */
 static Matrix4 TranslationMatrix(const Double& x, const Double& y, const Double& z);
 
-
-/** Scalar multiplication, scalar factor on the left. */
-template<UInt N, UInt M>
-Matrix<N,M> operator*(const Double& lhs, const Matrix<N,M>& rhs);
-
+#pragma mark Static Methods
 
 /*
  * charles::basics::Matrix<>::Zero --
@@ -106,6 +112,7 @@ Matrix<N,M>::Identity()
     return m;
 }
 
+#pragma mark Instance Methods
 
 /*
  * charles::basics::Matrix<>::Matrix --
@@ -197,11 +204,35 @@ Matrix<N,M>
 Matrix<N,M>::operator*(const Double& rhs)
     const
 {
-    Matrix<N,M> result;
-    for (int i = 0; i < N*M; i++) {
-        result.mData = mData[i] * rhs;
+    return Matrix<N,M>(*this) *= rhs;
+}
+
+
+template<UInt N, UInt M>
+Matrix<N,M>&
+Matrix<N,M>::operator*=(const Double& rhs)
+{
+    for (size_t i = 0; i < N*M; i++) {
+        mData[i] *= rhs;
     }
-    return result;
+    return *this;
+}
+
+
+template<UInt N, UInt M>
+Matrix<N,M>
+Matrix<N,M>::operator/(const Double& rhs)
+    const
+{
+    return Matrix<N,M>(*this) /= rhs;
+}
+
+
+template<UInt N, UInt M>
+Matrix<N,M>&
+Matrix<N,M>::operator/=(const Double& rhs)
+{
+    return *this *= (1.0 / rhs);
 }
 
 
