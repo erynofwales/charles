@@ -9,8 +9,8 @@
 #ifndef __BASICS_BASICS_HH__
 #define __BASICS_BASICS_HH__
 
-#include "matrix.hh"
-#include "types.hh"
+#include "basics/matrix.hh"
+#include "basics/types.hh"
 
 
 namespace charles {
