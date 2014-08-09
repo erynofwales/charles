@@ -71,6 +71,36 @@ Matrix<N,M> operator*(const Double& lhs, const Matrix<N,M>& rhs);
 
 
 /*
+ * charles::basics::Matrix<>::Zero --
+ */
+template<UInt N, UInt M>
+/* static */ Matrix<N,M>
+Matrix<N,M>::Zero()
+{
+    Matrix<N,M> m;
+    bzero(m.mData, sizeof(Double) * N * M);
+    return m;
+}
+
+
+/*
+ * charles::basics::Matrix<>::Identity --
+ */
+template<UInt N, UInt M>
+/* static */ Matrix<N,M>
+Matrix<N,M>::Identity()
+{
+    static_assert(N == M, "Identity matrices must be square.");
+
+    auto m = Matrix<N,M>::Zero();
+    for (size_t i = 0; i < N; i++) {
+        m(i,i) = 1.0;
+    }
+    return m;
+}
+
+
+/*
  * charles::basics::Matrix<>::Matrix --
  */
 template<UInt N, UInt M>
@@ -137,40 +167,6 @@ Matrix<N,M>::operator!=(const Matrix<N,M>& rhs)
     const
 {
     return !(*this == rhs);
-}
-
-
-/*
- * charles::basics::Matrix<>::Zero --
- */
-template<UInt N, UInt M>
-Matrix<N,M>
-Matrix<N,M>::Zero()
-{
-    Matrix<N,M> m;
-    bzero(m.mData, sizeof(Double) * N * M);
-    return m;
-}
-
-
-/*
- * charles::basics::Matrix<>::Identity --
- */
-template<UInt N, UInt M>
-Matrix<N,M>
-Matrix<N,M>::Identity()
-{
-    static_assert(N == M, "Identity matrices must be square.");
-
-    auto m = Matrix<N,M>::Zero();
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            if (i == j) {
-                m(i,j) = 1.0;
-            }
-        }
-    }
-    return m;
 }
 
 
