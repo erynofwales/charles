@@ -32,6 +32,15 @@ struct Vector4
     Double& Z();
     const Double& Z() const;
 
+    Vector4 operator*(const Double& rhs) const;
+
+    Vector4 operator+(const Vector4& rhs) const;
+    Vector4& operator+=(const Vector4& rhs);
+    Vector4 operator-(const Vector4& rhs) const;
+    Vector4& operator-=(const Vector4& rhs);
+
+    Vector4 operator-() const;
+
     /** Get the length-squared of this vector. */
     Double Length2() const;
 
@@ -47,6 +56,10 @@ struct Vector4
     /** Normalize this vector. */
     Vector4& Normalize();
 };
+
+
+/** Scalar multiplication of vectors, with the scalar factor on the left. */
+Vector4 operator*(const Double& lhs, const Vector4& rhs);
 
 
 /** Normalize the given vector and return a copy of it. */

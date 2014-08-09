@@ -78,11 +78,81 @@ Vector4::Z()
 }
 
 
+/*
+ * charles::basics::Vector4::Z --
+ */
 const Double&
 Vector4::Z()
     const
 {
     return mData[2];
+}
+
+
+/*
+ * charles::basics::Vector4::operator* --
+ */
+Vector4
+Vector4::operator*(const Double& rhs)
+    const
+{
+    return dynamic_cast<Vector4&&>(*this * rhs);
+}
+
+
+/*
+ * charles::basics::Vector4::operator+ --
+ */
+Vector4
+Vector4::operator+(const Vector4& rhs)
+    const
+{
+    return Vector4(*this) += rhs;
+}
+
+
+/*
+ * charles::basics::Vector4::operator+= --
+ */
+Vector4&
+Vector4::operator+=(const Vector4& rhs)
+{
+    mData[0] += rhs.mData[0];
+    mData[1] += rhs.mData[1];
+    mData[2] += rhs.mData[2];
+    return *this;
+}
+
+
+/*
+ * charles::basics::Vector4::operator- --
+ */
+Vector4
+Vector4::operator-(const Vector4& rhs)
+    const
+{
+    return Vector4(*this) -= rhs;
+}
+
+
+/*
+ * charles::basics::Vector4::operator-= --
+ */
+Vector4&
+Vector4::operator-=(const Vector4& rhs)
+{
+    return *this += -rhs;
+}
+
+
+/*
+ * charles::basics::Vector4::operator- --
+ */
+Vector4
+Vector4::operator-()
+    const
+{
+    return Vector4(-X(), -Y(), -Z());
 }
 
 
@@ -144,6 +214,17 @@ Vector4::Normalize()
     Y() = Y() / len;
     Z() = Z() / len;
     return *this;
+}
+
+
+/*
+ * charles::basics::operator* --
+ */
+Vector4
+operator*(const Double& lhs,
+          const Vector4& rhs)
+{
+    return rhs * lhs;
 }
 
 } /* namespace basics */
