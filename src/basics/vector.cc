@@ -224,6 +224,42 @@ operator*(const Double& lhs,
     return rhs * lhs;
 }
 
+
+/*
+ * charles::basics::Normalized --
+ */
+Vector4
+Normalized(const Vector4& v)
+{
+    return Vector4(v).Normalize();
+}
+
+
+/*
+ * charles::basics::LinearCombination --
+ */
+Vector4
+LinearCombination(const Double k1, const Vector4& v1,
+                  const Double k2, const Vector4& v2,
+                  const Double k3, const Vector4& v3)
+{
+    return Vector4(k1 * v1.X() + k2 * v2.X() + k3 * v3.X(),
+                   k1 * v1.Y() + k2 * v2.Y() + k3 * v3.Y(),
+                   k1 * v1.Z() + k2 * v2.Z() + k3 * v3.Z());
+}
+
+
+/*
+ * charles::basics::operator<< --
+ */
+std::ostream &
+operator<<(std::ostream &os, const Vector3 &v)
+{
+    // Stream the vector like this: <x, y, z>
+    os << "<" << v.X() << ", " << v.Y() << ", " << v.Z() << ">";
+    return os;
+}
+
 } /* namespace basics */
 } /* namespace charles */
 

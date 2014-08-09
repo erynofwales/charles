@@ -6,6 +6,8 @@
 #ifndef __BASICS_VECTOR_HH__
 #define __BASICS_VECTOR_HH__
 
+#include <ostream>
+
 #include "basics/matrix.hh"
 #include "basics/types.hh"
 
@@ -63,7 +65,15 @@ Vector4 operator*(const Double& lhs, const Vector4& rhs);
 
 
 /** Normalize the given vector and return a copy of it. */
-Vector4& Normalized(const Vector4& v);
+Vector4 Normalized(const Vector4& v);
+
+
+Vector4 LinearCombination(const Double k1, const Vector4& v1,
+                          const Double k2, const Vector4& v2,
+                          const Double k3, const Vector4& v3);
+
+
+std::ostream& operator<<(std::ostream& ost, const Vector4& v);
 
 } /* namespace basics */
 } /* namespace charles */
