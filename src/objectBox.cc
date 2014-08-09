@@ -108,13 +108,19 @@ Box::DoIntersect(const basics::Ray& ray,
     Double tNear = -std::numeric_limits<Double>::infinity();
     Double tFar = std::numeric_limits<Double>::infinity();
 
-    if (!IntersectSlab(mNear.x, mFar.x, ray.origin.x, ray.direction.x, tNear, tFar)) {
+    if (!IntersectSlab(mNear.x, mFar.x,
+                       ray.origin.X(), ray.direction.X(),
+                       tNear, tFar)) {
         return false;
     }
-    if (!IntersectSlab(mNear.y, mFar.y, ray.origin.y, ray.direction.y, tNear, tFar)) {
+    if (!IntersectSlab(mNear.y, mFar.y,
+                       ray.origin.Y(), ray.direction.Y(),
+                       tNear, tFar)) {
         return false;
     }
-    if (!IntersectSlab(mNear.z, mFar.z, ray.origin.z, ray.direction.z, tNear, tFar)) {
+    if (!IntersectSlab(mNear.z, mFar.z,
+                       ray.origin.Z(), ray.direction.Z(),
+                       tNear, tFar)) {
         return false;
     }
 
@@ -199,6 +205,9 @@ Box::IntersectSlab(const Double& slabLow,
 }
 
 
+/*
+ * charles::Box::Write --
+ */
 void
 Box::Write(std::ostream& ost)
     const
