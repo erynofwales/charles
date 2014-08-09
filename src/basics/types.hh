@@ -9,6 +9,9 @@
 #ifndef __BASICS_TYPES_HH__
 #define __BASICS_TYPES_HH__
 
+#include <vector>
+
+
 typedef double Double;
 
 typedef unsigned int uint;
