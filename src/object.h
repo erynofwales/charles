@@ -51,8 +51,6 @@ struct Object
     virtual void Write(std::ostream& ost) const;
 
 private:
-    /** The location of this object. */
-    Vector3 mOrigin;
 
     /** This object's material, surface properties, etc. */
     Material mMaterial;

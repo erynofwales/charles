@@ -29,26 +29,10 @@ Object::Object(const Vector4& origin)
 
 
 /*
+ * charles::Object::~Object --
  */
-
-
-Vector3
-Object::GetOrigin()
-    const
-{
-    return mOrigin;
-}
-
-
 Object::~Object()
 { }
-
-
-void
-Object::SetOrigin(const Vector3& origin)
-{
-    mOrigin = origin;
-}
 
 
 Material&
