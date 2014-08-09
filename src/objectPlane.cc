@@ -10,9 +10,12 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "basics.h"
-#include "object.h"
 #include "objectPlane.hh"
+
+
+using charles::basics::Ray;
+using charles::basics::Vector4;
+
 
 namespace charles {
 
@@ -20,12 +23,15 @@ namespace charles {
  * charles::Plane::Plane --
  */
 Plane::Plane()
-    : mNormal(Vector3::Y),
+    : mNormal(0, 1, 0),
       mDistance(0.0)
 { }
 
 
-const Vector3&
+/*
+ * charles::Plane::GetNormal --
+ */
+const Vector4&
 Plane::GetNormal()
     const
 {
@@ -33,13 +39,19 @@ Plane::GetNormal()
 }
 
 
+/*
+ * charles::Plane::SetNormal --
+ */
 void
-Plane::SetNormal(const Vector3& normal)
+Plane::SetNormal(const Vector4& normal)
 {
-    mNormal = normal.normalized();
+    mNormal = basics::Normalized(normal);
 }
 
 
+/*
+ * charles::Plane::GetDistance --
+ */
 Double
 Plane::GetDistance()
     const
@@ -48,6 +60,9 @@ Plane::GetDistance()
 }
 
 
+/*
+ * charles::Plane::SetDistance --
+ */
 void
 Plane::SetDistance(Double distance)
 {
@@ -59,9 +74,9 @@ Plane::SetDistance(Double distance)
  * charles::Plane::DoesIntersect --
  */
 bool
-Plane::DoesIntersect(const Ray &ray,
-                     TVector& t,
-                     Stats& stats)
+Plane::DoIntersect(const Ray& ray,
+                   TVector& t,
+                   Stats& stats)
     const
 {
     /*
@@ -94,14 +109,14 @@ Plane::DoesIntersect(const Ray &ray,
     stats.planeIntersectionTests++;
 
     /* The denominator for the t equation above. */
-    Double vd = mNormal.dot(ray.direction);
+    Double vd = mNormal.Dot(ray.direction);
     if (NearZero(vd)) {
         /* The ray is parallel to the plane. */
         return false;
     }
 
     /* The numerator of the equation for t above. */
-    Double vo = -(mNormal.dot(ray.origin) + mDistance);
+    Double vo = -(mNormal.Dot(ray.origin) + mDistance);
 
     Double t0 = vo / vd;
     if (t0 < 0.0) {
@@ -119,33 +134,14 @@ Plane::DoesIntersect(const Ray &ray,
 }
 
 
-/*
- * charles::Plane::point_is_on_surface --
- */
-bool
-Plane::point_is_on_surface(const Vector3 &p)
-    const
-{
-    /*
-     * Plug point p into the equation for a plane:
-     *
-     *     A * x + B * y + C * z + D = 0
-     *
-     * where (A, B, C) are the coordinates of the normal vector, and D is the
-     * distance along that vector from the origin.
-     */
-    return NearZero(mNormal.dot(p) + mDistance);
-}
-
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
 /*
- * charles::Plane::compute_normal --
+ * charles::Plane::DoNormal --
  */
-Vector3
-Plane::compute_normal(const Vector3 &p)
+Vector4
+Plane::DoNormal(const Vector4& p)
     const
 {
     return mNormal;
@@ -154,6 +150,9 @@ Plane::compute_normal(const Vector3 &p)
 #pragma clang diagnostic pop
 
 
+/*
+ * charles::Plane::Write --
+ */
 void
 Plane::Write(std::ostream& ost)
     const
