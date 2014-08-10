@@ -25,9 +25,10 @@ Vector4::Vector4(const Double& x,
 }
 
 
-Vector4::Vector4(const Matrix<4,1>&& rhs)
-    : Vector4(static_cast<const Vector4&&>(rhs))
-{ }
+Vector4::Vector4(const Matrix<4,1>& rhs)
+{
+    memcpy(mData, rhs.CArray(), sizeof(Double) * 4);
+}
 
 
 /*
@@ -86,6 +87,7 @@ Vector4::Z()
 }
 
 
+#if 0
 /*
  * charles::basics::Vector4::operator* --
  */
@@ -95,6 +97,7 @@ Vector4::operator*(const Double& rhs)
 {
     return static_cast<Matrix<4,1>>(*this) * rhs;
 }
+#endif
 
 
 /*

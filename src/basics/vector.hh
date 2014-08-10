@@ -25,7 +25,7 @@ struct Vector4
     : public Vector<4>
 {
     Vector4(const Double& x = 0.0, const Double& y = 0.0, const Double& z = 0.0);
-    Vector4(const Matrix<4,1>&& m);
+    Vector4(const Matrix<4,1>& m);
 
     Double& X();
     const Double& X() const;
@@ -34,7 +34,9 @@ struct Vector4
     Double& Z();
     const Double& Z() const;
 
+#if 0
     Vector4 operator*(const Double& rhs) const;
+#endif
 
     Vector4 operator+(const Vector4& rhs) const;
     Vector4& operator+=(const Vector4& rhs);
