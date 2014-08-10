@@ -248,7 +248,7 @@ TEST_F(Matrix4Test, ScalarMultiplication)
 }
 
 
-TEST_F(Matrix4Test, SquareMatrixMultiplication)
+TEST_F(Matrix4Test, MatrixMatrixMultiplication)
 {
     const Double p1Expect[] = {1045,  1690,  2735,  4425,
                                2137,  3454,  5591,  9045,
@@ -267,20 +267,10 @@ TEST_F(Matrix4Test, SquareMatrixMultiplication)
     for (int i = 0; i < 16; i++) {
         EXPECT_EQ(p2.CArray()[i], p2Expect[i]);
     }
-
-    /* Multiplication with the identity matrix produces the same matrix. */
-    Matrix4 p3 = m1 * Matrix4::Identity();
-    for (int i = 0; i < 16; i++) {
-        EXPECT_EQ(p3.CArray()[i], m1.CArray()[i]);
-    }
-    Matrix4 p4 = Matrix4::Identity() * m1;
-    for (int i = 0; i < 16; i++) {
-        EXPECT_EQ(p4.CArray()[i], m1.CArray()[i]);
-    }
 }
 
 
-TEST_F(Matrix4Test, IdentityMultiplication)
+TEST_F(Matrix4Test, MatrixIdentityMultiplication)
 {
     Matrix4 p1 = m1 * id;
     for (UInt i = 0; i < 16; i++) {
@@ -294,7 +284,7 @@ TEST_F(Matrix4Test, IdentityMultiplication)
 }
 
 
-TEST_F(Matrix4Test, VectorMultiplication)
+TEST_F(Matrix4Test, IdentityVectorMultiplication)
 {
     Vector4 v1(1, 2, 3);
 
