@@ -10,10 +10,8 @@
 #include <memory>
 #include <vector>
 
-#include "material.h"
+#include "material.hh"
 #include "stats.hh"
-#include "texture.h"
-#include "types.hh"
 #include "basics/basics.hh"
 
 

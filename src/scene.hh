@@ -11,6 +11,7 @@
 
 #include "camera.hh"
 #include "light.hh"
+#include "lightPoint.hh"
 #include "object.hh"
 #include "stats.hh"
 #include "basics/basics.hh"
@@ -42,16 +43,16 @@ struct Scene
 
     void Render();
     bool IsRendered() const;
-    const Color* GetPixels() const;
+    const basics::Color* GetPixels() const;
 
     AmbientLight& GetAmbient();
     void AddObject(Object::Ptr obj);
     void AddLight(PointLight* light);
 
 private:
-    Color TraceRay(const basics::Ray &ray,
-                   const int depth = 0,
-                   const Double weight = 1.0);
+    basics::Color TraceRay(const basics::Ray &ray,
+                           const int depth = 0,
+                           const Double weight = 1.0);
 
     void LogCamera() const;
     void LogObjects() const;
@@ -78,7 +79,7 @@ private:
 
     // Rendering output.
     bool mIsRendered;
-    Color *mPixels;
+    basics::Color *mPixels;
 };
 
 } /* namespace charles */

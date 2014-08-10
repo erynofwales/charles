@@ -13,7 +13,7 @@
 #include "scene.hh"
 
 #include "basics.h"
-#include "light.h"
+#include "light.hh"
 #include "log.hh"
 #include "object.hh"
 #include "writer.h"
@@ -23,6 +23,7 @@
 #include "logModule.hh"
 
 
+using charles::basics::Color;
 using charles::basics::Ray;
 using charles::basics::Vector4;
 

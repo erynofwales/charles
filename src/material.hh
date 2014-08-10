@@ -46,12 +46,12 @@ private:
     // Diffuse parameters.
     DiffuseShaderModel mDiffuseModel;
     Double mDiffuseIntensity;
-    Color mDiffuseColor;
+    basics::Color mDiffuseColor;
 
     // Specular parameters.
     SpecularShaderModel mSpecularModel;
     Double mSpecularIntensity;
-    Color mSpecularColor;
+    basics::Color mSpecularColor;
 };
 
 } /* namespace charles */
