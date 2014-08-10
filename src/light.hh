@@ -6,6 +6,8 @@
 #ifndef __LIGHT_H__
 #define __LIGHT_H__
 
+#include <memory>
+
 #include "basics/basics.hh"
 
 
@@ -13,6 +15,8 @@ namespace charles {
 
 struct Light
 {
+    typedef std::shared_ptr<Light> Ptr;
+
     Light(const basics::Color& color,
           const Double& intensity = 1.0);
 
@@ -23,7 +27,7 @@ struct Light
     Double GetIntensity() const;
     void SetIntensity(const Double& intensity);
 
-    basics::Color&& Contribution() const;
+    virtual basics::Color&& Contribution() const;
 
 private:
     Double ClampIntensity(const Double& intensity);
