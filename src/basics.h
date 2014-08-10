@@ -72,6 +72,7 @@ TooFar(const Double& value)
 }
 
 
+#if 0
 struct Vector3
 {
     Vector3();
@@ -116,6 +117,7 @@ std::ostream &operator<<(std::ostream &os, const Vector3 &v);
 Vector3 LinearCombination(const Double k1, const Vector3& v1,
                           const Double k2, const Vector3& v2,
                           const Double k3, const Vector3& v3);
+#endif
 
 
 #if 0
@@ -210,43 +212,5 @@ std::ostream &operator<<(std::ostream &os, const Ray &r);
 #endif
 
 
-struct Color
-{
-    Color();
-    Color(const float &r, const float &g, const float &b);
-    Color(const float &r, const float &g, const float &b, const float &a);
-
-    Color &operator*=(const float &rhs);
-    Color &operator/=(const float &rhs);
-    Color &operator+=(const float &rhs);
-    Color &operator-=(const float &rhs);
-    Color operator*(const float &rhs) const;
-    Color operator/(const float &rhs) const;
-    Color operator+(const float &rhs) const;
-    Color operator-(const float &rhs) const;
-
-    Color &operator=(const Color &rhs);
-
-    // These operators blend the two colors.
-    Color &operator*=(const Color &rhs);
-    Color &operator/=(const Color &rhs);
-    Color &operator+=(const Color &rhs);
-    Color &operator-=(const Color &rhs);
-    Color operator*(const Color &rhs) const;
-    Color operator/(const Color &rhs) const;
-    Color operator+(const Color &rhs) const;
-    Color operator-(const Color &rhs) const;
-
-    static const Color Black;
-    static const Color White;
-    static const Color Red;
-    static const Color Green;
-    static const Color Blue;
-
-    float red, green, blue, alpha;
-};
-
-const Color operator*(const float &lhs, const Color &rhs);
-std::ostream &operator<<(std::ostream &os, const Color &c);
 
 #endif
