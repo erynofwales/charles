@@ -2,17 +2,18 @@
  * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
-/**
- * Interface for an input file reader.
- */
-
 
 #ifndef __READER_HH__
 #define __READER_HH__
 
-#include "scene.h"
+#include "scene.hh"
 
 
+namespace charles {
+    
+/**
+ * Interface for an input file reader.
+ */
 struct Reader
 {
     Reader(Scene& scene)
@@ -28,5 +29,7 @@ struct Reader
 protected:
     Scene& mScene;
 };
+
+} /* namespace charles */
 
 #endif /* __READER_HH__ */
