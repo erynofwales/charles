@@ -48,7 +48,7 @@ private:
     void HandleTypeEvent(yaml_event_t& event);
     void HandleUpEvent(yaml_event_t& event);
 
-    Camera *mCamera;
+    Camera::Ptr mCamera;
     Section mSection;
     Type mType;
 };

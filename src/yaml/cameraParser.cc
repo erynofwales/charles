@@ -10,6 +10,9 @@
 #include "yaml/vectorParser.hh"
 
 
+using charles::basics::Vector4;
+
+
 namespace charles {
 namespace yaml {
 
@@ -87,13 +90,13 @@ CameraParser::HandleDirectionEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 origin) {
-        mCamera->set_direction(origin);
+    auto onDone = [this](Vector4 direction) {
+        mCamera->SetDirection(direction);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -106,13 +109,13 @@ CameraParser::HandleLookAtEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 lookAt) {
+    auto onDone = [this](Vector4 lookAt) {
         mCamera->LookAt(lookAt);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -125,13 +128,13 @@ CameraParser::HandleOriginEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 origin) {
+    auto onDone = [this](Vector4 origin) {
         mCamera->SetOrigin(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -144,13 +147,13 @@ CameraParser::HandleRightEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 right) {
+    auto onDone = [this](Vector4 right) {
         mCamera->SetRight(right);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -166,18 +169,14 @@ CameraParser::HandleTypeEvent(yaml_event_t& event)
                                     event.data.scalar.length);
     if (value == "perspective") {
         if (mType == TypeOrthographic) {
-            Camera *newCamera = new PerspectiveCamera(*mCamera);
-            delete mCamera;
-            mCamera = newCamera;
-            GetScene().SetCamera(newCamera);
+            mCamera.reset(new PerspectiveCamera(*mCamera));
+            GetScene().SetCamera(mCamera);
         }
     }
     else if (value == "orthographic") {
         if (mType == TypePerspective) {
-            Camera *newCamera = new OrthographicCamera(*mCamera);
-            delete mCamera;
-            mCamera = newCamera;
-            GetScene().SetCamera(newCamera);
+            mCamera.reset(new OrthographicCamera(*mCamera));
+            GetScene().SetCamera(mCamera);
         }
     }
     else {
@@ -198,13 +197,13 @@ CameraParser::HandleUpEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 origin) {
+    auto onDone = [this](Vector4 origin) {
         mCamera->SetUp(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 } /* namespace yaml */

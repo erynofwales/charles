@@ -6,6 +6,7 @@
 #include "lightPoint.hh"
 
 
+using charles::basics::Color;
 using charles::basics::Vector4;
 
 
@@ -19,7 +20,7 @@ PointLight::PointLight(const Vector4& origin,
 { }
 
 
-Vector4
+Vector4&
 PointLight::GetOrigin()
 {
     return mOrigin;

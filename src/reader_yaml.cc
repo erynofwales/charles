@@ -58,6 +58,7 @@ private:
 };
 #endif
 
+namespace charles {
 
 ssize_t
 YAMLReader::read_file(const std::string& filename)
@@ -152,3 +153,5 @@ error:
     yaml_parser_delete(&parser);
     return success;
 }
+
+} /* namespace charles */

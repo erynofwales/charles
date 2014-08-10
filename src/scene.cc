@@ -12,7 +12,6 @@
 
 #include "scene.hh"
 
-#include "basics.h"
 #include "light.hh"
 #include "log.hh"
 #include "object.hh"
@@ -39,7 +38,7 @@ Scene::Scene()
       mCamera(new PerspectiveCamera()),
       mMaxDepth(5),
       mMinWeight(1e-6),
-      mAmbient(),
+      mAmbient(Color(1, 1, 1), 0.2),
       mObjects(),
       mLights(),
       mStats(),
@@ -285,7 +284,7 @@ Scene::TraceRay(const Ray &ray,
     Ray shadowRay;
 
     for (PointLight *l : mLights) {
-        lightDirection = (l->GetOrigin() - intersection).normalize();
+        lightDirection = basics::Normalized(l->GetOrigin() - intersection);
         ldotn = lightDirection.Dot(normal);
 
         /*
@@ -319,7 +318,7 @@ Scene::TraceRay(const Ray &ray,
         /*
          * Compute basic Lambert diffuse shading for this object.
          */
-        outColor += shapeColor * (  ambientLevel * mAmbient.compute_color_contribution()
+        outColor += shapeColor * (  ambientLevel * mAmbient.Contribution()
                                   + diffuseLevel * ldotn);
     }
 

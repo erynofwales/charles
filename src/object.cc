@@ -11,7 +11,7 @@
 
 #include "object.hh"
 
-#include "material.h"
+#include "material.hh"
 #include "basics/basics.hh"
 
 
