@@ -1,112 +1,77 @@
 /* light.cc
- *
- * Lights light the scene.
- *
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include "basics.h"
-#include "light.h"
-#include "object.h"
+#include "light.hh"
 
-#pragma mark - Ambient Lights
 
-AmbientLight::AmbientLight()
-    : AmbientLight(Color::White)
+using charles::basics::Color;
+
+
+namespace charles {
+
+Light::Light(const Color& color,
+             const Double& intensity)
+    : mColor(color),
+      mIntensity(ClampIntensity(intensity))
 { }
 
 
-AmbientLight::AmbientLight(const Color &c)
-    : AmbientLight(c, 0.0)
-{ }
-
-
-AmbientLight::AmbientLight(const Color &c, const float &i)
-    : color(c),
-      intensity(i)
+Color&
+Light::GetColor()
 {
-    _clamp_intensity();
+    return mColor;
 }
 
 
-const Color &
-AmbientLight::get_color()
+const Color&
+Light::GetColor()
     const
 {
-    return color;
+    return mColor;
 }
 
 
-const float &
-AmbientLight::get_intensity()
+void
+Light::SetColor(const Color& color)
+{
+    mColor = color;
+}
+
+
+Double
+Light::GetIntensity()
     const
 {
+    return mIntensity;
+}
+
+
+void
+Light::SetIntensity(const Double& intensity)
+{
+    mIntensity = ClampIntensity(intensity);
+}
+
+
+Color&&
+Light::Contribution()
+    const
+{
+    return mColor * mIntensity;
+}
+
+
+Double
+Light::ClampIntensity(const Double& intensity)
+{
+    if (intensity < 0.0) {
+        return 0.0;
+    } else if (intensity > 1.0) {
+        return 1.0;
+    }
     return intensity;
 }
 
-void
-AmbientLight::set_intensity(const float &i)
-{
-    intensity = i;
-    _clamp_intensity();
-}
-
-
-Color
-AmbientLight::compute_color_contribution()
-    const
-{
-    return color * intensity;
-}
-
-
-void
-AmbientLight::_clamp_intensity()
-{
-    if (intensity < 0.0) {
-        intensity = 0.0;
-    }
-    else if (intensity > 1.0) {
-        intensity = 1.0;
-    }
-}
-
-#pragma mark - Point Lights
-
-PointLight::PointLight()
-    : PointLight(Vector3())
-{ }
-
-
-PointLight::PointLight(const Vector3 &o)
-    : PointLight(o, Color::White)
-{ }
-
-
-PointLight::PointLight(const Vector3 &o,
-                       const Color &c)
-    : PointLight(o, c, 1.0)
-{ }
-
-
-PointLight::PointLight(const Vector3 &o,
-                       const Color &c,
-                       const float &i)
-    : AmbientLight(c, i),
-      mOrigin(o)
-{ }
-
-
-const Vector3&
-PointLight::GetOrigin()
-    const
-{
-    return mOrigin;
-}
-
-
-void
-PointLight::SetOrigin(const Vector3& origin)
-{
-    mOrigin = origin;
-}
+} /* namespace charles */

@@ -1,53 +1,46 @@
-/* light.h
- *
- * Lights light the scene.
- *
+/* light.hh
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
 #ifndef __LIGHT_H__
 #define __LIGHT_H__
 
-#include "basics.h"
+#include "basics/basics.hh"
 
 
-class AmbientLight
+namespace charles {
+
+struct Light
 {
-public:
-    AmbientLight();
-    AmbientLight(const Color &c);
-    AmbientLight(const Color &c, const float &i);
+    Light(const basics::Color& color,
+          const Double& intensity = 1.0);
 
-    const Color &get_color() const;
-    const float &get_intensity() const;
-    void set_intensity(const float &i);
+    basics::Color& GetColor();
+    const basics::Color& GetColor() const;
+    void SetColor(basics::Color& color);
 
-    Color compute_color_contribution() const;
+    Double GetIntensity() const;
+    void SetIntensity(const Double& intensity);
 
-protected:
-    Color color;
-    float intensity;
+    basics::Color&& Contribution() const;
 
 private:
-    void _clamp_intensity();
+    Double ClampIntensity(const Double& intensity);
+
+    /** The color of the light. */
+    basics::Color mColor;
+
+    /**
+     * The intensity of the light. Normal values range from 0.0 to 1.0, but
+     * they can be set higher.
+     */
+    Double mIntensity;
 };
 
 
-class PointLight
-    : public AmbientLight
-{
-public:
-    PointLight();
+typedef Light AmbientLight;
 
-    PointLight(const Vector3 &o);
-    PointLight(const Vector3 &o, const Color &c);
-    PointLight(const Vector3 &o, const Color &c, const float &i);
-
-    const Vector3& GetOrigin() const;
-    void SetOrigin(const Vector3& origin);
-
-private:
-    Vector3 mOrigin;
-};
+} /* namespace charles */
 
 #endif
