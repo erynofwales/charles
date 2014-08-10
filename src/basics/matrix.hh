@@ -16,274 +16,71 @@
 namespace charles {
 namespace basics {
 
-/**
- * A generic, templated Matrix class taking two template parameters. `N` is the
- * number of rows. `M` is the number of columns. If `M` is not specified, the
- * matrix will be square.
- */
-template<UInt N, UInt M = N>
-struct Matrix
+struct Vector4;
+
+
+/** A 4x4 matrix, used for 3D transforms. */
+struct Matrix4
 {
-    /** Construct an N x M matrix of zeros. */
-    static Matrix<N,M> Zero();
+    /** Create a 4x4 matrix of zeros. */
+    static Matrix4 Zero();
+
+    /** Create a 4x4 identity matrix. */
+    static Matrix4 Identity();
+
+    /** Create a 4x4 translation matrix. */
+    static Matrix4 Translation(Double x, Double y, Double z);
+
+    Matrix4();
+    Matrix4(const Double *data);
+    Matrix4(const Matrix4 &rhs);
+
+    Matrix4& operator=(const Matrix4 &rhs);
+
+    bool operator==(const Matrix4 &rhs) const;
+    bool operator!=(const Matrix4 &rhs) const;
 
     /**
-     * Construct an N x M identity matrix. Identity matrices are always square.
-     * It is a (compile time) error to call Identity on a Matrix class where
-     * N != M.
+     * Get the ij'th item. In debug builds, this will assert if i or j are
+     * outside the bounds of the array.
      */
-    static Matrix<N,M> Identity();
-
-    Matrix();
-    Matrix(const Double data[N*M]);
-    Matrix(const Matrix<N,M>& rhs);
-
-    Matrix<N,M>& operator=(const Matrix<N,M>& rhs);
-
-    bool operator==(const Matrix<N,M>& rhs) const;
-    bool operator!=(const Matrix<N,M>& rhs) const;
-
-    /** Value accessor. Get the ij'th item. */
     Double& operator()(UInt i, UInt j);
+    Double  operator()(UInt i, UInt j) const;
+
+    /** Get the underlying C array */
+    const Double *CArray() const;
+
+    /*
+     * TODO: For completeness, matrix addition and subtraction, though I have
+     * yet to find a need for them...
+     */
 
     /**
      * @defgroup Scalar multiplication
      * @{
      */
-    Matrix<N,M> operator*(const Double& rhs) const;
-    Matrix<N,M>& operator*=(const Double& rhs);
-    Matrix<N,M> operator/(const Double& rhs) const;
-    Matrix<N,M>& operator/=(const Double& rhs);
+    Matrix4  operator*(Double rhs) const;
+    Matrix4  operator/(Double rhs) const;
+    Matrix4& operator*=(Double rhs);
+    Matrix4& operator/=(Double rhs);
     /** @} */
 
-    /** Matrix multiplication */
-    template<UInt P>
-    Matrix<N,P> operator*(Matrix<M,P> rhs) const;
-
-    /** Get the underlying C array */
-    const Double* CArray() const;
+    /**
+     * @defgroup Matrix multiplication
+     * @{
+     */
+    Matrix4 operator*(const Matrix4 &rhs) const;
+    Vector4 operator*(const Vector4 &rhs) const;
+    /** @} */
 
 protected:
-    /** The matrix data, stored in row-major format. */
-    Double mData[N * M];
+    /** The matrix data */
+    Double mData[16];
 };
 
 
 /** Scalar multiplication, scalar factor on the left. */
-template<UInt N, UInt M>
-Matrix<N,M> operator*(const Double& lhs, const Matrix<N,M>& rhs);
-
-
-/** A standard 4x4 matrix. */
-typedef Matrix<4> Matrix4;
-
-
-/**
- * Create a translation matrix that will translate a vector to the given
- * coordinates.
- */
-Matrix4 TranslationMatrix(const Double& x, const Double& y, const Double& z);
-
-#pragma mark Static Methods
-
-/*
- * charles::basics::Matrix<>::Zero --
- */
-template<UInt N, UInt M>
-/* static */ Matrix<N,M>
-Matrix<N,M>::Zero()
-{
-    Matrix<N,M> m;
-    bzero(m.mData, sizeof(Double) * N * M);
-    return m;
-}
-
-
-/*
- * charles::basics::Matrix<>::Identity --
- */
-template<UInt N, UInt M>
-/* static */ Matrix<N,M>
-Matrix<N,M>::Identity()
-{
-    static_assert(N == M, "Identity matrices must be square.");
-
-    auto m = Matrix<N,M>::Zero();
-    for (size_t i = 0; i < N; i++) {
-        m(i,i) = 1.0;
-    }
-    return m;
-}
-
-#pragma mark Instance Methods
-
-/*
- * charles::basics::Matrix<>::Matrix --
- */
-template<UInt N, UInt M>
-Matrix<N,M>::Matrix()
-    : mData()
-{ }
-
-
-/*
- * charles::basics::Matrix<>::Matrix --
- */
-template<UInt N, UInt M>
-Matrix<N,M>::Matrix(const Double data[N*M])
-{
-    memcpy(mData, data, sizeof(Double) * N * M);
-}
-
-
-/*
- * charles::basics::Matrix<>::Matrix --
- */
-template<UInt N, UInt M>
-Matrix<N,M>::Matrix(const Matrix<N,M>& rhs)
-    : Matrix(rhs.mData)
-{ }
-
-
-/*
- * charles::basics::Matrix<>::operator= --
- */
-template<UInt N, UInt M>
-Matrix<N,M>&
-Matrix<N,M>::operator=(const Matrix<N,M>& rhs)
-{
-    memcpy(mData, rhs.mData, sizeof(Double) * N * M);
-    return *this;
-}
-
-
-/*
- * charles::basics::Matrix<>::operator== --
- */
-template<UInt N, UInt M>
-bool
-Matrix<N,M>::operator==(const Matrix<N,M>& rhs)
-    const
-{
-    for (UInt i = 0; i < N*M; i++) {
-        /* TODO: Use NearlyEqual. */
-        if (mData[i] != rhs.mData[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-
-/*
- * charles::basics::Matrix<>::operator!= --
- */
-template<UInt N, UInt M>
-bool
-Matrix<N,M>::operator!=(const Matrix<N,M>& rhs)
-    const
-{
-    return !(*this == rhs);
-}
-
-
-/*
- * charles::basics::Matrix<>::operator() --
- */
-template<UInt N, UInt M>
-Double&
-Matrix<N,M>::operator()(UInt i, UInt j)
-{
-    assert(i < N && j < M);
-    return mData[i * N + j];
-}
-
-
-/*
- * charles::basics::Matrix<>::operator* --
- */
-template<UInt N, UInt M>
-Matrix<N,M>
-Matrix<N,M>::operator*(const Double& rhs)
-    const
-{
-    return Matrix<N,M>(*this) *= rhs;
-}
-
-
-template<UInt N, UInt M>
-Matrix<N,M>&
-Matrix<N,M>::operator*=(const Double& rhs)
-{
-    for (size_t i = 0; i < N*M; i++) {
-        mData[i] *= rhs;
-    }
-    return *this;
-}
-
-
-template<UInt N, UInt M>
-Matrix<N,M>
-Matrix<N,M>::operator/(const Double& rhs)
-    const
-{
-    return Matrix<N,M>(*this) /= rhs;
-}
-
-
-template<UInt N, UInt M>
-Matrix<N,M>&
-Matrix<N,M>::operator/=(const Double& rhs)
-{
-    return *this *= (1.0 / rhs);
-}
-
-
-/*
- * charles::basics::Matrix<>::operator* --
- */
-template<UInt N, UInt M>
-template<UInt P>
-Matrix<N,P>
-Matrix<N,M>::operator*(Matrix<M,P> rhs)
-    const
-{
-    Matrix<N,P> result;
-    for (UInt i = 0; i < N; i++) {
-        for (UInt j = 0; j < P; j++) {
-            /* Each cell is Sigma(k=0, M)(lhs[ik] * rhs[kj]) */
-            result(i, j) = 0.0;
-            for (UInt k = 0; k < M; k++) {
-                result(i, j) += mData[i*N + k] * rhs(k, j);
-            }
-        }
-    }
-    return result;
-}
-
-
-/*
- * charles::basics::Matrix<>::CArray --
- */
-template<UInt N, UInt M>
-const Double*
-Matrix<N,M>::CArray()
-    const
-{
-    return mData;
-}
-
-
-/*
- * charles::basics::operator* --
- */
-template<UInt N, UInt M>
-Matrix<N,M>
-operator*(const Double& lhs,
-          const Matrix<N,M>& rhs)
-{
-    return rhs * lhs;
-}
+Matrix4 operator*(const Double &lhs, const Matrix4 &rhs);
 
 } /* namespace basics */
 } /* namespace charles */

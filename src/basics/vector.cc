@@ -4,6 +4,7 @@
  */
 
 #include <cmath>
+#include <cstring>
 
 #include "basics/vector.hh"
 
@@ -14,9 +15,18 @@ namespace basics {
 /*
  * charles::basics::Vector4::Vector4 --
  */
-Vector4::Vector4(const Double& x,
-                 const Double& y,
-                 const Double& z)
+Vector4::Vector4()
+{
+    bzero(mData, sizeof(Double) * 4);
+}
+
+
+/*
+ * charles::basics::Vector4::Vector4 --
+ */
+Vector4::Vector4(Double x,
+                 Double y,
+                 Double z)
 {
     mData[0] = x;
     mData[1] = y;
@@ -24,12 +34,7 @@ Vector4::Vector4(const Double& x,
     mData[3] = 1.0;
 }
 
-
-Vector4::Vector4(const Matrix<4,1>& rhs)
-{
-    memcpy(mData, rhs.CArray(), sizeof(Double) * 4);
-}
-
+#pragma mark Component Access
 
 /*
  * charles::basics::Vector4::X --
@@ -40,7 +45,11 @@ Vector4::X()
     return mData[0];
 }
 
-const Double&
+
+/*
+ * charles::basics::Vector4::X --
+ */
+Double
 Vector4::X()
     const
 {
@@ -58,7 +67,10 @@ Vector4::Y()
 }
 
 
-const Double&
+/*
+ * charles::basics::Vector4::Y --
+ */
+Double
 Vector4::Y()
     const
 {
@@ -79,32 +91,65 @@ Vector4::Z()
 /*
  * charles::basics::Vector4::Z --
  */
-const Double&
+Double
 Vector4::Z()
     const
 {
     return mData[2];
 }
 
+#pragma mark Maths
 
-#if 0
 /*
  * charles::basics::Vector4::operator* --
  */
 Vector4
-Vector4::operator*(const Double& rhs)
+Vector4::operator*(Double rhs)
     const
 {
-    return static_cast<Matrix<4,1>>(*this) * rhs;
+    return Vector4(*this) *= rhs;
 }
-#endif
+
+
+/*
+ * charles::basics::Vector4::operator* --
+ */
+Vector4
+Vector4::operator/(Double rhs)
+    const
+{
+    return Vector4(*this) /= rhs;
+}
+
+
+/*
+ * charles::basics::Vector4::operator*= --
+ */
+Vector4&
+Vector4::operator*=(Double rhs)
+{
+    for (int i = 0; i < 4; i++) {
+        mData[i] *= rhs;
+    }
+    return *this;
+}
+
+
+/*
+ * charles::basics::Vector4::operator/= --
+ */
+Vector4&
+Vector4::operator/=(Double rhs)
+{
+    return *this *= (1.0 / rhs);
+}
 
 
 /*
  * charles::basics::Vector4::operator+ --
  */
 Vector4
-Vector4::operator+(const Vector4& rhs)
+Vector4::operator+(const Vector4 &rhs)
     const
 {
     return Vector4(*this) += rhs;
@@ -112,10 +157,21 @@ Vector4::operator+(const Vector4& rhs)
 
 
 /*
+ * charles::basics::Vector4::operator- --
+ */
+Vector4
+Vector4::operator-(const Vector4 &rhs)
+    const
+{
+    return Vector4(*this) -= rhs;
+}
+
+
+/*
  * charles::basics::Vector4::operator+= --
  */
 Vector4&
-Vector4::operator+=(const Vector4& rhs)
+Vector4::operator+=(const Vector4 &rhs)
 {
     mData[0] += rhs.mData[0];
     mData[1] += rhs.mData[1];
@@ -125,21 +181,10 @@ Vector4::operator+=(const Vector4& rhs)
 
 
 /*
- * charles::basics::Vector4::operator- --
- */
-Vector4
-Vector4::operator-(const Vector4& rhs)
-    const
-{
-    return Vector4(*this) -= rhs;
-}
-
-
-/*
  * charles::basics::Vector4::operator-= --
  */
 Vector4&
-Vector4::operator-=(const Vector4& rhs)
+Vector4::operator-=(const Vector4 &rhs)
 {
     return *this += -rhs;
 }
@@ -163,7 +208,7 @@ Double
 Vector4::Length2()
     const
 {
-    return mData[0] * mData[0] + mData[1] * mData[1] + mData[2] * mData[2];
+    return X()*X() + Y()*Y() + Z()*Z();
 }
 
 
@@ -185,7 +230,7 @@ Double
 Vector4::Dot(const Vector4& rhs)
     const
 {
-    return mData[0] * rhs.mData[0] + mData[1] * rhs.mData[1] + mData[2] * rhs.mData[2];
+    return X()*rhs.X() + Y()*rhs.Y() + Z()*rhs.Z();
 }
 
 
@@ -208,12 +253,7 @@ Vector4::Cross(const Vector4& rhs)
 Vector4&
 Vector4::Normalize()
 {
-    /* XXX: Is there some way to do this with the Matrix<>::operator/? */
-    const Double len = Length();
-    X() = X() / len;
-    Y() = Y() / len;
-    Z() = Z() / len;
-    return *this;
+    return *this /= Length();
 }
 
 
@@ -221,7 +261,7 @@ Vector4::Normalize()
  * charles::basics::operator* --
  */
 Vector4
-operator*(const Double& lhs,
+operator*(Double lhs,
           const Vector4& rhs)
 {
     return rhs * lhs;
@@ -232,9 +272,9 @@ operator*(const Double& lhs,
  * charles::basics::Normalized --
  */
 Vector4
-Normalized(const Vector4& v)
+Normalized(Vector4 v)
 {
-    return Vector4(v).Normalize();
+    return v.Normalize();
 }
 
 

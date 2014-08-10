@@ -18,10 +18,4 @@
 #include "basics/util.hh"
 #include "basics/vector.hh"
 
-inline bool
-TooFar(const Double& value)
-{
-    return value > MAX_DISTANCE;
-}
-
 #endif /* __BASICS_BASICS_HH__ */

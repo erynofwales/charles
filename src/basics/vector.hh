@@ -15,34 +15,50 @@
 namespace charles {
 namespace basics {
 
-template<UInt N>
-struct Vector
-    : public Matrix<N,1>
-{ };
-
-
+/** A 4x1 matrix, used for specifying points and directions in 3D space. */
 struct Vector4
-    : public Vector<4>
 {
-    Vector4(const Double& x = 0.0, const Double& y = 0.0, const Double& z = 0.0);
-    Vector4(const Matrix<4,1>& m);
+    Vector4();
+    Vector4(Double x, Double y, Double z);
 
+    Vector4 &operator=(const Vector4 &rhs);
+
+    /**
+     * @defgroup Component access
+     * @{
+     */
     Double& X();
-    const Double& X() const;
+    Double  X() const;
     Double& Y();
-    const Double& Y() const;
+    Double  Y() const;
     Double& Z();
-    const Double& Z() const;
+    Double  Z() const;
+    /** @} */
 
-#if 0
-    Vector4 operator*(const Double& rhs) const;
-#endif
+    bool operator==(const Vector4 &rhs) const;
+    bool operator!=(const Vector4 &rhs) const;
 
-    Vector4 operator+(const Vector4& rhs) const;
-    Vector4& operator+=(const Vector4& rhs);
-    Vector4 operator-(const Vector4& rhs) const;
-    Vector4& operator-=(const Vector4& rhs);
+    /**
+     * @defgroup Scalar multiplication
+     * @{
+     */
+    Vector4 operator*(Double rhs) const;
+    Vector4 operator/(Double rhs) const;
+    Vector4 &operator*=(Double rhs);
+    Vector4 &operator/=(Double rhs);
+    /** @} */
 
+    /**
+     * @defgroup Vector addition and subtraction
+     * @{
+     */
+    Vector4 operator+(const Vector4 &rhs) const;
+    Vector4 operator-(const Vector4 &rhs) const;
+    Vector4 &operator+=(const Vector4 &rhs);
+    Vector4 &operator-=(const Vector4 &rhs);
+    /** @} */
+
+    /** Negate this vector. */
     Vector4 operator-() const;
 
     /** Get the length-squared of this vector. */
@@ -52,30 +68,33 @@ struct Vector4
     Double Length() const;
 
     /** Get the dot product of `this` and `rhs`. */
-    Double Dot(const Vector4& rhs) const;
+    Double Dot(const Vector4 &rhs) const;
 
     /** Get the cross product of `this` and `rhs`. */
     Vector4 Cross(const Vector4& rhs) const;
 
     /** Normalize this vector. */
     Vector4& Normalize();
+
+private:
+    Double mData[4];
 };
 
 
 /** Scalar multiplication of vectors, with the scalar factor on the left. */
-Vector4 operator*(const Double& lhs, const Vector4& rhs);
+Vector4 operator*(Double lhs, const Vector4 &rhs);
 
 
-/** Normalize the given vector and return a copy of it. */
-Vector4 Normalized(const Vector4& v);
+/** Normalize a copy of the given vector. */
+Vector4 Normalized(Vector4 v);
 
 
-Vector4 LinearCombination(const Double k1, const Vector4& v1,
-                          const Double k2, const Vector4& v2,
-                          const Double k3, const Vector4& v3);
+Vector4 LinearCombination(Double k1, const Vector4 &v1,
+                          Double k2, const Vector4 &v2,
+                          Double k3, const Vector4 &v3);
 
 
-std::ostream& operator<<(std::ostream& ost, const Vector4& v);
+std::ostream& operator<<(std::ostream &ost, const Vector4 &v);
 
 } /* namespace basics */
 } /* namespace charles */
