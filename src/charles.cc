@@ -8,18 +8,19 @@
 #include <cstdio>
 #include <unistd.h>
 
-#include "basics.h"
 #include "log.hh"
 #include "light.hh"
 #include "reader_yaml.hh"
 #include "scene.hh"
 #include "writer_png.h"
+#include "basics/basics.hh"
 
 #define LOG_NAME "ROOT"
 #include "logModule.hh"
 
 
 using namespace charles;
+using namespace charles::basics;
 
 
 static void
@@ -38,8 +39,8 @@ main(int argc,
 
     Scene scene;
 
-    PointLight *l1 = new PointLight(Vector3(4.0, 6.0, 1.0), Color::White, 0.8);
-    scene.add_light(l1);
+    PointLight *l1 = new PointLight(Vector4(4.0, 6.0, 1.0), Color::White, 0.8);
+    scene.AddLight(l1);
 
     std::string logFilename;
     unsigned int logLevel = 0;
@@ -96,11 +97,11 @@ main(int argc,
 
     /* Call tracer. */
     LOG_INFO << "Beginning render";
-    scene.render();
+    scene.Render();
 
     /* Write rendered scene to PNG file. */
     PNGWriter writer;
-    scene.write(writer, outfile);
+    scene.Write(writer, outfile);
 
     if (logLevel > 0) {
         Log::Close();

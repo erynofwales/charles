@@ -5,6 +5,10 @@
 
 #include <ostream>
 
+#include "basics/color.hh"
+
+#include "basics/types.hh"
+
 
 namespace charles {
 namespace basics {

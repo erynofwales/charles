@@ -252,8 +252,8 @@ LinearCombination(const Double k1, const Vector4& v1,
 /*
  * charles::basics::operator<< --
  */
-std::ostream &
-operator<<(std::ostream &os, const Vector3 &v)
+std::ostream&
+operator<<(std::ostream& os, const Vector4& v)
 {
     // Stream the vector like this: <x, y, z>
     os << "<" << v.X() << ", " << v.Y() << ", " << v.Z() << ">";
