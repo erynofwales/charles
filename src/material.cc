@@ -1,11 +1,12 @@
-/* material.h
- *
- * Materials are applied to shapes and determine color, texture mapping, shading, etc.
- *
+/* material.cc
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include "material.h"
+#include "material.hh"
+
+
+using charles::basics::Color;
 
 
 namespace charles {
@@ -36,9 +37,8 @@ Material::SetDiffuseIntensity(const Double& kd)
 }
 
 
-const Color&
+Color&
 Material::GetDiffuseColor()
-    const
 {
     return mDiffuseColor;
 }
@@ -67,9 +67,8 @@ Material::SetSpecularIntensity(const Double& ks)
 }
 
 
-const Color&
+Color&
 Material::GetSpecularColor()
-    const
 {
     return mSpecularColor;
 }
