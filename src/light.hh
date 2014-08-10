@@ -20,9 +20,11 @@ struct Light
     Light(const basics::Color& color,
           const Double& intensity = 1.0);
 
+    virtual ~Light();
+
     basics::Color& GetColor();
     const basics::Color& GetColor() const;
-    void SetColor(basics::Color& color);
+    void SetColor(const basics::Color& color);
 
     Double GetIntensity() const;
     void SetIntensity(const Double& intensity);

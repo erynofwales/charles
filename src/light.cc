@@ -18,6 +18,10 @@ Light::Light(const Color& color,
 { }
 
 
+Light::~Light()
+{ }
+
+
 Color&
 Light::GetColor()
 {
