@@ -1,4 +1,4 @@
-/* scene.h
+/* scene.hh
  * vim: tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
@@ -17,10 +17,10 @@
 #include "basics/basics.hh"
 
 
+namespace charles {
+
 class Writer;
 
-
-namespace charles {
 
 /**
  * Scenes are the top level object in charles. Scenes contain objects, lights, a

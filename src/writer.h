@@ -11,7 +11,9 @@
 #include <string>
 
 
-class Scene;
+namespace charles {
+
+struct Scene;
 
 
 class Writer
@@ -23,5 +25,7 @@ public:
 
     virtual int write_scene(const Scene &scene, const std::string &filename) = 0;
 };
+
+} /* namespace charles */
 
 #endif
