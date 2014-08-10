@@ -177,6 +177,7 @@ public:
 
 protected:
     Matrix4 m1, m2;
+    Matrix4 id;
 };
 
 
@@ -194,6 +195,8 @@ Matrix4Test::SetUp()
                                34,  55,  89, 144,
                               233, 377, 610, 987};
     m2 = Matrix4(m2Cells);
+
+    id = Matrix4::Identity();
 }
 
 
@@ -245,7 +248,7 @@ TEST_F(Matrix4Test, ScalarMultiplication)
 }
 
 
-TEST_F(Matrix4Test, MatrixMultiplication)
+TEST_F(Matrix4Test, SquareMatrixMultiplication)
 {
     const Double p1Expect[] = {1045,  1690,  2735,  4425,
                                2137,  3454,  5591,  9045,
@@ -274,4 +277,29 @@ TEST_F(Matrix4Test, MatrixMultiplication)
     for (int i = 0; i < 16; i++) {
         EXPECT_EQ(p4.CArray()[i], m1.CArray()[i]);
     }
+}
+
+
+TEST_F(Matrix4Test, IdentityMultiplication)
+{
+    Matrix4 p1 = m1 * id;
+    for (UInt i = 0; i < 16; i++) {
+        EXPECT_EQ(p1.CArray()[i], m1.CArray()[i]);
+    }
+
+    Matrix4 p2 = id * m1;
+    for (UInt i = 0; i < 16; i++) {
+        EXPECT_EQ(p2.CArray()[i], m1.CArray()[i]);
+    }
+}
+
+
+TEST_F(Matrix4Test, VectorMultiplication)
+{
+    Vector4 v1(1, 2, 3);
+
+    Vector4 p1 = id * v1;
+    EXPECT_EQ(p1.X(), v1.X());
+    EXPECT_EQ(p1.Y(), v1.Y());
+    EXPECT_EQ(p1.Z(), v1.Z());
 }
