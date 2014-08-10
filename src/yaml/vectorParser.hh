@@ -90,7 +90,6 @@ struct Vector4Parser
     typedef std::function<void (basics::Vector4)> CallbackFunction;
 
     Vector4Parser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
-    ~Vector4Parser();
 };
 
 
@@ -100,7 +99,6 @@ struct ColorParser
     typedef std::function<void (basics::Color)> CallbackFunction;
 
     ColorParser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
-    ~ColorParser();
 };
 
 } /* namespace yaml */
