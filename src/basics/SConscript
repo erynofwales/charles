@@ -6,6 +6,7 @@ Import('env')
 
 
 files = [
+    'color.cc',
     'matrix.cc',
     'ray.cc',
     'vector.cc',

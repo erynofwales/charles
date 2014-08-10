@@ -9,6 +9,7 @@
 #ifndef __BASICS_BASICS_HH__
 #define __BASICS_BASICS_HH__
 
+#include "basics/color.hh"
 #include "basics/matrix.hh"
 #include "basics/ray.hh"
 #include "basics/types.hh"
