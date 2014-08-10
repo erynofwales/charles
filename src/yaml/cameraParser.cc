@@ -5,11 +5,12 @@
 
 #include <cassert>
 
-#include "camera.h"
+#include "camera.hh"
 #include "yaml/cameraParser.hh"
 #include "yaml/vectorParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 CameraParser::CameraParser(Scene& scene,
@@ -207,3 +208,4 @@ CameraParser::HandleUpEvent(yaml_event_t& event)
 }
 
 } /* namespace yaml */
+} /* namespace charles */

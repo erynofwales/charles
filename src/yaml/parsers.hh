@@ -15,9 +15,10 @@
 
 #include "yaml.h"
 
-#include "scene.h"
+#include "scene.hh"
 
 
+namespace charles {
 namespace yaml {
 
 struct Parser;
@@ -144,5 +145,6 @@ ParseScalar(const std::string& scalar,
 }
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_PARSERS_HH__ */

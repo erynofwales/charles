@@ -17,6 +17,7 @@
 #include "yaml/parsers.hh"
 
 
+namespace charles {
 namespace yaml {
 
 struct ScalarMappingParser
@@ -40,5 +41,6 @@ private:
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_SCALARMAPPINGPARSER_HH__ */

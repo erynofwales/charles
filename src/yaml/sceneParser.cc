@@ -15,6 +15,7 @@
 #include "vectorParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 SceneParser::SceneParser(Scene& scene,
@@ -137,3 +138,4 @@ SceneParser::HandleObjectsEvent(yaml_event_t& event)
 }
 
 } /* namespace yaml */
+} /* namespace charles */

@@ -19,9 +19,7 @@
 #include "yaml/vectorParser.hh"
 
 
-using namespace charles;
-
-
+namespace charles {
 namespace yaml {
 
 ObjectParser::ObjectParser(Scene& scene,
@@ -280,3 +278,4 @@ ObjectParser::HandleDistanceEvent(yaml_event_t& event)
 }
 
 } /* namespace yaml */
+} /* namespace charles */

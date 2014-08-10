@@ -13,6 +13,7 @@
 #include "yaml/scalarMappingParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 struct ObjectParser
@@ -66,5 +67,6 @@ private:
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_OBJECTPARSER_HH__ */

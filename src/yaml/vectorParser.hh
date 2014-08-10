@@ -16,6 +16,7 @@
 #include "parsers.hh"
 
 
+namespace charles {
 namespace yaml {
 
 /**
@@ -102,5 +103,6 @@ struct ColorParser
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_VECTOR_PARSER_HH__ */

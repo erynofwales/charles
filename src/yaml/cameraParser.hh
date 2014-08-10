@@ -12,6 +12,7 @@
 struct Camera;
 
 
+namespace charles {
 namespace yaml {
 
 struct CameraParser
@@ -53,6 +54,7 @@ private:
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_CAMERAPARSER_HH__ */
 

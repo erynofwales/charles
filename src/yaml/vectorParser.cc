@@ -8,6 +8,7 @@
 #include "yaml/vectorParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 Vector3Parser::Vector3Parser(Scene& scene,
@@ -55,3 +56,4 @@ ColorParser::~ColorParser()
 { }
 
 } /* namespace yaml */
+} /* namespace charles */

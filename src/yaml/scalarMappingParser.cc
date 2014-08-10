@@ -12,6 +12,7 @@
 #include "scalarMappingParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 ScalarMappingParser::ScalarMappingParser(Scene& scene,
@@ -83,3 +84,4 @@ ScalarMappingParser::GetShouldExpectKey()
 }
 
 } /* namespace yaml */
+} /* namespace charles */
