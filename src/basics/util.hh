@@ -57,5 +57,12 @@ NearlyEqual(T left,
     return NearZero(left - right);
 }
 
+
+inline bool
+TooFar(const Double& value)
+{
+    return value > MAX_DISTANCE;
+}
+
 #endif /* __BASICS_UTIL_HH__ */
 
