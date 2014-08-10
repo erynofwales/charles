@@ -10,7 +10,7 @@
 #include <string>
 
 #include "camera.hh"
-#include "light.h"
+#include "light.hh"
 #include "object.hh"
 #include "stats.hh"
 #include "basics/basics.hh"
