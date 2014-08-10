@@ -20,7 +20,8 @@ class PointLight
 {
 public:
     PointLight(const basics::Vector4 &origin,
-               const basics::Color& color);
+               const basics::Color& color,
+               const Double& intensity);
 
     basics::Vector4& GetOrigin();
     void SetOrigin(const basics::Vector4& origin);

@@ -12,8 +12,9 @@ using charles::basics::Vector4;
 namespace charles {
 
 PointLight::PointLight(const Vector4& origin,
-                       const Color& color)
-    : Light(color),
+                       const Color& color,
+                       const Double& intensity)
+    : Light(color, intensity),
       mOrigin(origin)
 { }
 
