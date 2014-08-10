@@ -10,6 +10,7 @@
 #include "basics/matrix.hh"
 
 #include "basics/util.hh"
+#include "basics/vector.hh"
 
 
 namespace charles {
@@ -47,9 +48,9 @@ Matrix4::Identity()
  * charles::basics::TranslationMatrix --
  */
 /* static */ Matrix4
-Translation(Double x,
-            Double y,
-            Double z)
+Matrix4::Translation(Double x,
+                     Double y,
+                     Double z)
 {
     Matrix4 m = Matrix4::Identity();
     m(0,3) = x;
@@ -129,14 +130,15 @@ Matrix4::operator!=(const Matrix4 &rhs)
  * charles::basics::Matrix4::operator() --
  */
 Double&
-Matrix4::operator()(UInt i, UInt j)
+Matrix4::operator()(UInt i,
+                    UInt j)
 {
     if (i >= 4 || j >= 4) {
         std::stringstream ss;
         ss << "matrix index out of bounds: i = " << i << ", j = " << j;
         throw std::out_of_range(ss.str());
     }
-    return mData[i * 4 + j];
+    return mData[i*4 + j];
 }
 
 
@@ -144,10 +146,16 @@ Matrix4::operator()(UInt i, UInt j)
  * charles::basics::Matrix4::operator() --
  */
 Double
-Matrix4::operator()(UInt i, UInt j)
+Matrix4::operator()(UInt i,
+                    UInt j)
     const
 {
-    return operator()(i, j);
+    if (i >= 4 || j >= 4) {
+        std::stringstream ss;
+        ss << "matrix index out of bounds: i = " << i << ", j = " << j;
+        throw std::out_of_range(ss.str());
+    }
+    return mData[i*4 + j];
 }
 
 
@@ -223,6 +231,24 @@ Matrix4::operator*(const Matrix4& rhs)
             for (UInt k = 0; k < 4; k++) {
                 result(i,j) += mData[i*4 + k] * rhs(k,j);
             }
+        }
+    }
+    return result;
+}
+
+
+/*
+ * charles::basics::Matrix4::operator* --
+ */
+Vector4
+Matrix4::operator*(const Vector4 &rhs)
+    const
+{
+    Vector4 result;
+    for (UInt i = 0; i < 4; i++) {
+        result(i) = 0.0;
+        for (UInt k = 0; k < 4; k++) {
+            result(i) += mData[i*4 + k] * rhs(k);
         }
     }
     return result;

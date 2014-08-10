@@ -80,7 +80,7 @@ protected:
 
 
 /** Scalar multiplication, scalar factor on the left. */
-Matrix4 operator*(const Double &lhs, const Matrix4 &rhs);
+Matrix4 operator*(Double lhs, const Matrix4 &rhs);
 
 } /* namespace basics */
 } /* namespace charles */
