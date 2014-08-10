@@ -33,6 +33,12 @@ struct Vector4
     Double  Y() const;
     Double& Z();
     Double  Z() const;
+
+    Double &operator()(UInt i);
+    Double  operator()(UInt i) const;
+
+    /** Get the underlying C array. */
+    const Double *CArray() const;
     /** @} */
 
     bool operator==(const Vector4 &rhs) const;

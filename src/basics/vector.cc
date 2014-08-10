@@ -5,12 +5,18 @@
 
 #include <cmath>
 #include <cstring>
+#include <sstream>
+#include <stdexcept>
 
 #include "basics/vector.hh"
+
+#include "basics/util.hh"
 
 
 namespace charles {
 namespace basics {
+
+#pragma mark Constructors and Assignment
 
 /*
  * charles::basics::Vector4::Vector4 --
@@ -32,6 +38,17 @@ Vector4::Vector4(Double x,
     mData[1] = y;
     mData[2] = z;
     mData[3] = 1.0;
+}
+
+
+/*
+ * charles::basics::Vector4::operator= --
+ */
+Vector4&
+Vector4::operator=(const Vector4 &rhs)
+{
+    memcpy(mData, rhs.mData, sizeof(Double) * 4);
+    return *this;
 }
 
 #pragma mark Component Access
@@ -96,6 +113,70 @@ Vector4::Z()
     const
 {
     return mData[2];
+}
+
+
+Double&
+Vector4::operator()(UInt i)
+{
+    if (i >= 4) {
+        std::stringstream ss;
+        ss << "vector index out of bounds: i = " << i;
+        throw std::out_of_range(ss.str());
+    }
+    return mData[i];
+}
+
+
+Double
+Vector4::operator()(UInt i)
+    const
+{
+    if (i >= 4) {
+        std::stringstream ss;
+        ss << "vector index out of bounds: i = " << i;
+        throw std::out_of_range(ss.str());
+    }
+    return mData[i];
+}
+
+
+/*
+ * charles::basics::Vector4::CArray --
+ */
+const Double*
+Vector4::CArray()
+    const
+{
+    return mData;
+}
+
+#pragma mark Boolean Operators
+
+/*
+ * charles::basics::Vector4::operator== --
+ */
+bool
+Vector4::operator==(const Vector4 &rhs)
+    const
+{
+    for (UInt i = 0; i < 4; i++) {
+        if (!NearlyEqual(mData[i], rhs.mData[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+/*
+ * charles::basics::Vector4::operator!= --
+ */
+bool
+Vector4::operator!=(const Vector4 &rhs)
+    const
+{
+    return !(*this == rhs);
 }
 
 #pragma mark Maths
