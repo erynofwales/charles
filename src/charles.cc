@@ -10,16 +10,16 @@
 
 #include "basics.h"
 #include "log.hh"
-#include "light.h"
+#include "light.hh"
 #include "reader_yaml.hh"
-#include "scene.h"
+#include "scene.hh"
 #include "writer_png.h"
 
 #define LOG_NAME "ROOT"
 #include "logModule.hh"
 
 
-int verbosity = 0;
+using namespace charles;
 
 
 static void
@@ -37,35 +37,6 @@ main(int argc,
     using namespace charles::log;
 
     Scene scene;
-
-    scene.get_ambient().set_intensity(1.0);
-
-#if 0
-    Material *m1 = new Material();
-    m1->set_diffuse_color(Color::Red);
-    Material *m2 = new Material();
-    m2->set_diffuse_color(Color::Green);
-    Material *m3 = new Material();
-    m3->set_diffuse_color(Color::Blue);
-
-    // Make some spheres.
-    Sphere *s1 = new Sphere(Vector3(0, 0.5, 2), 0.33);
-    Sphere *s2 = new Sphere(Vector3(-0.33, 0, 2), 0.33);
-    Sphere *s3 = new Sphere(Vector3(0.33, 0, 2), 0.33);
-    s1->set_material(m1);
-    s2->set_material(m2);
-    s3->set_material(m3);
-    scene.add_shape(s1);
-    scene.add_shape(s2);
-    scene.add_shape(s3);
-
-    // Make a plane
-    /*
-    Plane *p1 = new Plane(Vector3(0, 460, 400), Vector3(0, 1, 0.01));
-    p1->set_material(m1);
-    scene.add_shape(p1);
-    */
-#endif
 
     PointLight *l1 = new PointLight(Vector3(4.0, 6.0, 1.0), Color::White, 0.8);
     scene.add_light(l1);
