@@ -25,7 +25,7 @@ namespace charles {
  * charles::Object::Object --
  */
 Object::Object(const Vector4& origin)
-    : mTranslation(basics::TranslationMatrix(origin.X(), origin.Y(), origin.Z())),
+    : mTranslation(basics::Matrix4::Translation(origin.X(), origin.Y(), origin.Z())),
       mMaterial()
 { }
 
