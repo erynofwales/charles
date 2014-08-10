@@ -73,14 +73,30 @@ struct Matrix4
     Vector4 operator*(const Vector4 &rhs) const;
     /** @} */
 
+    Matrix4& Transpose();
+    Matrix4& Inverse();
+
 protected:
     /** The matrix data */
     Double mData[16];
+
+    /**
+     * `true` if the matrix has been transposed (i.e. should be indexed in
+     * column-major format).
+     */
+    bool mTransposed;
 };
 
 
 /** Scalar multiplication, scalar factor on the left. */
 Matrix4 operator*(Double lhs, const Matrix4 &rhs);
+
+
+/** Transpose the given matrix. */
+Matrix4 Transposed(Matrix4 rhs);
+
+/** Invert the given matrix. */
+Matrix4 Inverse(Matrix4 rhs);
 
 } /* namespace basics */
 } /* namespace charles */

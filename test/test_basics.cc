@@ -293,3 +293,21 @@ TEST_F(Matrix4Test, IdentityVectorMultiplication)
     EXPECT_EQ(p1.Y(), v1.Y());
     EXPECT_EQ(p1.Z(), v1.Z());
 }
+
+
+TEST_F(Matrix4Test, Transpose)
+{
+    Matrix4 t1 = Transposed(m1);
+    for (UInt i = 0; i < 4; i++) {
+        for (UInt j = 0; j < 4; j++) {
+            EXPECT_EQ(m1(i,j), t1(j,i));
+        }
+    }
+
+    t1.Transpose();
+    for (UInt i = 0; i < 4; i++) {
+        for (UInt j = 0; j < 4; j++) {
+            EXPECT_EQ(m1(i,j), t1(i,j));
+        }
+    }
+}

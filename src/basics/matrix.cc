@@ -65,7 +65,8 @@ Matrix4::Translation(Double x,
  * charles::basics::Matrix4::Matrix4 --
  */
 Matrix4::Matrix4()
-    : mData()
+    : mData(),
+      mTransposed(false)
 { }
 
 
@@ -73,6 +74,7 @@ Matrix4::Matrix4()
  * charles::basics::Matrix4::Matrix4 --
  */
 Matrix4::Matrix4(const Double data[16])
+    : mTransposed(false)
 {
     memcpy(mData, data, sizeof(Double) * 16);
 }
@@ -83,7 +85,13 @@ Matrix4::Matrix4(const Double data[16])
  */
 Matrix4::Matrix4(const Matrix4 &rhs)
     : Matrix4(rhs.mData)
-{ }
+{
+    /*
+     * Needs to be in the body instead of the initializer list because
+     * (apparently) delegating constructors must be the only thing in the list.
+     */
+    mTransposed = rhs.mTransposed;
+}
 
 
 /*
@@ -93,6 +101,7 @@ Matrix4&
 Matrix4::operator=(const Matrix4 &rhs)
 {
     memcpy(mData, rhs.mData, sizeof(Double) * 16);
+    mTransposed = rhs.mTransposed;
     return *this;
 }
 
@@ -138,7 +147,12 @@ Matrix4::operator()(UInt i,
         ss << "matrix index out of bounds: i = " << i << ", j = " << j;
         throw std::out_of_range(ss.str());
     }
-    return mData[i*4 + j];
+
+    if (!mTransposed) {
+        return mData[i*4 + j];
+    } else {
+        return mData[i + j*4];
+    }
 }
 
 
@@ -155,7 +169,11 @@ Matrix4::operator()(UInt i,
         ss << "matrix index out of bounds: i = " << i << ", j = " << j;
         throw std::out_of_range(ss.str());
     }
-    return mData[i*4 + j];
+    if (!mTransposed) {
+        return mData[i*4 + j];
+    } else {
+        return mData[i + j*4];
+    }
 }
 
 
@@ -256,6 +274,28 @@ Matrix4::operator*(const Vector4 &rhs)
 
 
 /*
+ * charles::basics::Matrix4::Transpose --
+ */
+Matrix4&
+Matrix4::Transpose()
+{
+    mTransposed = !mTransposed;
+    return *this;
+}
+
+
+Matrix4&
+Matrix4::Inverse()
+{
+    /* XXX: Only translation matrices are supported right now. */
+    operator()(0,3) = -operator()(0,3);
+    operator()(1,3) = -operator()(1,3);
+    operator()(2,3) = -operator()(2,3);
+    return *this;
+}
+
+
+/*
  * charles::basics::operator* --
  */
 Matrix4
@@ -265,6 +305,27 @@ operator*(Double lhs,
     /* Scalar multiplication is commutative. */
     return rhs * lhs;
 }
+
+
+/*
+ * charles::basics::Transposed --
+ */
+Matrix4
+Transposed(Matrix4 m)
+{
+    return m.Transpose();
+}
+
+
+/*
+ * charles::basics::Inverse --
+ */
+Matrix4
+Inverse(Matrix4 m)
+{
+    return m.Inverse();
+}
+
 
 } /* namespace mespace  */
 } /* namespace charles */
