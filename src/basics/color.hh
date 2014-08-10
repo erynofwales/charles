@@ -3,6 +3,9 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#ifndef __BASICS_COLOR_HH__
+#define __BASICS_COLOR_HH__
+
 #include "basics/types.hh"
 
 
@@ -52,3 +55,4 @@ std::ostream &operator<<(std::ostream &os, const Color &c);
 } /* namespace basics */
 } /* namespace charles */
 
+#endif /* __BASICS_COLOR_HH__ */
