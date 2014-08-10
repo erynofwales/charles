@@ -165,7 +165,7 @@ bool
 Matrix<N,M>::operator==(const Matrix<N,M>& rhs)
     const
 {
-    for (int i = 0; i < N*M; i++) {
+    for (UInt i = 0; i < N*M; i++) {
         /* TODO: Use NearlyEqual. */
         if (mData[i] != rhs.mData[i]) {
             return false;
@@ -254,7 +254,7 @@ Matrix<N,M>::operator*(Matrix<M,P> rhs)
             /* Each cell is Sigma(k=0, M)(lhs[ik] * rhs[kj]) */
             result(i, j) = 0.0;
             for (UInt k = 0; k < M; k++) {
-                result(i, j) += mData[i*N + k] * rhs(k*P, j);
+                result(i, j) += mData[i*N + k] * rhs(k, j);
             }
         }
     }

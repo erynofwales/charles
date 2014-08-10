@@ -7,160 +7,164 @@
 
 #include "gtest/gtest.h"
 
-#include "basics.h"
+#include "basics/basics.hh"
 
 
-class Vector3Test
+using charles::basics::Vector4;
+using charles::basics::Matrix4;
+
+
+class Vector4Test
     : public ::testing::Test
 {
 public:
     virtual void SetUp();
 
 protected:
-    Vector3 v1, v2;
+    Vector4 v1, v2;
 };
 
 
 void
-Vector3Test::SetUp()
+Vector4Test::SetUp()
 {
-    v1 = Vector3(1, 3, 5);
-    v2 = Vector3(7, 13, 17);
+    v1 = Vector4(1, 3, 5);
+    v2 = Vector4(7, 13, 17);
 }
 
 
-TEST_F(Vector3Test, OperatorEq)
+TEST_F(Vector4Test, OperatorEq)
 {
     v1 = v2;
     EXPECT_EQ(v2, v1);
 }
 
 
-TEST_F(Vector3Test, OperatorMul)
+TEST_F(Vector4Test, OperatorMul)
 {
-    Vector3 out;
+    Vector4 out;
 
     out = v1 * 5;
-    EXPECT_EQ(5, out.x);
-    EXPECT_EQ(15, out.y);
-    EXPECT_EQ(25, out.z);
+    EXPECT_EQ(5, out.X());
+    EXPECT_EQ(15, out.Y());
+    EXPECT_EQ(25, out.Z());
 
     out = v1 * -7;
-    EXPECT_EQ(-7, out.x);
-    EXPECT_EQ(-21, out.y);
-    EXPECT_EQ(-35, out.z);
+    EXPECT_EQ(-7, out.X());
+    EXPECT_EQ(-21, out.Y());
+    EXPECT_EQ(-35, out.Z());
 
     out = v1;
     out *= 5;
-    EXPECT_EQ(5, out.x);
-    EXPECT_EQ(15, out.y);
-    EXPECT_EQ(25, out.z);
+    EXPECT_EQ(5, out.X());
+    EXPECT_EQ(15, out.Y());
+    EXPECT_EQ(25, out.Z());
 
     out = v1;
     out *= -7;
-    EXPECT_EQ(-7, out.x);
-    EXPECT_EQ(-21, out.y);
-    EXPECT_EQ(-35, out.z);
+    EXPECT_EQ(-7, out.X());
+    EXPECT_EQ(-21, out.Y());
+    EXPECT_EQ(-35, out.Z());
 }
 
 
-TEST_F(Vector3Test, OperatorDiv)
+TEST_F(Vector4Test, OperatorDiv)
 {
-    Vector3 out;
+    Vector4 out;
 
     out = v1 / 5.0;
-    EXPECT_FLOAT_EQ(1.0/5.0, out.x);
-    EXPECT_FLOAT_EQ(3.0/5.0, out.y);
-    EXPECT_FLOAT_EQ(5.0/5.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/5.0, out.X());
+    EXPECT_FLOAT_EQ(3.0/5.0, out.Y());
+    EXPECT_FLOAT_EQ(5.0/5.0, out.Z());
 
     out = v1 / -7.0;
-    EXPECT_FLOAT_EQ(1.0/-7.0, out.x);
-    EXPECT_FLOAT_EQ(3.0/-7.0, out.y);
-    EXPECT_FLOAT_EQ(5.0/-7.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/-7.0, out.X());
+    EXPECT_FLOAT_EQ(3.0/-7.0, out.Y());
+    EXPECT_FLOAT_EQ(5.0/-7.0, out.Z());
 
     out = v1;
     out /= 5.0;
-    EXPECT_FLOAT_EQ(1.0/5.0, out.x);
-    EXPECT_FLOAT_EQ(3.0/5.0, out.y);
-    EXPECT_FLOAT_EQ(5.0/5.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/5.0, out.X());
+    EXPECT_FLOAT_EQ(3.0/5.0, out.Y());
+    EXPECT_FLOAT_EQ(5.0/5.0, out.Z());
 
     out = v1;
     out /= -7.0;
-    EXPECT_FLOAT_EQ(1.0/-7.0, out.x);
-    EXPECT_FLOAT_EQ(3.0/-7.0, out.y);
-    EXPECT_FLOAT_EQ(5.0/-7.0, out.z);
+    EXPECT_FLOAT_EQ(1.0/-7.0, out.X());
+    EXPECT_FLOAT_EQ(3.0/-7.0, out.Y());
+    EXPECT_FLOAT_EQ(5.0/-7.0, out.Z());
 }
 
 
-TEST_F(Vector3Test, OperatorAdd)
+TEST_F(Vector4Test, OperatorAdd)
 {
-    Vector3 out;
+    Vector4 out;
 
     out = v1 + v2;
-    EXPECT_EQ(8, out.x);
-    EXPECT_EQ(16, out.y);
-    EXPECT_EQ(22, out.z);
+    EXPECT_EQ(8, out.X());
+    EXPECT_EQ(16, out.Y());
+    EXPECT_EQ(22, out.Z());
 
     out = v1;
     out += v2;
-    EXPECT_EQ(8, out.x);
-    EXPECT_EQ(16, out.y);
-    EXPECT_EQ(22, out.z);
+    EXPECT_EQ(8, out.X());
+    EXPECT_EQ(16, out.Y());
+    EXPECT_EQ(22, out.Z());
 }
 
 
-TEST_F(Vector3Test, OperatorSub)
+TEST_F(Vector4Test, OperatorSub)
 {
-    Vector3 out;
+    Vector4 out;
 
     out = v1 - v2;
-    EXPECT_EQ(-6, out.x);
-    EXPECT_EQ(-10, out.y);
-    EXPECT_EQ(-12, out.z);
+    EXPECT_EQ(-6, out.X());
+    EXPECT_EQ(-10, out.Y());
+    EXPECT_EQ(-12, out.Z());
 
     out = v2 - v1;
-    EXPECT_EQ(6, out.x);
-    EXPECT_EQ(10, out.y);
-    EXPECT_EQ(12, out.z);
+    EXPECT_EQ(6, out.X());
+    EXPECT_EQ(10, out.Y());
+    EXPECT_EQ(12, out.Z());
 
     v1 -= v2;
-    EXPECT_EQ(-6, v1.x);
-    EXPECT_EQ(-10, v1.y);
-    EXPECT_EQ(-12, v1.z);
+    EXPECT_EQ(-6, v1.X());
+    EXPECT_EQ(-10, v1.Y());
+    EXPECT_EQ(-12, v1.Z());
 }
 
 
-TEST_F(Vector3Test, OperatorBoolEq)
+TEST_F(Vector4Test, OperatorBoolEq)
 {
     EXPECT_EQ(v1, v1);
     EXPECT_EQ(v2, v2);
 }
 
 
-TEST_F(Vector3Test, OperatorBoolNe)
+TEST_F(Vector4Test, OperatorBoolNe)
 {
     EXPECT_NE(v1, v2);
     EXPECT_NE(v2, v1);
 }
 
 
-TEST_F(Vector3Test, Length2)
+TEST_F(Vector4Test, Length2)
 {
-    EXPECT_EQ(35.0, v1.length2());
-    EXPECT_EQ(507.0, v2.length2());
+    EXPECT_EQ(35.0, v1.Length2());
+    EXPECT_EQ(507.0, v2.Length2());
 }
 
 
-TEST_F(Vector3Test, Length)
+TEST_F(Vector4Test, Length)
 {
-    EXPECT_FLOAT_EQ(5.916079783099616, v1.length());
-    EXPECT_FLOAT_EQ(22.5166604983954, v2.length());
+    EXPECT_FLOAT_EQ(5.916079783099616, v1.Length());
+    EXPECT_FLOAT_EQ(22.5166604983954, v2.Length());
 }
 
 
-TEST_F(Vector3Test, DotProduct)
+TEST_F(Vector4Test, DotProduct)
 {
-    EXPECT_EQ(131.0, v1.dot(v2));
+    EXPECT_EQ(131.0, v1.Dot(v2));
 }
 
 #pragma mark Matrix4 Tests

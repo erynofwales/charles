@@ -93,7 +93,7 @@ Vector4
 Vector4::operator*(const Double& rhs)
     const
 {
-    return static_cast<Vector4&&>(*this * rhs);
+    return static_cast<Matrix<4,1>>(*this) * rhs;
 }
 
 
@@ -182,7 +182,7 @@ Double
 Vector4::Dot(const Vector4& rhs)
     const
 {
-    return mData[0] * rhs.mData[0] + mData[1] * rhs.mData[1] + mData[2] + rhs.mData[2];
+    return mData[0] * rhs.mData[0] + mData[1] * rhs.mData[1] + mData[2] * rhs.mData[2];
 }
 
 
