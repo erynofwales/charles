@@ -59,7 +59,7 @@ protected:
 
 private:
     /** Convert `ray` to object space from global space. */
-    basics::Ray ToObjectSpace(const basics::Ray& ray) const;
+    basics::Ray ToObjectSpace(basics::Ray ray) const;
 
     /** Convert `v` to object space from global space. */
     basics::Vector4 ToObjectSpace(const basics::Vector4& v) const;

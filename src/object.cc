@@ -85,13 +85,12 @@ Object::Normal(const Vector4& p)
  * charles::Object::ToObjectSpace --
  */
 Ray
-Object::ToObjectSpace(const Ray& ray)
+Object::ToObjectSpace(Ray ray)
     const
 {
-    Ray objRay(ray);
-    objRay.origin = mTranslation * objRay.origin;
-    objRay.direction = mTranslation * objRay.direction;
-    return objRay;
+    ray.origin = mTranslation * ray.origin;
+    ray.direction = mTranslation * ray.direction;
+    return ray;
 }
 
 
