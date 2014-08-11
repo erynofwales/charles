@@ -73,8 +73,8 @@ struct Matrix4
     Vector4 operator*(const Vector4 &rhs) const;
     /** @} */
 
-    Matrix4& Transpose();
-    Matrix4& Inverse();
+    Matrix4 &Transpose();
+    Matrix4 &Inverse();
 
 protected:
     /** The matrix data */
@@ -93,10 +93,10 @@ Matrix4 operator*(Double lhs, const Matrix4 &rhs);
 
 
 /** Transpose the given matrix. */
-Matrix4 Transposed(Matrix4 rhs);
+Matrix4 Transpose(Matrix4 m);
 
 /** Invert the given matrix. */
-Matrix4 Inverse(Matrix4 rhs);
+Matrix4 Inverse(Matrix4 m);
 
 } /* namespace basics */
 } /* namespace charles */

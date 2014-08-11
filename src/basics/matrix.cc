@@ -311,7 +311,7 @@ operator*(Double lhs,
  * charles::basics::Transposed --
  */
 Matrix4
-Transposed(Matrix4 m)
+Transpose(Matrix4 m)
 {
     return m.Transpose();
 }
