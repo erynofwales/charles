@@ -69,8 +69,8 @@ struct Tracer
     ~Tracer();
 
 private:
-    const std::string& mName;
-    const std::string& mFunction;
+    const std::string mName;
+    const std::string mFunction;
 };
 
 
