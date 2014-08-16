@@ -16,6 +16,7 @@
 
 
 using charles::basics::Ray;
+using charles::basics::Matrix4;
 using charles::basics::Vector4;
 
 
@@ -25,7 +26,7 @@ namespace charles {
  * charles::Object::Object --
  */
 Object::Object(const Vector4& origin)
-    : mTranslation(basics::Matrix4::Translation(origin.X(), origin.Y(), origin.Z())),
+    : mTranslation(Matrix4::Translation(origin.X(), origin.Y(), origin.Z())),
       mMaterial()
 { }
 
@@ -99,7 +100,6 @@ Object::ToObjectSpace(Ray ray)
     const
 {
     ray.origin = mTranslation * ray.origin;
-    ray.direction = mTranslation * ray.direction;
     return ray;
 }
 
@@ -122,7 +122,7 @@ Vector4
 Object::FromObjectSpace(const Vector4& v)
     const
 {
-    return v;
+    return Inverse(mTranslation) * v;
 }
 
 
