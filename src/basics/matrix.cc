@@ -346,6 +346,35 @@ Inverse(Matrix4 m)
 }
 
 
+/*
+ * charles::basics::operator<< --
+ */
+std::ostream&
+operator<<(std::ostream &ost,
+           const Matrix4 &m)
+{
+    ost << "[";
+    for (UInt i = 0; i < 4; i++) {
+        if (i != 0) {
+            ost << " ";
+        }
+        ost << "[";
+        for (UInt j = 0; j < 4; j++) {
+            ost << m(i,j);
+            if (j < 3) {
+                ost << " ";
+            }
+        }
+        ost << "]";
+        if (i < 3) {
+            ost << "\n";
+        }
+    }
+    ost << "]";
+    return ost;
+}
+
+
 } /* namespace mespace  */
 } /* namespace charles */
 

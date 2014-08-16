@@ -93,12 +93,14 @@ protected:
 /** Scalar multiplication, scalar factor on the left. */
 Matrix4 operator*(Double lhs, const Matrix4 &rhs);
 
-
 /** Transpose the given matrix. */
 Matrix4 Transpose(Matrix4 m);
 
 /** Invert the given matrix. */
 Matrix4 Inverse(Matrix4 m);
+
+
+std::ostream& operator<<(std::ostream &ost, const Matrix4 &m);
 
 } /* namespace basics */
 } /* namespace charles */
