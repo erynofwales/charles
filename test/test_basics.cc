@@ -297,7 +297,7 @@ TEST_F(Matrix4Test, IdentityVectorMultiplication)
 
 TEST_F(Matrix4Test, Transpose)
 {
-    Matrix4 t1 = Transposed(m1);
+    Matrix4 t1 = Transpose(m1);
     for (UInt i = 0; i < 4; i++) {
         for (UInt j = 0; j < 4; j++) {
             EXPECT_EQ(m1(i,j), t1(j,i));
