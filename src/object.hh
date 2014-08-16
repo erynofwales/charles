@@ -60,6 +60,9 @@ protected:
     virtual basics::Vector4 DoNormal(const basics::Vector4& p) const = 0;
 
 private:
+    friend std::ostream& operator<<(std::ostream& ost, const Object& object);
+
+
     /** Convert `ray` to object space from global space. */
     basics::Ray ToObjectSpace(basics::Ray ray) const;
 

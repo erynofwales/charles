@@ -6,6 +6,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <sstream>
+#include <type_traits>
 
 #include "basics/matrix.hh"
 
@@ -184,6 +185,14 @@ Matrix4::operator()(UInt i,
     } else {
         return mData[i + j*4];
     }
+}
+
+
+Vector4
+Matrix4::Column(const UInt i)
+    const noexcept
+{
+    return Vector4(operator()(i,0), operator()(i,1), operator()(i,2), operator()(i,3));
 }
 
 

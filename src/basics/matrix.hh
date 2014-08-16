@@ -47,6 +47,7 @@ struct Matrix4
      */
     Double& operator()(UInt i, UInt j);
     Double  operator()(UInt i, UInt j) const;
+    Vector4 Column(const UInt i) const noexcept;
 
     /** Get the underlying C array */
     const Double *CArray() const;

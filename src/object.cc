@@ -144,7 +144,9 @@ std::ostream&
 operator<<(std::ostream& ost,
            const Object& object)
 {
+    ost << "[";
     object.Write(ost);
+    ost << " translate=" << object.mTranslation.Column(3) << "]";
     return ost;
 }
 

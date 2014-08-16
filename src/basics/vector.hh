@@ -20,6 +20,7 @@ struct Vector4
 {
     Vector4();
     Vector4(Double x, Double y, Double z);
+    Vector4(Double x, Double y, Double z, Double w);
 
     Vector4 &operator=(const Vector4 &rhs);
 

@@ -33,11 +33,22 @@ Vector4::Vector4()
 Vector4::Vector4(Double x,
                  Double y,
                  Double z)
+    : Vector4(x, y, z, 1.0)
+{ }
+
+
+/*
+ * charles::basics::Vector4::Vector4 --
+ */
+Vector4::Vector4(Double x,
+                 Double y,
+                 Double z,
+                 Double w)
 {
     mData[0] = x;
     mData[1] = y;
     mData[2] = z;
-    mData[3] = 1.0;
+    mData[3] = w;
 }
 
 
