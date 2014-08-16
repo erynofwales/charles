@@ -42,13 +42,15 @@ main(int argc,
     PointLight *l1 = new PointLight(Vector4(4.0, 6.0, 1.0), Color::White, 0.8);
     scene.AddLight(l1);
 
+    bool shouldRender = true;
+
     std::string logFilename;
     unsigned int logLevel = 0;
 
     std::string outfile, infile;
 
     int opt;
-    while ((opt = getopt(argc, (char *const *)argv, "hl:L:o:v:")) != -1) {
+    while ((opt = getopt(argc, (char *const *)argv, "hl:L:no:v:")) != -1) {
         switch (opt) {
             case 'h':
                 usage(argv[0]);
@@ -59,6 +61,9 @@ main(int argc,
                 break;
             case 'L':
                 logLevel = std::stoul(optarg);
+                break;
+            case 'n':
+                shouldRender = false;
                 break;
             case 'o':
                 outfile = optarg;
@@ -96,12 +101,14 @@ main(int argc,
     }
 
     /* Call tracer. */
-    LOG_INFO << "Beginning render";
-    scene.Render();
+    if (shouldRender) {
+        LOG_INFO << "Beginning render";
+        scene.Render();
 
-    /* Write rendered scene to PNG file. */
-    PNGWriter writer;
-    scene.Write(writer, outfile);
+        /* Write rendered scene to PNG file. */
+        PNGWriter writer;
+        scene.Write(writer, outfile);
+    }
 
     if (logLevel > 0) {
         Log::Close();
