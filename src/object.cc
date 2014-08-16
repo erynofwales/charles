@@ -48,6 +48,16 @@ Object::GetMaterial()
 
 
 /*
+ * charles::Object::Place --
+ */
+void
+Object::Place(const Vector4 &p)
+{
+    mTranslation = Matrix4::Translation(p);
+}
+
+
+/*
  * charles::Object::SetMaterial --
  */
 void

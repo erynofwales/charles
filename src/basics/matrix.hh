@@ -30,6 +30,7 @@ struct Matrix4
 
     /** Create a 4x4 translation matrix. */
     static Matrix4 Translation(Double x, Double y, Double z);
+    static Matrix4 Translation(const Vector4 &p);
 
     Matrix4();
     Matrix4(const Double *data);

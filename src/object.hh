@@ -27,6 +27,8 @@ struct Object
     Material& GetMaterial();
     void SetMaterial(const Material& material);
 
+    void Place(const basics::Vector4 &p);
+
     /**
      * Determine if the given ray intersects with this object. Converts the
      * ray's origin and direction to object space before calling the protected
@@ -66,6 +68,7 @@ private:
 
     /** Convert `v` to global space from object space. */
     basics::Vector4 FromObjectSpace(const basics::Vector4& v) const;
+
 
     /** A translation matrix from global coordinates to this object's space. */
     basics::Matrix4 mTranslation;

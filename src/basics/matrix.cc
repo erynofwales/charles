@@ -45,6 +45,16 @@ Matrix4::Identity()
 
 
 /*
+ * charles::basics::Translation --
+ */
+/* static */ Matrix4
+Matrix4::Translation(const Vector4& p)
+{
+    return Translation(p.X(), p.Y(), p.Z());
+}
+
+
+/*
  * charles::basics::TranslationMatrix --
  */
 /* static */ Matrix4
