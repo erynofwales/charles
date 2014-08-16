@@ -174,12 +174,9 @@ ObjectParser::HandleOriginEvent(yaml_event_t& event)
     }
 
     auto onDone = [this](Vector4 origin) {
-        /* TODO: Once Place() and Move() are implemented on Object, use that. */
-#if 0
-        mObject->SetOrigin(origin);
+        mObject->Place(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
-#endif
     };
 
     GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
