@@ -295,6 +295,18 @@ TEST_F(Matrix4Test, IdentityVectorMultiplication)
 }
 
 
+TEST_F(Matrix4Test, TranslationVectorMultiplication)
+{
+    Matrix4 tr = Matrix4::Translation(1, 2, 3);
+    Vector4 v1(3, 7, 9);
+
+    Vector4 p1 = tr * v1;
+    EXPECT_EQ(p1.X(), 4.0);
+    EXPECT_EQ(p1.Y(), 9.0);
+    EXPECT_EQ(p1.Z(), 12.0);
+}
+
+
 TEST_F(Matrix4Test, Transpose)
 {
     Matrix4 t1 = Transpose(m1);
