@@ -3,4 +3,6 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
+#include "gtest/gtest.h"
 
+#include "object.hh"
