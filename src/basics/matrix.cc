@@ -87,6 +87,7 @@ Matrix4::Matrix4()
 Matrix4::Matrix4(const Double data[16])
     : mTransposed(false)
 {
+    /* TODO: Replace with std::copy */
     memcpy(mData, data, sizeof(Double) * 16);
 }
 
@@ -111,6 +112,7 @@ Matrix4::Matrix4(const Matrix4 &rhs)
 Matrix4&
 Matrix4::operator=(const Matrix4 &rhs)
 {
+    /* TODO: Replace with std::copy */
     memcpy(mData, rhs.mData, sizeof(Double) * 16);
     mTransposed = rhs.mTransposed;
     return *this;
