@@ -28,8 +28,8 @@ struct Box
     void Write(std::ostream& ost) const;
 
 protected:
-    bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const;
-    basics::Vector4 DoNormal(const basics::Vector4& p) const;
+    bool DoIntersect(const basics::Ray& ray, TVector& t, Stats& stats) const override;
+    basics::Vector4 DoNormal(const basics::Vector4& p) const override;
 
 private:
     /**
