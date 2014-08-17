@@ -8,9 +8,14 @@
 #include "yaml/vectorParser.hh"
 
 
+using charles::basics::Color;
+using charles::basics::Vector4;
+
+
+namespace charles {
 namespace yaml {
 
-Vector3Parser::Vector3Parser(Scene& scene,
+Vector4Parser::Vector4Parser(Scene& scene,
                              ParserStack& parsers,
                              CallbackFunction onDone)
     : ScalarSequenceParser(scene, parsers)
@@ -20,14 +25,10 @@ Vector3Parser::Vector3Parser(Scene& scene,
             assert(seq.size() != 3);
             return;
         }
-        onDone(Vector3(seq[0], seq[1], seq[2]));
+        onDone(Vector4(seq[0], seq[1], seq[2]));
     };
     SetCallback(onSeqDone);
 }
-
-
-Vector3Parser::~Vector3Parser()
-{ }
 
 
 ColorParser::ColorParser(Scene& scene,
@@ -50,8 +51,5 @@ ColorParser::ColorParser(Scene& scene,
     SetCallback(onSeqDone);
 }
 
-
-ColorParser::~ColorParser()
-{ }
-
 } /* namespace yaml */
+} /* namespace charles */

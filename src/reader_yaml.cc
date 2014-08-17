@@ -14,10 +14,14 @@
 #include "yaml.h"
 
 #include "charles.hh"
+#include "log.hh"
 #include "reader_yaml.hh"
 
 #include "yaml/parsers.hh"
 #include "yaml/sceneParser.hh"
+
+#define LOG_NAME "yaml"
+#include "logModule.hh"
 
 
 #if 0
@@ -58,6 +62,7 @@ private:
 };
 #endif
 
+namespace charles {
 
 ssize_t
 YAMLReader::read_file(const std::string& filename)
@@ -86,47 +91,45 @@ YAMLReader::read_file(const std::string& filename)
             goto error;
         }
 
-        if (verbosity >= 4) {
-            switch (event.type) {
-                case YAML_NO_EVENT:
-                    printf("YAML_NO_EVENT\n");
-                    break;
+        switch (event.type) {
+            case YAML_NO_EVENT:
+                LOG_TRACE << "YAML_NO_EVENT";
+                break;
 
-                case YAML_STREAM_START_EVENT:
-                    printf("YAML_STREAM_START_EVENT\n");
-                    break;
-                case YAML_STREAM_END_EVENT:
-                    printf("YAML_STREAM_END_EVENT\n");
-                    break;
+            case YAML_STREAM_START_EVENT:
+                LOG_TRACE << "YAML_STREAM_START_EVENT";
+                break;
+            case YAML_STREAM_END_EVENT:
+                LOG_TRACE << "YAML_STREAM_END_EVENT";
+                break;
 
-                case YAML_DOCUMENT_START_EVENT:
-                    printf("YAML_DOCUMENT_START_EVENT\n");
-                    break;
-                case YAML_DOCUMENT_END_EVENT:
-                    printf("YAML_DOCUMENT_END_EVENT\n");
-                    break;
+            case YAML_DOCUMENT_START_EVENT:
+                LOG_TRACE << "YAML_DOCUMENT_START_EVENT";
+                break;
+            case YAML_DOCUMENT_END_EVENT:
+                LOG_TRACE << "YAML_DOCUMENT_END_EVENT";
+                break;
 
-                case YAML_ALIAS_EVENT:
-                    printf("YAML_ALIAS_EVENT\n");
-                    break;
-                case YAML_SCALAR_EVENT:
-                    printf("YAML_SCALAR_EVENT\n");
-                    break;
+            case YAML_ALIAS_EVENT:
+                LOG_TRACE << "YAML_ALIAS_EVENT";
+                break;
+            case YAML_SCALAR_EVENT:
+                LOG_TRACE << "YAML_SCALAR_EVENT";
+                break;
 
-                case YAML_SEQUENCE_START_EVENT:
-                    printf("YAML_SEQUENCE_START_EVENT\n");
-                    break;
-                case YAML_SEQUENCE_END_EVENT:
-                    printf("YAML_SEQUENCE_END_EVENT\n");
-                    break;
+            case YAML_SEQUENCE_START_EVENT:
+                LOG_TRACE << "YAML_SEQUENCE_START_EVENT";
+                break;
+            case YAML_SEQUENCE_END_EVENT:
+                LOG_TRACE << "YAML_SEQUENCE_END_EVENT";
+                break;
 
-                case YAML_MAPPING_START_EVENT:
-                    printf("YAML_MAPPING_START_EVENT\n");
-                    break;
-                case YAML_MAPPING_END_EVENT:
-                    printf("YAML_MAPPING_END_EVENT\n");
-                    break;
-            }
+            case YAML_MAPPING_START_EVENT:
+                LOG_TRACE << "YAML_MAPPING_START_EVENT";
+                break;
+            case YAML_MAPPING_END_EVENT:
+                LOG_TRACE << "YAML_MAPPING_END_EVENT";
+                break;
         }
 
         if (event.type == YAML_DOCUMENT_START_EVENT) {
@@ -152,3 +155,5 @@ error:
     yaml_parser_delete(&parser);
     return success;
 }
+
+} /* namespace charles */

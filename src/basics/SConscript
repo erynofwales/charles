@@ -1,0 +1,16 @@
+# SConscript
+# vim: set ft=python:
+# Eryn Wells <eryn@erynwells.me>
+
+Import('env')
+
+
+files = [
+    'color.cc',
+    'matrix.cc',
+    'ray.cc',
+    'vector.cc',
+]
+
+objs = [env.Object(f) for f in files]
+Return('objs')

@@ -13,6 +13,7 @@
 #include "parsers.hh"
 
 
+namespace charles {
 namespace yaml {
 
 #pragma mark Parser
@@ -81,3 +82,4 @@ template<>
 const char* ScalarParserTraits<double>::fmt = "%lf";
 
 } /* namespace yaml */
+} /* namespace charles */

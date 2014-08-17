@@ -12,6 +12,7 @@
 struct Camera;
 
 
+namespace charles {
 namespace yaml {
 
 struct CameraParser
@@ -47,12 +48,13 @@ private:
     void HandleTypeEvent(yaml_event_t& event);
     void HandleUpEvent(yaml_event_t& event);
 
-    Camera *mCamera;
+    Camera::Ptr mCamera;
     Section mSection;
     Type mType;
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_CAMERAPARSER_HH__ */
 

@@ -15,6 +15,7 @@
 #include "scalarMappingParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 struct SceneParser
@@ -43,5 +44,6 @@ private:
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_SCENE_PARSER_HH__ */

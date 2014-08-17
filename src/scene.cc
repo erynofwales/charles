@@ -5,84 +5,123 @@
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#include <chrono>
+#include <cassert>
 #include <cmath>
 #include <cstdio>
+#include <chrono>
 
-#include "basics.h"
-#include "light.h"
+#include "scene.hh"
+
+#include "light.hh"
 #include "log.hh"
-#include "object.h"
-#include "scene.h"
+#include "object.hh"
 #include "writer.h"
+#include "basics/basics.hh"
 
 #define LOG_NAME "scene"
 #include "logModule.hh"
 
-using namespace charles;
+
+using charles::basics::Color;
+using charles::basics::Ray;
+using charles::basics::Vector4;
 
 
+namespace charles {
+
+/*
+ * charles::Scene::Scene --
+ */
 Scene::Scene()
-    : width(640), height(480),
+    : mWidth(640),
+      mHeight(480),
       mCamera(new PerspectiveCamera()),
-      max_depth(5),
-      min_weight(1e-4),
-      ambient(new AmbientLight()),
-      shapes(),
-      lights(),
+      mMaxDepth(5),
+      mMinWeight(1e-6),
+      mAmbient(Color(1, 1, 1), 0.2),
+      mObjects(),
+      mLights(),
       mStats(),
-      pixels(NULL)
+      mPixels(NULL)
 { }
 
 
+/*
+ * charles::Scene::~Scene --
+ */
 Scene::~Scene()
 {
     mCamera.reset();
 
-    if (ambient != NULL) {
-        delete ambient;
-    }
+    mObjects.clear();
 
-    shapes.clear();
-
-    for (PointLight *l : lights) {
+    for (PointLight *l : mLights) {
         delete l;
     }
-    lights.clear();
+    mLights.clear();
 
-    if (pixels != NULL) {
-        delete[] pixels;
-        _is_rendered = false;
+    if (mPixels != NULL) {
+        delete[] mPixels;
+        mIsRendered = false;
     }
-}
-
-
-bool
-Scene::is_rendered()
-    const
-{
-    return _is_rendered;
-}
-
-
-int
-Scene::get_width()
-    const
-{
-    return width;
-}
-
-
-int
-Scene::get_height()
-    const
-{
-    return height;
 }
 
 
 /*
- * Scene::GetCamera --
+ * charles::Scene::IsRendered --
+ */
+bool
+Scene::IsRendered()
+    const
+{
+    return mIsRendered;
+}
+
+
+/*
+ * charles::Scene::GetWidth --
+ */
+UInt
+Scene::GetWidth()
+    const
+{
+    return mWidth;
+}
+
+
+/*
+ * charles::Scene::SetWidth --
+ */
+void
+Scene::SetWidth(UInt w)
+{
+    mWidth = w;
+}
+
+
+/*
+ * charles::Scene::GetHeight --
+ */
+UInt
+Scene::GetHeight()
+    const
+{
+    return mHeight;
+}
+
+
+/*
+ * charles::Scene::SetHeight --
+ */
+void
+Scene::SetHeight(UInt h)
+{
+    mHeight = h;
+}
+
+
+/*
+ * charles::Scene::GetCamera --
  */
 Camera::Ptr
 Scene::GetCamera()
@@ -93,63 +132,55 @@ Scene::GetCamera()
 
 
 /*
- * Scene::SetCamera --
+ * charles::Scene::SetCamera --
  */
 void
-Scene::SetCamera(Camera* camera)
+Scene::SetCamera(Camera::Ptr camera)
 {
-    mCamera.reset(camera);
-}
-
-
-AmbientLight &
-Scene::get_ambient()
-    const
-{
-    return *ambient;
-}
-
-
-const Color *
-Scene::get_pixels()
-    const
-{
-    return pixels;
+    mCamera = camera;
 }
 
 
 /*
- * scene_load --
- *
- * Load scene objects into this Scene from the given file.
+ * charles::Scene::GetAmbient --
  */
-void
-Scene::read(const std::string &filename)
-{ }
+AmbientLight&
+Scene::GetAmbient()
+{
+    return mAmbient;
+}
 
 
 /*
- * scene_save --
- *
- * Write a rendered scene to the given file.
+ * charles::Scene::GetPixels --
+ */
+const Color*
+Scene::GetPixels()
+    const
+{
+    return mPixels;
+}
+
+
+/*
+ * charles::Scene::Write --
  */
 void
-Scene::write(Writer &writer, const std::string &filename)
+Scene::Write(Writer& writer,
+             const std::string& filename)
 {
     writer.write_scene(*this, filename);
 }
 
 
 /*
- * Scene::render --
- *
- * Render the given Scene.
+ * charles::Scene::Render --
  */
 void
-Scene::render()
+Scene::Render()
 {
-    LOG_INFO << "Rendering scene with " << shapes.size() << " objects.";
-    printf("Rendering scene with %lu objects.\n", shapes.size());
+    LOG_INFO << "Rendering scene with " << mObjects.size() << " objects.";
+    printf("Rendering scene with %lu objects.\n", mObjects.size());
 
     LogCamera();
     LogObjects();
@@ -157,23 +188,23 @@ Scene::render()
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
-    pixels = new Color[width * height];
+    mPixels = new Color[mWidth * mHeight];
 
-    Ray primary_ray;
-    Vector3 o, d;
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            primary_ray = mCamera->compute_primary_ray(x, width, y, height);
+    Ray primaryRay;
+    Vector4 o, d;
+    for (UInt y = 0; y < mHeight; y++) {
+        for (UInt x = 0; x < mWidth; x++) {
+            primaryRay = mCamera->PrimaryRay(x, mWidth, y, mHeight);
             mStats.primaryRays++;
-            Color c = trace_ray(primary_ray);
-            pixels[y * width + x] = c;
+            Color c = TraceRay(primaryRay);
+            mPixels[y * mWidth + x] = c;
         }
     }
 
     end = std::chrono::system_clock::now();
-    std::chrono::duration<float> seconds = end - start;
+    std::chrono::duration<Double> seconds = end - start;
 
-    _is_rendered = true;
+    mIsRendered = true;
 
     printf("Rendering completed in %f seconds.\n\n", seconds.count());
     LOG_INFO << "Rendering completed in " << seconds.count() << " seconds.";
@@ -184,83 +215,77 @@ Scene::render()
 
 
 /*
- * Scene::add_shape --
- *
- * Add a shape to the scene.
+ * charles::Scene::AddObject --
  */
 void
-Scene::add_shape(Object::Ptr shape)
+Scene::AddObject(Object::Ptr obj)
 {
-    shapes.push_back(shape);
+    mObjects.push_back(obj);
 }
 
 
 /*
- * Scene::add_light --
- *
- * Add a light to the scene.
+ * charles::Scene::AddLight --
  */
 void
-Scene::add_light(PointLight *light)
+Scene::AddLight(PointLight* light)
 {
-    lights.push_back(light);
+    mLights.push_back(light);
 }
 
 
 /*
- * Scene::trace_ray --
- *
- * Trace the given ray through the scene, recursing until depth has been reached.
+ * charles::Scene::TraceRay --
  */
 Color
-Scene::trace_ray(const Ray &ray,
-                 const int depth,
-                 const float weight)
+Scene::TraceRay(const Ray &ray,
+                const int depth,
+                const Double weight)
 {
-    if (depth >= max_depth || weight <= min_weight) {
+    if (depth >= mMaxDepth || weight <= mMinWeight) {
         return Color::Black;
     }
 
-    Color out_color = Color::Black;
-    Object::Ptr intersected_shape;
+    Color outColor = Color::Black;
+    Object::Ptr intersectedObj;
     TVector ts;
-    Double nearest_t = INFINITY;
+    Double nearestT = INFINITY;
 
     ts.reserve(2);
 
     // Find intersections of this ray with objects in the scene.
-    for (Object::Ptr s : shapes) {
+    for (Object::Ptr obj : mObjects) {
         ts.clear();
-        if (s->DoesIntersect(ray, ts, mStats)) {
-            if (ts[0] < nearest_t) {
-                intersected_shape = s;
-                nearest_t = ts[0];
+        if (obj->Intersect(ray, ts, mStats)) {
+            if (ts[0] < nearestT) {
+                intersectedObj = obj;
+                nearestT = ts[0];
             }
         }
     }
 
     // If there was no intersection, return black.
-    if (!intersected_shape) {
-        return out_color;
+    if (!intersectedObj) {
+        return outColor;
     }
 
-    Material& shape_material = intersected_shape->GetMaterial();
-    const Color& shape_color = shape_material.GetDiffuseColor();
+    Material& material = intersectedObj->GetMaterial();
+    const Color& shapeColor = material.GetDiffuseColor();
 
-    Vector3 intersection = ray.parameterize(nearest_t);
-    Vector3 normal = intersected_shape->compute_normal(intersection);
+    Vector4 intersection = ray.Parameterize(nearestT);
+    Vector4 normal = intersectedObj->Normal(intersection);
 
     /*
      * Diffuse lighting. (Shading, etc.)
      */
 
-    Vector3 light_direction;
-    Double ldotn, diffuse_level, ambient_level;
+    Vector4 lightDirection;
+    Double ldotn, diffuseLevel, ambientLevel;
     Ray shadowRay;
 
-    for (PointLight *l : lights) {
-        light_direction = (l->GetOrigin() - intersection).normalize();
-        ldotn = light_direction.dot(normal);
+    for (PointLight *l : mLights) {
+        lightDirection = basics::Normalized(l->GetOrigin() - intersection);
+        ldotn = lightDirection.Dot(normal);
 
         /*
          * TODO: What is this even for? Removing it makes the darker showers
@@ -270,12 +295,12 @@ Scene::trace_ray(const Ray &ray,
             ldotn = 0.0;
         }
 
-        diffuse_level = shape_material.GetDiffuseIntensity();
-        ambient_level = 1.0 - diffuse_level;
+        diffuseLevel = material.GetDiffuseIntensity();
+        ambientLevel = 1.0 - diffuseLevel;
 
-        shadowRay = Ray(intersection, light_direction);
-        for (Object::Ptr s : shapes) {
-            if (s == intersected_shape) {
+        shadowRay = Ray(intersection, lightDirection);
+        for (Object::Ptr obj : mObjects) {
+            if (obj == intersectedObj) {
                 /* Skip the intersected shape. */
                 continue;
             }
@@ -284,8 +309,8 @@ Scene::trace_ray(const Ray &ray,
 
             /* Figure out if we're in shadow. */
             ts.clear();
-            if (s->DoesIntersect(shadowRay, ts, mStats)) {
-                diffuse_level = 0.0;
+            if (obj->Intersect(shadowRay, ts, mStats)) {
+                diffuseLevel = 0.0;
                 break;
             }
         }
@@ -293,8 +318,8 @@ Scene::trace_ray(const Ray &ray,
         /*
          * Compute basic Lambert diffuse shading for this object.
          */
-        out_color += shape_color * (  ambient_level * ambient->compute_color_contribution()
-                                    + diffuse_level * ldotn);
+        outColor += shapeColor * (  ambientLevel * mAmbient.Contribution()
+                                  + diffuseLevel * ldotn);
     }
 
     /*
@@ -328,10 +353,13 @@ Scene::trace_ray(const Ray &ray,
     out_color += specular_level * specular_color * reflection_color;
 #endif
 
-    return out_color;
+    return outColor;
 }
 
 
+/*
+ * charles::Scene::LogCamera --
+ */
 void
 Scene::LogCamera()
     const
@@ -341,7 +369,7 @@ Scene::LogCamera()
     LOG_DEBUG << "BEGIN CAMERA";
     LOG_DEBUG << "  type      = " << c.GetTypeString();
     LOG_DEBUG << "  origin    = " << c.GetOrigin();
-    LOG_DEBUG << "  direction = " << c.get_direction();
+    LOG_DEBUG << "  direction = " << c.GetDirection();
     LOG_DEBUG << "  right     = " << c.GetRight();
     LOG_DEBUG << "  up        = " << c.GetUp();
     LOG_DEBUG << "  coordinate system is "
@@ -350,15 +378,20 @@ Scene::LogCamera()
 }
 
 
+/*
+ * charles::Scene::LogObjects --
+ */
 void
 Scene::LogObjects()
     const
 {
     LOG_DEBUG << "BEGIN SCENE OBJECTS";
 
-    for (Object::Ptr obj : shapes) {
+    for (Object::Ptr obj : mObjects) {
         LOG_DEBUG << "  " << *obj;
     }
 
     LOG_DEBUG << "END SCENE OBJECTS";
 }
+
+} /* namespace charles */

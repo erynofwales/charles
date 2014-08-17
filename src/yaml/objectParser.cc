@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 
-#include "material.h"
-#include "object.h"
+#include "material.hh"
+#include "object.hh"
 #include "objectBox.hh"
 #include "objectPlane.hh"
 #include "objectSphere.hh"
@@ -19,9 +19,11 @@
 #include "yaml/vectorParser.hh"
 
 
-using namespace charles;
+using charles::basics::Color;
+using charles::basics::Vector4;
 
 
+namespace charles {
 namespace yaml {
 
 ObjectParser::ObjectParser(Scene& scene,
@@ -43,7 +45,7 @@ ObjectParser::ObjectParser(Scene& scene,
     } else {
         assert(false);
     }
-    GetScene().add_shape(mObject);
+    GetScene().AddObject(mObject);
 }
 
 
@@ -171,13 +173,13 @@ ObjectParser::HandleOriginEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 origin) {
-        mObject->SetOrigin(origin);
+    auto onDone = [this](Vector4 origin) {
+        mObject->Place(origin);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -211,13 +213,13 @@ ObjectParser::HandleNearEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 near) {
+    auto onDone = [this](Vector4 near) {
         std::dynamic_pointer_cast<Box>(mObject)->SetNear(near);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -230,13 +232,13 @@ ObjectParser::HandleFarEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 far) {
+    auto onDone = [this](Vector4 far) {
         std::dynamic_pointer_cast<Box>(mObject)->SetFar(far);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -249,13 +251,13 @@ ObjectParser::HandleNormalEvent(yaml_event_t& event)
         return;
     }
 
-    auto onDone = [this](Vector3 normal) {
+    auto onDone = [this](Vector4 normal) {
         std::dynamic_pointer_cast<Plane>(mObject)->SetNormal(normal);
         mSection = NoSection;
         SetShouldExpectKey(true);
     };
 
-    GetParsers().push(new Vector3Parser(GetScene(), GetParsers(), onDone));
+    GetParsers().push(new Vector4Parser(GetScene(), GetParsers(), onDone));
 }
 
 
@@ -280,3 +282,4 @@ ObjectParser::HandleDistanceEvent(yaml_event_t& event)
 }
 
 } /* namespace yaml */
+} /* namespace charles */

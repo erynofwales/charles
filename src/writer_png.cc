@@ -9,17 +9,23 @@
 #include <cstdlib>
 #include <string>
 
-#include "scene.h"
+#include "scene.hh"
 #include "writer_png.h"
+#include "basics/basics.hh"
 
 extern "C" {
 #include <png.h>
 }
 
 
+using charles::basics::Color;
+
+
 static void png_user_error(png_structp png, png_const_charp msg);
 static void png_user_warning(png_structp png, png_const_charp msg);
 
+
+namespace charles {
 
 /*
  * PNGWriter::write_scene --
@@ -29,7 +35,7 @@ static void png_user_warning(png_structp png, png_const_charp msg);
 int
 PNGWriter::write_scene(const Scene &scene, const std::string &filename)
 {
-    if (!scene.is_rendered()) {
+    if (!scene.IsRendered()) {
         return -1;
     }
 
@@ -62,7 +68,7 @@ PNGWriter::write_scene(const Scene &scene, const std::string &filename)
      *   - No compression
      */
     png_set_IHDR(png, png_info,
-                 scene.get_width(), scene.get_height(),
+                 scene.GetWidth(), scene.GetHeight(),
                  8, PNG_COLOR_TYPE_RGB,
                  PNG_INTERLACE_NONE,
                  PNG_COMPRESSION_TYPE_DEFAULT,
@@ -75,21 +81,20 @@ PNGWriter::write_scene(const Scene &scene, const std::string &filename)
     png_write_info(png, png_info);
 
     // Write it!
-    const Color *pixels = scene.get_pixels();
+    const Color* pixels = scene.GetPixels();
     png_byte *row = NULL;
     int nbytes = 0;
-    for (int y = 0; y < scene.get_height(); y++) {
-        row = new png_byte[scene.get_width() * 3];
+    for (UInt y = 0; y < scene.GetHeight(); y++) {
+        row = new png_byte[scene.GetWidth() * 3];
         if (row == NULL) {
             // TODO: DANGER! WILL ROBINSON!
         }
-        for (int x = 0; x < scene.get_width(); x++) {
-            Color c = pixels[y * scene.get_width() + x];
+        for (UInt x = 0; x < scene.GetWidth(); x++) {
+            Color c = pixels[y * scene.GetWidth() + x];
             row[x*3+0] = 0xff * c.red;
             row[x*3+1] = 0xff * c.green;
             row[x*3+2] = 0xff * c.blue;
             nbytes += 3;
-
         }
         png_write_row(png, row);
         delete[] row;
@@ -102,6 +107,8 @@ PNGWriter::write_scene(const Scene &scene, const std::string &filename)
     // Return number of bytes written.
     return nbytes;
 }
+
+} /* namespace charles */
 
 
 #pragma clang diagnostic push

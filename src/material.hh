@@ -1,18 +1,20 @@
-/* material.h
- *
- * Materials are applied to shapes and determine color, texture mapping, shading, etc.
- *
+/* material.hh
+ * vim: set tw=80:
  * Eryn Wells <eryn@erynwells.me>
  */
 
-#ifndef __MATERIAL_H__
-#define __MATERIAL_H__
+#ifndef __MATERIAL_HH__
+#define __MATERIAL_HH__
 
-#include "basics.h"
-#include "types.hh"
+#include "basics/basics.hh"
+
 
 namespace charles {
 
+/**
+ * Materials are applied to shapes and determine color, texture mapping,
+ * shading, etc.
+ */
 struct Material
 {
     enum class DiffuseShaderModel {
@@ -29,14 +31,14 @@ struct Material
     Double GetDiffuseIntensity() const;
     void SetDiffuseIntensity(const Double& kd);
 
-    const Color& GetDiffuseColor() const;
-    void SetDiffuseColor(const Color& c);
+    basics::Color& GetDiffuseColor();
+    void SetDiffuseColor(const basics::Color& c);
 
     Double GetSpecularIntensity() const;
     void SetSpecularIntensity(const Double& kd);
 
-    const Color &GetSpecularColor() const;
-    void SetSpecularColor(const Color& c);
+    basics::Color& GetSpecularColor();
+    void SetSpecularColor(const basics::Color& c);
 
 private:
     void ClampParameter(Double& param);
@@ -44,12 +46,12 @@ private:
     // Diffuse parameters.
     DiffuseShaderModel mDiffuseModel;
     Double mDiffuseIntensity;
-    Color mDiffuseColor;
+    basics::Color mDiffuseColor;
 
     // Specular parameters.
     SpecularShaderModel mSpecularModel;
     Double mSpecularIntensity;
-    Color mSpecularColor;
+    basics::Color mSpecularColor;
 };
 
 } /* namespace charles */

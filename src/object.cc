@@ -9,54 +9,38 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "basics.h"
-#include "material.h"
-#include "object.h"
+#include "object.hh"
+
+#include "material.hh"
+#include "basics/basics.hh"
+
+
+using charles::basics::Ray;
+using charles::basics::Matrix4;
+using charles::basics::Vector4;
+
 
 namespace charles {
 
-#pragma mark - Objects
-
 /*
- * Object::Object --
- *
- * Default constructor. Create a new Object with an origin at (0, 0, 0).
+ * charles::Object::Object --
  */
-Object::Object()
-    : Object(Vector3::Zero)
-{ }
-
-
-/*
- * Object::Object --
- *
- * Constructor. Create a new Object with an origin at o.
- */
-Object::Object(Vector3 origin)
-    : mOrigin(origin),
+Object::Object(const Vector4& origin)
+    : mTranslation(Matrix4::Translation(origin)),
       mMaterial()
 { }
 
 
-Vector3
-Object::GetOrigin()
-    const
-{
-    return mOrigin;
-}
-
-
+/*
+ * charles::Object::~Object --
+ */
 Object::~Object()
 { }
 
 
-void
-Object::SetOrigin(const Vector3& origin)
-{
-    mOrigin = origin;
-}
-
-
+/*
+ * charles::Object::GetMaterial --
+ */
 Material&
 Object::GetMaterial()
 {
@@ -64,6 +48,19 @@ Object::GetMaterial()
 }
 
 
+/*
+ * charles::Object::Place --
+ */
+void
+Object::Place(const Vector4 &p)
+{
+    mTranslation = Matrix4::Translation(p);
+}
+
+
+/*
+ * charles::Object::SetMaterial --
+ */
 void
 Object::SetMaterial(const Material& material)
 {
@@ -71,6 +68,67 @@ Object::SetMaterial(const Material& material)
 }
 
 
+/*
+ * charles::Object::Intersect --
+ */
+bool
+Object::Intersect(const basics::Ray& ray,
+                  TVector& t,
+                  Stats& stats)
+    const
+{
+    return DoIntersect(ToObjectSpace(ray), t, stats);
+}
+
+
+/*
+ * charles::Object::Normal --
+ */
+Vector4
+Object::Normal(const Vector4& p)
+    const
+{
+    return FromObjectSpace(DoNormal(ToObjectSpace(p)));
+}
+
+
+/*
+ * charles::Object::ToObjectSpace --
+ */
+Ray
+Object::ToObjectSpace(Ray ray)
+    const
+{
+    ray.origin = mTranslation * ray.origin;
+    return ray;
+}
+
+
+/*
+ * charles::Object::ToObjectSpace --
+ */
+Vector4
+Object::ToObjectSpace(const Vector4& v)
+    const
+{
+    return mTranslation * v;
+}
+
+
+/*
+ * charles::Object::FromObjectSpace --
+ */
+Vector4
+Object::FromObjectSpace(const Vector4& v)
+    const
+{
+    return Inverse(mTranslation) * v;
+}
+
+
+/*
+ * charles::Object::Write --
+ */
 void
 Object::Write(std::ostream& ost)
     const
@@ -79,11 +137,16 @@ Object::Write(std::ostream& ost)
 }
 
 
+/*
+ * charles::operator<< --
+ */
 std::ostream&
 operator<<(std::ostream& ost,
            const Object& object)
 {
+    ost << "[";
     object.Write(ost);
+    ost << " translate=" << object.mTranslation.Column(3) << "]";
     return ost;
 }
 

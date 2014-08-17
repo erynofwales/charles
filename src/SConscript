@@ -8,6 +8,7 @@ Import('env')
 objs = []
 
 subdirs = [
+    'basics',
     'yaml',
 ]
 
@@ -17,9 +18,9 @@ for d in subdirs:
 
 
 files = [
-    'basics.cc',
     'camera.cc',
     'light.cc',
+    'lightPoint.cc',
     'log.cc',
     'material.cc',
     'object.cc',

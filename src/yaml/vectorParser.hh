@@ -14,8 +14,10 @@
 #include <vector>
 
 #include "parsers.hh"
+#include "basics/basics.hh"
 
 
+namespace charles {
 namespace yaml {
 
 /**
@@ -82,25 +84,24 @@ private:
 };
 
 
-struct Vector3Parser
-    : ScalarSequenceParser<double>
+struct Vector4Parser
+    : ScalarSequenceParser<Double>
 {
-    typedef std::function<void (Vector3)> CallbackFunction;
+    typedef std::function<void (basics::Vector4)> CallbackFunction;
 
-    Vector3Parser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
-    ~Vector3Parser();
+    Vector4Parser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
 };
 
 
 struct ColorParser
-    : ScalarSequenceParser<double>
+    : ScalarSequenceParser<Double>
 {
-    typedef std::function<void (Color)> CallbackFunction;
+    typedef std::function<void (basics::Color)> CallbackFunction;
 
     ColorParser(Scene& scene, ParserStack& parsers, CallbackFunction onDone);
-    ~ColorParser();
 };
 
 } /* namespace yaml */
+} /* namespace charles */
 
 #endif /* __YAML_VECTOR_PARSER_HH__ */

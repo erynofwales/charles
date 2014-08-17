@@ -15,6 +15,7 @@
 #include "vectorParser.hh"
 
 
+namespace charles {
 namespace yaml {
 
 SceneParser::SceneParser(Scene& scene,
@@ -95,8 +96,8 @@ SceneParser::HandleDimensionsEvent(yaml_event_t& event)
         }
 
         Scene& sc = GetScene();
-        sc.set_width(dimensions.at(0));
-        sc.set_height(dimensions.at(1));
+        sc.SetWidth(dimensions.at(0));
+        sc.SetHeight(dimensions.at(1));
 
         mSection = NoSection;
         SetShouldExpectKey(true);
@@ -137,3 +138,4 @@ SceneParser::HandleObjectsEvent(yaml_event_t& event)
 }
 
 } /* namespace yaml */
+} /* namespace charles */
