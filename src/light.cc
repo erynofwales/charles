@@ -59,7 +59,7 @@ Light::SetIntensity(const Double& intensity)
 }
 
 
-Color&&
+Color
 Light::Contribution()
     const
 {

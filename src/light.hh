@@ -29,7 +29,7 @@ struct Light
     Double GetIntensity() const;
     void SetIntensity(const Double& intensity);
 
-    virtual basics::Color&& Contribution() const;
+    virtual basics::Color Contribution() const;
 
 private:
     Double ClampIntensity(const Double& intensity);
