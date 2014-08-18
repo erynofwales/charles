@@ -22,9 +22,8 @@ namespace basics {
  * charles::basics::Vector4::Vector4 --
  */
 Vector4::Vector4()
-{
-    bzero(mData, sizeof(Double) * 4);
-}
+    : Vector4(0, 0, 0)
+{ }
 
 
 /*
