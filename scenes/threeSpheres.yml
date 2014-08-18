@@ -1,7 +1,7 @@
 --- !Scene
-dimensions: [1920, 1080]
+dimensions: [800, 600]
 camera: !Camera.Perspective
-    right: [1.77, 0, 0]
+    right: [1.33, 0, 0]
 objects:
     - !Object.Sphere
       origin: [0, 0.5, 2]
