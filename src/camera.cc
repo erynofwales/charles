@@ -22,7 +22,8 @@ namespace charles {
  * charles::Camera::Camera --
  */
 Camera::Camera()
-    : mDirection(0, 0, 1),
+    : mOrigin(),
+      mDirection(0, 0, 1),
       mRight(1.33, 0, 0),
       mUp(0, 1, 0)
 { }
