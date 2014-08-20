@@ -8,6 +8,8 @@
 
 #include <cstdio>
 #include <cstdlib>
+
+#include <chrono>
 #include <stack>
 #include <string>
 
@@ -40,6 +42,12 @@ YAMLReader::read_file(const std::string& filename)
     yaml_parser_initialize(&parser);
 
     printf("Reading %s\n", filename.c_str());
+    LOG_INFO << "Reading " << filename;
+
+    /* Time the parse */
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
+
     yaml_parser_set_input_file(&parser, yaml_infile);
 
     yaml::ParserStack parsers;
@@ -115,6 +123,12 @@ YAMLReader::read_file(const std::string& filename)
 
 error:
     yaml_parser_delete(&parser);
+
+    end = std::chrono::system_clock::now();
+    std::chrono::duration<Double> seconds = end - start;
+    LOG_INFO << "Scene file parsed in " << seconds.count() << " seconds.";
+    printf("Scene file parsed in %f seconds.\n", seconds.count());
+
     return success;
 }
 
