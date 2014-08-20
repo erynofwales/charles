@@ -77,7 +77,8 @@ Object::Intersect(const basics::Ray& ray,
                   Stats& stats)
     const
 {
-    return DoIntersect(ToObjectSpace(ray), t, stats);
+    Ray objSpaceRay = ToObjectSpace(ray);
+    return DoIntersect(objSpaceRay, t, stats);
 }
 
 
@@ -100,7 +101,8 @@ Ray
 Object::ToObjectSpace(Ray ray)
     const
 {
-    ray.origin = mTranslation * ray.origin;
+    ray.origin = ToObjectSpace(ray.origin);
+    //ray.direction = ToObjectSpace(ray.direction).Normalize();
     return ray;
 }
 
