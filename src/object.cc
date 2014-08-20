@@ -88,7 +88,8 @@ Vector4
 Object::Normal(const Vector4& p)
     const
 {
-    return FromObjectSpace(DoNormal(ToObjectSpace(p)));
+    Vector4 norm = Transpose(mTranslation) * DoNormal(ToObjectSpace(p));
+    return norm;
 }
 
 
