@@ -1,0 +1,8 @@
+# SConscript
+# vim: set ft=python:
+# Eryn Wells <eryn@erynwells.me>
+
+Import('env')
+
+prog = env.Program('yamldumper', ['yamldumper.cc'], LIBS=['yaml'])
+env.Alias('yamldumper', prog)

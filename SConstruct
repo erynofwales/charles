@@ -1,5 +1,5 @@
 # SConstruct
-# vim: set ft=python:
+# vim: set ft=python tw=80:
 # Eryn Wells <eryn@erynwells.me>
 
 
@@ -114,6 +114,11 @@ common_env.Append(CCFLAGS=CCFLAGS)
 common_env.Append(CFLAGS=['-std=c99'])
 common_env.Append(CXXFLAGS=['-std=c++11'])
 
+# Separate base environment for building utilities. They're all written by me,
+# so they need my usual flags, but each should have its own build environment
+# derived from this one.
+util_env = common_env.Clone()
+
 # Add color error messages for clang
 if sys.stdout.isatty():
     if 'clang' in common_env['CC'] or 'clang' in common_env['CXX']:
@@ -123,6 +128,7 @@ BUILD_DIR = Dir('#build')
 LIB_DIR = Dir('#lib')
 SRC_DIR = Dir('#src')
 TEST_DIR = Dir('#test')
+UTIL_DIR = Dir('#util')
 
 
 def create_env(name, appends=None):
@@ -197,6 +203,10 @@ for mode in build_modes:
         lib_out_dir = out_dir.Dir('lib').Dir(lib)
         do_sconscript(env, lib_env, LIB_DIR.Dir(lib), lib_out_dir)
         env.Append(LIBPATH=[lib_out_dir])
+
+    for util in os.listdir(UTIL_DIR.abspath):
+        util_out_dir = out_dir.Dir('util').Dir(util)
+        do_sconscript(env, util_env.Clone(), UTIL_DIR.Dir(util), util_out_dir)
 
     # Get test binaries.
     do_sconscript(env, env, TEST_DIR, out_dir.Dir('test'))
