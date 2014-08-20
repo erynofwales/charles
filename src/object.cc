@@ -54,7 +54,7 @@ Object::GetMaterial()
 void
 Object::Place(const Vector4 &p)
 {
-    mTranslation = Matrix4::Translation(p);
+    mTranslation = Matrix4::Translation(-p);
 }
 
 
