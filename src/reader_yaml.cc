@@ -24,44 +24,6 @@
 #include "logModule.hh"
 
 
-#if 0
-struct ObjectParser
-    : public Parser
-{
-    ObjectParser(Scene& scene, ParserStack& parsers)
-        : Parser(scene, parsers),
-          mSection(NoSection)
-    {
-        printf("ObjectParser\n");
-    }
-
-    ~ObjectParser()
-    {
-        printf("~ObjectParser\n");
-    }
-
-    void
-    handle_event(yaml_event_t& event)
-    {
-        switch (mSection) {
-            case NoSection:
-                break;
-            case TypeSection:
-                break;
-            case OriginSection:
-                break;
-        }
-    }
-
-private:
-    enum {
-        NoSection,
-        TypeSection,
-        OriginSection,
-    } mSection;
-};
-#endif
-
 namespace charles {
 
 ssize_t
