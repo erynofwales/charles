@@ -69,7 +69,9 @@ main(int argc,
                     std::cout << "YAML_ALIAS_EVENT\n";
                     break;
                 case YAML_SCALAR_EVENT:
-                    std::cout << "YAML_SCALAR_EVENT\n";
+                    printf("YAML_SCALAR_EVENT value='%s'\n",
+                           std::string((const char *)event.data.scalar.value,
+                                       event.data.scalar.length).c_str());
                     break;
 
                 case YAML_SEQUENCE_START_EVENT:
